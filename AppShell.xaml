@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Asis_Batia.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Asis_Batia.View"
+    Shell.FlyoutBehavior="Disabled">
+
+    <ShellContent
+  Title="Home"
+  ContentTemplate="{DataTemplate local:MainPage}"
+  Route="MainPage"
+  FlyoutItemIsVisible="False"
+  Shell.FlyoutBehavior="Disabled" />
+
+    <ShellContent
+  Icon="iconminfo.png"
+  Title="Infomacion de empleado"
+  ContentTemplate="{DataTemplate local:FormuPrinAsis}"
+  Route="FormPrin"
+  Shell.FlyoutBehavior="Flyout" />
+
+    <ShellContent
+        Icon="iconasis.png"
+  Title="Registro de asistencia"
+  ContentTemplate="{DataTemplate local:FormuSegAsis}"
+  Route="FormSeg"
+  FlyoutItemIsVisible="False" 
+  Shell.FlyoutBehavior="Flyout"/>
+
+    <ShellContent
+  Title="Registro exitoso"
+  ContentTemplate="{DataTemplate local:RegExitoso}"
+  Route="FormReg"
+  FlyoutItemIsVisible="False"
+  Shell.FlyoutBehavior="Disabled" />
+
+    <ShellContent
+  Title="Selecionar área"
+  ContentTemplate="{DataTemplate local:SelectInmueble}"
+  Route="SelectInmu"
+  FlyoutItemIsVisible="False"
+  Shell.FlyoutBehavior="Flyout" />
+
+    <ShellContent
+        Icon="iconcondiciones"
+  Title="Reglas de Uso"
+  ContentTemplate="{DataTemplate local:RulesPage}"
+  Route="RulesPage"
+  FlyoutItemIsVisible="True"
+  Shell.FlyoutBehavior="Flyout" />
+
+    <MenuItem  Text="Cerrar sesión" Command="{Binding LogoutCommand}" IconImageSource="cerrarsecion.png"/>
+
+</Shell>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asis_Batia.View.MainPage"
+             Title="BIENVENIDOS GRUPO BATIA">
+    
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="0,1">
+            <GradientStop Offset="0.1" Color="#ffffff"/>
+            <GradientStop Offset="1.0" Color="#3775B5"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    <ScrollView>
+        <VerticalStackLayout>
+
+        <Grid RowDefinitions="*,*,*,*,*,*,*" ColumnDefinitions="*,*"
+             VerticalOptions="CenterAndExpand"
+             ColumnSpacing="5"
+             RowSpacing="5"
+             Margin="20,60,20,5">
+
+            <Frame                
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                BorderColor="Transparent"
+                BackgroundColor="Transparent"
+                IsClippedToBounds="True"
+                Padding="0"
+                HeightRequest="250">
+
+                <Image Source="logo_batia"/>
+            </Frame>
+
+            <Label        
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2" Text="BIOMETA" FontSize="100" 
+                FontFamily="Regular" FontAttributes="Bold"  TextColor="#2E3192" HorizontalTextAlignment="Center" 
+                VerticalTextAlignment="Center"
+                BackgroundColor="Transparent"
+                 />
+
+            <!--<Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Ingresa tus datos" FontSize="15" FontFamily="MontRegular" TextColor="#2E3192" HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>-->
+
+            <StackLayout 
+               Orientation="Horizontal"
+               Grid.Row="3"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Margin="10,0,10,5">
+                <Frame Margin="0,0,0,0" Padding="0,0,0,-10" HasShadow="True" BackgroundColor="Transparent" BorderColor="#D4BC88"  HorizontalOptions="FillAndExpand" CornerRadius="5" WidthRequest="160" HeightRequest="50">
+                    <Entry
+            x:Name="labelid"
+            Placeholder="  ID Empleado  "
+            Text="{Binding IdEmpleado}"
+            TextColor="Black"
+            ClearButtonVisibility="Never"
+            FontFamily="Regular"
+            VerticalTextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            CharacterSpacing="1"
+            FontSize="25"
+            PlaceholderColor="White"
+            IsSpellCheckEnabled="True"
+            IsTextPredictionEnabled="True"
+            HorizontalOptions="Center"
+            ReturnCommand="{Binding GetInfoEmpleadoCommand}"
+            ReturnType="Send" 
+            Keyboard="Numeric" />
+
+                </Frame>
+            </StackLayout>
+
+            <Image
+           Grid.Row="5"
+           Grid.Column="0"
+           Grid.ColumnSpan="2"
+           Source="biometa_icoq"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"
+           TranslationY="20"
+           WidthRequest="200"
+           HeightRequest="200"/>
+        </Grid>
+
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
