@@ -3,7 +3,11 @@
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
+    
+    <LinearGradientBrush x:Key="BlueWhiteGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="White" Offset="0.4" />
+        <GradientStop Color="{StaticResource Primary}" Offset="1.0" />
+    </LinearGradientBrush> 
 
     <!--<Style x:Name="MyTheme" BasedOn="@android:style/Theme.Light">
         <Setter x:Name="android:windowBackground">@android:color/white</Setter>
@@ -379,6 +383,10 @@
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+    </Style>
+    
+    <Style TargetType="Page" x:Key="PageStyle">
+        <Setter Property="Background" Value="{StaticResource BlueWhiteGradient}"/>
     </Style>
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
