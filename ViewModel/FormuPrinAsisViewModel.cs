@@ -1,4 +1,5 @@
-﻿using Asis_Batia.Model;
+﻿using Asis_Batia.Helpers;
+using Asis_Batia.Model;
 using Asis_Batia.View;
 using Newtonsoft.Json;
 using System;
@@ -158,6 +159,10 @@ namespace Asis_Batia.ViewModel
             NextPageCommand = new Command(async () => await NextPage());
             _ = GetEstado();
 
+            _NombreEmpleado = UserSession.Empleado;
+            _Cliente = UserSession.Cliente;
+            _PuntoAtencion = UserSession.Inmueble;
+            _Estado= UserSession.Estado;
         }
 
 
@@ -285,15 +290,15 @@ namespace Asis_Batia.ViewModel
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            _NombreEmpleado = (string)query["Empleado"];
-            _Cliente = (string)query["Cliente"];
-            _PuntoAtencion = (string)query["PuntoAtencion"];
-            _Estado = (string)query["Estado"];
-            IdCliente = (int)query["IdCliente"];
-            IdEmpleado = (int)query["idEmpleado"];
-            IdInmueble = (int)query["idInmueble"];
-            IdEstado = (int)query["idEstado"];
-            _ = IdCliente > 0 ? GetInmuebleByIdClient(IdCliente) : null;
+            //_NombreEmpleado = (string)query["Empleado"];
+            //_Cliente = (string)query["Cliente"];
+            //_PuntoAtencion = (string)query["PuntoAtencion"];
+            //_Estado = (string)query["Estado"];
+            //IdCliente = (int)query["IdCliente"];
+            //IdEmpleado = (int)query["idEmpleado"];
+            //IdInmueble = (int)query["idInmueble"];
+            //IdEstado = (int)query["idEstado"];
+            //_ = IdCliente > 0 ? GetInmuebleByIdClient(IdCliente) : null;
         }
         private void Exit()
         {

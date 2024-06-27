@@ -1,4 +1,6 @@
-﻿namespace Asis_Batia.Helpers;
+﻿using Asis_Batia.Model;
+
+namespace Asis_Batia.Helpers;
 
 public class UserSession {
 
@@ -66,7 +68,18 @@ public class UserSession {
         set => Preferences.Default.Set(IS_FIRST_RUN_KEY, value);
     }
 
-    public void ClearSession() {
+    public static void SetData(InfoEmpleadoModel data) {
+        Empleado = data.empleado;
+        IdEmpleado = data.idEmpleado;
+        Cliente = data.cliente;
+        IdCliente = data.idCliente;
+        Inmueble = data.puntoAtencion;
+        IdInmueble = data.idInmueble;
+        Estado = data.estado;
+        IdEstado = data.idEstado;
+    }
+
+    public static void ClearSession() {
         Preferences.Default.Clear();
         IsFirstRun = false;
     }
