@@ -11,6 +11,9 @@ public partial class MainPageViewModel : ViewModelBase {
     [ObservableProperty]
     string _idEmpleado;
 
+    [ObservableProperty]
+    bool _isLoading;
+
     public MainPageViewModel() {
         ShowTermsAndConditions();
     }
@@ -23,7 +26,10 @@ public partial class MainPageViewModel : ViewModelBase {
         }
 
         string url = $"{Constants.API_EMPLEADO_APP}?idempleado={IdEmpleado}";
+
+        IsLoading = true;
         List<InfoEmpleadoModel> res = await _httpHelper.GetAsync<List<InfoEmpleadoModel>>(url);
+        IsLoading = false;
 
         if(res is not null && res.Count > 0) {
             UserSession.SetData(res[0]);
