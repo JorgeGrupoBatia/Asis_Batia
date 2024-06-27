@@ -13,12 +13,6 @@ public partial class MainPageViewModel : ViewModelBase {
 
     public MainPageViewModel() {
         ShowTermsAndConditions();
-
-        int idEmpleadoAlmacenado = UserSession.IdEmpleado;
-        if(idEmpleadoAlmacenado > 0) {
-            IdEmpleado = idEmpleadoAlmacenado.ToString();
-            GetInfoEmpleado();
-        }
     }
 
     [RelayCommand]
@@ -33,7 +27,7 @@ public partial class MainPageViewModel : ViewModelBase {
 
         if(res is not null && res.Count > 0) {
             UserSession.SetData(res[0]);
-            await Shell.Current.GoToAsync("//FormPrin", true);
+            App.Current.MainPage = new AppShell();
         } else {
             await App.Current.MainPage.DisplayAlert("Error", "No se encontró ningún usuario", "Cerrar");
         }
@@ -42,6 +36,6 @@ public partial class MainPageViewModel : ViewModelBase {
     async void ShowTermsAndConditions() {
         if(UserSession.ShowTermsConditions) {
             await MauiPopup.PopupAction.DisplayPopup<bool>(new PopupRulesPage());
-        }        
+        }
     }
 }

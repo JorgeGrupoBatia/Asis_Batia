@@ -80,7 +80,7 @@
                  TextColor="Black"
                  HorizontalTextAlignment="Start"/>
                             <Label 
-                 Text="•Datos de identificación                                                                             
+                 Text="•    Datos de identificación                                                                             
                        •	Datos de contacto                                                                                
                        •	Datos de navegación, dispositivos y geolocalización
                        •	Datos personales."
