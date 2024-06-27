@@ -12,7 +12,7 @@ public class UserSession {
     static readonly string ID_INMUEBLE_KEY = "Id inmueble key";
     static readonly string ESTADO_KEY = "Estado key";
     static readonly string ID_ESTADO_KEY = "Id estado key";
-    static readonly string IS_FIRST_RUN_KEY = "Is first run key";
+    static readonly string SHOW_TERMS_CONDITIONS_KEY = "Show terms and conditions";
 
     public static string Empleado {
         get => Preferences.Default.ContainsKey(EMPLEADO_KEY)
@@ -62,10 +62,10 @@ public class UserSession {
         set => Preferences.Default.Set(ID_ESTADO_KEY, value);
     }
 
-    public static bool IsFirstRun {
-        get => Preferences.Default.ContainsKey(IS_FIRST_RUN_KEY)
-            ? (bool)Preferences.Default.Get(IS_FIRST_RUN_KEY, true) : true;
-        set => Preferences.Default.Set(IS_FIRST_RUN_KEY, value);
+    public static bool ShowTermsConditions {
+        get => Preferences.Default.ContainsKey(SHOW_TERMS_CONDITIONS_KEY)
+            ? (bool)Preferences.Default.Get(SHOW_TERMS_CONDITIONS_KEY, true) : true;
+        set => Preferences.Default.Set(SHOW_TERMS_CONDITIONS_KEY, value);
     }
 
     public static void SetData(InfoEmpleadoModel data) {
@@ -81,6 +81,6 @@ public class UserSession {
 
     public static void ClearSession() {
         Preferences.Default.Clear();
-        IsFirstRun = false;
+        ShowTermsConditions = false;
     }
 }

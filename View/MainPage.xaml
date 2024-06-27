@@ -38,20 +38,17 @@
                 BorderColor="#D4BC88"
                 HorizontalOptions="FillAndExpand"
                 CornerRadius="5"
-                WidthRequest="160"
+                WidthRequest="180"
                 HeightRequest="70">
 
                 <Entry
-                    Text="{Binding IdEmpleado}"
+                    Text="{Binding IdEmpleado, Mode=TwoWay}"
                     TextColor="Black"
-                    Placeholder="ID Empleado"
+                    Placeholder="ID de empleado"
                     PlaceholderColor="White"
-                    ClearButtonVisibility="Never"
                     FontFamily="Regular"
                     CharacterSpacing="1"
                     FontSize="25"
-                    IsSpellCheckEnabled="True"
-                    IsTextPredictionEnabled="True"
                     HorizontalTextAlignment="Center"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
