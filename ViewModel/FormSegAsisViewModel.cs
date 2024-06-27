@@ -79,12 +79,13 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query) {// aqui estamos recibiendo el diccionario que enviamos desde el form anterior
-        IdCliente = (int)query["IdCliente"];// te fijas que una ves establecido el valor del cliente
-        IdEmpleado = (int)query["IdEmpleado"];//lo estamos usando para hacer la peticion en el api
-        IdInmueble = (int)query["IdInmueble"];// fijate que ya nos llegaron los datos
-        NombreCliente = (string)query["NombreEmpleado"];
+        //IdCliente = (int)query["IdCliente"];// te fijas que una ves establecido el valor del cliente
+        //IdEmpleado = (int)query["IdEmpleado"];//lo estamos usando para hacer la peticion en el api
+        //IdInmueble = (int)query["IdInmueble"];// fijate que ya nos llegaron los datos
+        //NombreCliente = (string)query["NombreEmpleado"];
         Lat = (string)query["Lat"];
         Lng = (string)query["Lng"];
+    
     }
 
     private void existeRegistro(int idEmple, DateTime fech, string movi) {
