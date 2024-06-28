@@ -123,7 +123,6 @@
             <Button
                 Grid.Row="6"
                 Grid.ColumnSpan="2"
-                x:Name="bntNext3"
                 Text="REGISTRAR"
                 IsEnabled="{Binding IsEnabled}"
                 FontSize="Large"
@@ -134,7 +133,6 @@
                 HorizontalOptions="Center"
                 FontAttributes="Bold"
                 CornerRadius="10"
-                TranslationY="-5"
                 WidthRequest="250"
                 HeightRequest="55"
                 Command="{Binding RegisterCommand}" />
