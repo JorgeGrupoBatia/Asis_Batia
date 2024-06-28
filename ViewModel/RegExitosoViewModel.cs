@@ -35,7 +35,7 @@ namespace Asis_Batia.ViewModel
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            NombreCliente = (string)query["NombreEmpleado"];
+            //NombreCliente = (string)query["NombreEmpleado"];
             Fecha = DateTime.Now;
         }
 

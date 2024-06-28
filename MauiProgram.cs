@@ -24,8 +24,8 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-		builder.Services.AddSingleton<IMediaPicker>(MediaPicker.Default);
-		builder.Services.AddTransient<FormuSegAsis>();
+		//builder.Services.AddSingleton<IMediaPicker>(MediaPicker.Default);
+		//builder.Services.AddTransient<FormuSegAsis>();
 
         //Routing.RegisterRoute("PrinP", typeof(PrincipalPage));
         //Routing.RegisterRoute("MenuP", typeof(MenuPage));
