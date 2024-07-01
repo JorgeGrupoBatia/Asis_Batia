@@ -8,10 +8,10 @@ using System.Globalization;
 
 namespace Asis_Batia.ViewModel;
 
-public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
+public partial class FormSegAsisViewModel : ViewModelBase {
 
     int _idPeriodo, _count;
-    public string _selectionRadio, _tipo, _lat, _lng, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
+    public string _selectionRadio, _tipo, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
     List<string> _localFilePathList;
 
     [ObservableProperty]
@@ -67,7 +67,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                 }
 
                 CultureInfo culture = new CultureInfo("es-MX");
-                Location inmuebleLocation = new Location(double.Parse(_lat, culture), double.Parse(_lng, culture));
+                Location inmuebleLocation = new Location(double.Parse(UserSession.LatitudeInmueble, culture), double.Parse(UserSession.LongitudInmueble, culture));
 
                 double distanceKm = LocationService.CalcularDistancia(currentLocation, inmuebleLocation);
                 if(distanceKm > .400) {
@@ -76,11 +76,11 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                         _count++;
                         var result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que estas lejos de tu servicio, ¿Deseas registrarte en otro servicio?", "Si", "No");
                         if(result) {
-                            var data = new Dictionary<string, object>{
-                                {"Lat", _lat},
-                                {"Lng", _lng}
-                            };
-                            await Shell.Current.GoToAsync(nameof(SelectInmueble), true, data);
+                            //var data = new Dictionary<string, object>{
+                            //    {"Lat", _lat},
+                            //    {"Lng", _lng}
+                            //};
+                            await Shell.Current.GoToAsync(nameof(SelectInmueble), true/*, data*/);
 
                         } else {
                             _count = 0;
@@ -123,7 +123,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             };
 
             int resp = await _httpHelper.PostBodyAsync<RegistroModel, int>(Constants.API_REGISTRO_BIOMETA, registroModel);
-            
+
             IsBusy = false;
             IsEnabled = true;
             IsLoading = false;
@@ -132,9 +132,9 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                 await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Ok");
                 return;
             }
-            
+
             await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
-        } catch(Exception ) {
+        } catch(Exception) {
             IsBusy = false;
             IsEnabled = false;
             IsLoading = false;
@@ -165,8 +165,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                     _localFilePathList.Add(localFilePath);
                 }
             }
-        } catch(Exception) { 
-            await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al seleccionar archivos", "Cerrar"); 
+        } catch(Exception) {
+            await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al seleccionar archivos", "Cerrar");
         }
     }
 
@@ -247,10 +247,5 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             PickerTitle = "Seleccione archivos",
             FileTypes = filePickerFileType
         };
-    }
-
-    public void ApplyQueryAttributes(IDictionary<string, object> query) {
-        _lat = (string)query["Lat"];
-        _lng = (string)query["Lng"];
     }
 }
