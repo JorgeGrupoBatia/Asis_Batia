@@ -242,12 +242,12 @@ namespace Asis_Batia.ViewModel
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            NombreEmpleado = (string)query["NombreEmpleado"];
-            IdEmpleado = (int)query["IdEmpleado"];
-            Lat = (string)query["Lat"];
-            Lng = (string)query["Lng"];
-            IdInmueble = (int)query["IdInSele"];
-            IdCliente = (int)query["IdClSele"];
+            //NombreEmpleado = (string)query["NombreEmpleado"];
+            //IdEmpleado = (int)query["IdEmpleado"];
+            //Lat = (string)query["Lat"];
+            //Lng = (string)query["Lng"];
+            //IdInmueble = (int)query["IdInSele"];
+            //IdCliente = (int)query["IdClSele"];
         }
 
         private async Task NextPage()

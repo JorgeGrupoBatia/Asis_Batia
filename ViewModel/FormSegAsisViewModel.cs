@@ -3,15 +3,14 @@ using Asis_Batia.Model;
 using Asis_Batia.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Asis_Batia.ViewModel;
 
 public partial class FormSegAsisViewModel : ViewModelBase {
 
-    int _idPeriodo, _count;
-    public string _selectionRadio, _tipo, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
+    int _count;
+    public string _selectionRadio, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
     List<string> _localFilePathList;
 
     [ObservableProperty]
@@ -27,12 +26,7 @@ public partial class FormSegAsisViewModel : ViewModelBase {
     bool _isLoading;
 
     public FormSegAsisViewModel() {
-        InitValues();
         _localFilePathList = new List<string>();
-    }
-
-    async void InitValues() {
-        await GetPeriodo();
     }
 
     [RelayCommand]
@@ -76,12 +70,7 @@ public partial class FormSegAsisViewModel : ViewModelBase {
                         _count++;
                         var result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que estas lejos de tu servicio, ¿Deseas registrarte en otro servicio?", "Si", "No");
                         if(result) {
-                            //var data = new Dictionary<string, object>{
-                            //    {"Lat", _lat},
-                            //    {"Lng", _lng}
-                            //};
-                            await Shell.Current.GoToAsync(nameof(SelectInmueble), true/*, data*/);
-
+                            await Shell.Current.GoToAsync(nameof(SelectInmueble), true);
                         } else {
                             _count = 0;
                             IsBusy = false;
@@ -107,18 +96,13 @@ public partial class FormSegAsisViewModel : ViewModelBase {
 
             RegistroModel registroModel = new RegistroModel {
                 Adjuntos = _dbFilePathList == null ? "" : _dbFilePathList,
-                Anio = DateTime.Today.Year,
                 Confirma = "BIOMETA",
                 Cubierto = 0,
-                Fecha = DateTime.Now,
                 Idempleado = UserSession.IdEmpleado,
-                Idinmueble = UserSession.IdInmueble,
-                Idperiodo = _idPeriodo,
                 Latitud = currentLocation.Latitude.ToString(),
                 Longitud = currentLocation.Longitude.ToString(),
                 Movimiento = _selectionRadio,
                 RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
-                Tipo = _tipo,
                 Foto = _dbPhotoPath == null ? "" : _dbPhotoPath,
             };
 
@@ -140,15 +124,6 @@ public partial class FormSegAsisViewModel : ViewModelBase {
             IsLoading = false;
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Cerrar");
         }
-    }
-
-    async Task GetPeriodo() {
-        IsLoading = true;
-        string url = $"{Constants.API_PERIODO_NOMINA}?Idempleado={UserSession.IdEmpleado}";
-        var periodoEmpleado = await _httpHelper.GetAsync<ObservableCollection<PeriodoNominaModel.PeriodoClient>>(url);
-        _idPeriodo = periodoEmpleado[0].id_periodo;
-        _tipo = periodoEmpleado[0].descripcion;
-        IsLoading = false;
     }
 
     [RelayCommand]
