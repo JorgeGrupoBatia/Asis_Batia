@@ -16,5 +16,7 @@ namespace Asis_Batia.Model
         public string cliente { get; set; }
         public string puntoAtencion { get; set; }
         public string estado { get; set; }
+        public string LatitudInmueble { get; set; }
+        public string LongitudInmueble { get; set; }
     }
 }

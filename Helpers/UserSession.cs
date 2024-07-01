@@ -10,6 +10,8 @@ public class UserSession {
     static readonly string ID_CLIENTE_KEY = "Id cliente key";
     static readonly string INMUEBLE_KEY = "Inmueble key";
     static readonly string ID_INMUEBLE_KEY = "Id inmueble key";
+    static readonly string LATITUDE_INMUEBLE_KEY = "Latitude inmueble";
+    static readonly string LONGITUDE_INMUEBLE_KEY = "Longitud inmueble";
     static readonly string ESTADO_KEY = "Estado key";
     static readonly string ID_ESTADO_KEY = "Id estado key";
     static readonly string SHOW_TERMS_CONDITIONS_KEY = "Show terms and conditions";
@@ -62,6 +64,18 @@ public class UserSession {
         set => Preferences.Default.Set(ID_ESTADO_KEY, value);
     }
 
+    public static string LongitudInmueble {
+        get => Preferences.Default.ContainsKey(LATITUDE_INMUEBLE_KEY)
+            ? (string)Preferences.Default.Get(LATITUDE_INMUEBLE_KEY, string.Empty) : string.Empty;
+        set => Preferences.Default.Set(LATITUDE_INMUEBLE_KEY, value);
+    }
+
+    public static string LatitudeInmueble {
+        get => Preferences.Default.ContainsKey(LONGITUDE_INMUEBLE_KEY)
+            ? (string)Preferences.Default.Get(LONGITUDE_INMUEBLE_KEY, string.Empty) : string.Empty;
+        set => Preferences.Default.Set(LONGITUDE_INMUEBLE_KEY, value);
+    }
+
     public static bool ShowTermsConditions {
         get => Preferences.Default.ContainsKey(SHOW_TERMS_CONDITIONS_KEY)
             ? (bool)Preferences.Default.Get(SHOW_TERMS_CONDITIONS_KEY, true) : true;
@@ -77,6 +91,8 @@ public class UserSession {
         IdInmueble = data.idInmueble;
         Estado = data.estado;
         IdEstado = data.idEstado;
+        LatitudeInmueble = data.LatitudInmueble;
+        LongitudInmueble = data.LongitudInmueble;
     }
 
     public static void ClearSession() {
