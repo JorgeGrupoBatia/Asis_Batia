@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Asis_Batia.View.PopupRulesPage"
              IsCloseOnBackgroundClick="False"
-             xmlns:mauiPopup="clr-namespace:MauiPopup.Views; assembly=MauiPopup"
+             xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
              Title="PopupRulesPage">
         <Grid  >
             <Grid.ColumnDefinitions>

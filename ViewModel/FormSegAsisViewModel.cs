@@ -132,10 +132,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                 await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Ok");
                 return;
             }
-
-            await App.Current.MainPage.DisplayAlert("Mensaje", "Registrado correctamente", "Ok");
-            await Shell.Current.GoToAsync(nameof(RegExitoso));
-
+            
+            await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
         } catch(Exception ) {
             IsBusy = false;
             IsEnabled = false;

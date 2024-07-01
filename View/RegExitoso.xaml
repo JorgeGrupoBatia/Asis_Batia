@@ -1,82 +1,95 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Asis_Batia.View.RegExitoso"
-             Title="REGISTRO EXITOSO">
-    
-    <ContentPage.Background>
-        <LinearGradientBrush EndPoint="0,1">
-            <GradientStop Offset="0.1" Color="#FFFFFF"/>
-            <GradientStop Offset="1.0" Color="#3775B5"/>
-        </LinearGradientBrush>
-    </ContentPage.Background>
-    
-    <ScrollView>
-        <VerticalStackLayout VerticalOptions="Center" 
-                             Spacing="50">
-            <Frame CornerRadius="25"
-                   HeightRequest="350"
-                   BackgroundColor="Transparent"
-                   BorderColor="#D4BC88"
-                   Margin="20,0,20,0"
-                   IsClippedToBounds="True"
-                   Padding="20">
-                <VerticalStackLayout Spacing="5">
-                    <Label Text="DATOS DEL EMPLEADO" 
-                           TextColor="#2E3192" 
-                           FontSize="40"
-                           FontFamily="Regular"
-                           FontAttributes="Bold"
-                           VerticalTextAlignment="Center"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="{Binding NombreCliente}" 
-                           TextColor="Black" 
-                           FontSize="Title" 
-                           Scale="1"
-                           FontAttributes="Bold"
-                           FontFamily="Regular"
-                           VerticalTextAlignment="Center"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="DATOS DE ENTRADA" 
-                           TextColor="#2E3192" 
-                           FontSize="40"
-                           FontFamily="Regular"
-                           FontAttributes="Bold"
-                           VerticalTextAlignment="Center"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="{Binding Fecha}" 
-                           TextColor="Black" 
-                           FontSize="Title" 
-                           Scale="1"
-                           FontFamily="Regular"
-                           FontAttributes="Bold"
-                           VerticalTextAlignment="Center"
-                           HorizontalTextAlignment="Center"/>
-                    <Image
-                        Source="paloma"
-                        Aspect="AspectFill" 
-                        TranslationY="0"
-                        TranslationX="0"
-                        HeightRequest="90" 
-                        WidthRequest="100"
-                        />
+<mauiPopup:BasePopupPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    IsCloseOnBackgroundClick="False"
+    xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
+    x:Class="Asis_Batia.View.RegExitoso"
+    VerticalOptions="CenterAndExpand"
+    HorizontalOptions="CenterAndExpand"
+    ForegroundColor="Transparent">
 
-                </VerticalStackLayout>
-            </Frame>
-            <Button x:Name="bntNext4"
-                    Text="SALIR"
-                    Command="{Binding ExitCommand}"
-                    FontSize="Large"
-                    FontAttributes="Bold"
-                    BackgroundColor="#3775B5"
-                    TextColor="#D4BC88"
-                    WidthRequest="250"
-                    HeightRequest="55"
-                    CornerRadius="10"
-                    BorderWidth="2"
-                    BorderColor="#D4BC88">
+    <Frame
+        CornerRadius="25"
+        BorderColor="Transparent"
+        Padding="20">
+
+        <VerticalStackLayout
+            Spacing="5">
+
+            <Label
+                Text="¡Registrado correctamente!"
+                TextColor="#2E3192"
+                FontSize="30"
+                FontFamily="Regular"
+                FontAttributes="Bold"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Text="DATOS DEL EMPLEADO"
+                TextColor="#2E3192"
+                FontSize="25"
+                FontFamily="Regular"
+                FontAttributes="Bold"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center"
+                Margin="0,30,0,0"/>
+
+            <Label
+                Text="{Binding NombreCliente}"
+                TextColor="Black"
+                FontSize="18"
+                Scale="1"
+                FontAttributes="Bold"
+                FontFamily="Regular"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Text="DATOS DE ENTRADA"
+                TextColor="#2E3192"
+                FontSize="25"
+                FontFamily="Regular"
+                FontAttributes="Bold"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center" 
+                Margin="0,30,0,0"/>
+
+            <Label
+                Text="{Binding Fecha}"
+                TextColor="Black"
+                FontSize="18"
+                Scale="1"
+                FontFamily="Regular"
+                FontAttributes="Bold"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center" />
+
+            <Image
+                Source="paloma"
+                Aspect="AspectFill"
+                TranslationY="0"
+                TranslationX="0"
+                HeightRequest="90"
+                WidthRequest="100"
+                Margin="0,30" />
+
+            <Button
+                x:Name="bntNext4"
+                Text="SALIR"
+                Command="{Binding ExitCommand}"
+                FontSize="Large"
+                FontAttributes="Bold"
+                BackgroundColor="#3775B5"
+                TextColor="#D4BC88"
+                WidthRequest="250"
+                HeightRequest="55"
+                CornerRadius="10"
+                BorderWidth="2"
+                BorderColor="#D4BC88">
 
             </Button>
         </VerticalStackLayout>
-    </ScrollView>
-</ContentPage>
+    </Frame>
+</mauiPopup:BasePopupPage>

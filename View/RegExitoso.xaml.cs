@@ -1,19 +1,11 @@
 using Asis_Batia.ViewModel;
+using MauiPopup.Views;
 
 namespace Asis_Batia.View;
 
-public partial class RegExitoso : ContentPage
-{
-	public RegExitoso()
-	{
-		InitializeComponent();
-		BindingContext = new RegExitosoViewModel();
-	}
-
-    //private void bntNext4_Clicked(object sender, EventArgs e)
-    //{
-        
-    //        Application.Current.Quit();
-        
-    //}
+public partial class RegExitoso : BasePopupPage {
+    public RegExitoso() {
+        InitializeComponent();
+        BindingContext = new RegExitosoViewModel();
+    }
 }

@@ -1,47 +1,36 @@
-﻿using Asis_Batia.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Asis_Batia.Helpers;
 using System.Windows.Input;
 
-namespace Asis_Batia.ViewModel
-{
-    public class RegExitosoViewModel : BaseViewModel, IQueryAttributable
-    {
-        private string _nombreCliente;
+namespace Asis_Batia.ViewModel;
 
-        public string NombreCliente
-        {
-            get { return _nombreCliente; }
-            set { _nombreCliente = value; OnPropertyChanged(); }
-        }
+public class RegExitosoViewModel : BaseViewModel, IQueryAttributable {
+    private string _nombreCliente;
 
-        private DateTime _fecha;
+    public string NombreCliente {
+        get { return _nombreCliente; }
+        set { _nombreCliente = value; OnPropertyChanged(); }
+    }
 
-        public DateTime Fecha
-        {
-            get { return _fecha; }
-            set { _fecha = value; OnPropertyChanged(); }
-        }
+    private DateTime _fecha;
 
-        public ICommand ExitCommand { get; set; }
+    public DateTime Fecha {
+        get { return _fecha; }
+        set { _fecha = value; OnPropertyChanged(); }
+    }
 
-        public RegExitosoViewModel()
-        {
-            ExitCommand = new Command(Exit);
-        }
+    public ICommand ExitCommand { get; set; }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            //NombreCliente = (string)query["NombreEmpleado"];
-            Fecha = DateTime.Now;
-        }
+    public RegExitosoViewModel() {
+        NombreCliente = UserSession.Empleado;
+        ExitCommand = new Command(Exit);
+    }
 
-        private void Exit()
-        {
-            Application.Current.Quit();
-        }
+    public void ApplyQueryAttributes(IDictionary<string, object> query) {
+        //NombreCliente = (string)query["NombreEmpleado"];
+        Fecha = DateTime.Now;
+    }
+
+    private void Exit() {
+        Application.Current.Quit();
     }
 }
