@@ -4,127 +4,166 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:user="clr-namespace:Asis_Batia.Helpers"
     x:Class="Asis_Batia.View.FormuPrinAsis"
-    Title="BIOMETA"
-    Style="{StaticResource PageStyle}">
+    Title="Bienvenido"
+    Style="{StaticResource PageStyle}">   
 
-    <ScrollView>
+    <Grid>
 
-        <VerticalStackLayout
-            VerticalOptions="Center"
-            Spacing="35"
-            Margin="20, 10">
+        <ScrollView
+            VerticalOptions="FillAndExpand"
+            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}">
 
-            <Label
-                Text="BIENVENIDO"
-                FontSize="63"
-                FontAttributes="Bold"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"
-                FontFamily="Regular"
-                TextColor="#2E3192" />
+            <Grid
+                RowDefinitions="auto, auto, *"
+                VerticalOptions="FillAndExpand"
+                Margin="20, 10">
 
-            <Frame
-                CornerRadius="25"
-                BackgroundColor="Transparent"
-                BorderColor="{StaticResource Dorado}"
-                IsClippedToBounds="True"
-                Padding="20">
+                <Frame
+                    BackgroundColor="Transparent"
+                    BorderColor="{StaticResource Dorado}"
+                    IsClippedToBounds="True"
+                    Padding="20">
 
-                <VerticalStackLayout
-                    Spacing="0"
-                    VerticalOptions="Center">
+                    <VerticalStackLayout
+                        Spacing="0"
+                        VerticalOptions="Center">
 
-                    <Label
-                        Text="EMPRESA/CLIENTE"
-                        FontSize="30"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        FontFamily="Regular"
-                        TextColor="#2E3192" />
+                        <Label
+                            Text="EMPLEADO"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            TextColor="#2E3192" />
 
-                    <Label
-                        Text="{x:Static user:UserSession.Cliente}"
-                        TextTransform="Uppercase"
-                        TextColor="Black"
-                        VerticalTextAlignment="Center"
-                        HorizontalTextAlignment="Center"
-                        FontSize="20"
-                        Margin="0,0,0,20" />
+                        <Label
+                            Text="{x:Static user:UserSession.Empleado}"
+                            TextTransform="Uppercase"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Start"
+                            FontSize="16"
+                            Margin="0,0,0,20" />
 
-                    <Label
-                        Text="EMPLEADO"
-                        FontSize="30"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        FontFamily="Regular"
-                        TextColor="#2E3192" />
+                        <Label
+                            Text="EMPRESA/CLIENTE"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            TextColor="#2E3192" />
 
-                    <Label
-                        Text="{x:Static user:UserSession.Empleado}"
-                        TextTransform="Uppercase"
-                        TextColor="Black"
-                        VerticalTextAlignment="Center"
-                        HorizontalTextAlignment="Center"
-                        FontSize="20"
-                        Margin="0,0,0,20" />
+                        <Label
+                            Text="{x:Static user:UserSession.Cliente}"
+                            TextTransform="Uppercase"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Start"
+                            FontSize="16"
+                            Margin="0,0,0,20" />
 
-                    <Label
-                        Text="ESTADO"
-                        FontSize="30"
-                        FontAttributes="Bold"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center"
-                        FontFamily="Regular"
-                        TextColor="#2E3192" />
+                        <Label
+                            Text="ESTADO"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            TextColor="#2E3192" />
 
-                    <Label
-                        x:Name="lbl_Estado"
-                        Text="{x:Static user:UserSession.Estado}"
-                        TextTransform="Uppercase"
-                        TextColor="Black"
-                        VerticalTextAlignment="Center"
-                        HorizontalTextAlignment="Center"
-                        FontSize="20"
-                        Margin="0,0,0,20" />
+                        <Label
+                            x:Name="lbl_Estado"
+                            Text="{x:Static user:UserSession.Estado}"
+                            TextTransform="Uppercase"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Start"
+                            FontSize="16"
+                            Margin="0,0,0,20" />
 
-                    <Label
-                        Text="PUNTO DE ATENCION O AREA DE TRABAJO"
-                        FontSize="30"
-                        VerticalTextAlignment="Center"
-                        HorizontalTextAlignment="Center"
-                        FontAttributes="Bold"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center"
-                        FontFamily="Regular"
-                        TextColor="#2E3192" />
+                        <Label
+                            Text="PUNTO DE ATENCION O AREA DE TRABAJO"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Start"
+                            TextColor="#2E3192" />
 
-                    <Label
-                        Text="{x:Static user:UserSession.Inmueble}"
-                        TextTransform="Uppercase"
-                        TextColor="Black"
-                        VerticalTextAlignment="Center"
-                        HorizontalTextAlignment="Center"
-                        FontSize="20" />
-                </VerticalStackLayout>
-            </Frame>
+                        <Label
+                            Text="{x:Static user:UserSession.Inmueble}"
+                            TextTransform="Uppercase"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Start"
+                            FontSize="16" />
+                    </VerticalStackLayout>
+                </Frame>
 
-            <Button
-                Text="Siguiente"
-                Command="{Binding NextPageCommand}"
-                FontSize="Large"
-                BackgroundColor="#3775B5"
-                TextColor="{StaticResource Dorado}"
-                HorizontalOptions="Center"
-                FontAttributes="Bold"
-                CornerRadius="10"
-                WidthRequest="250"
-                HeightRequest="55"
-                BorderWidth="2"
-                BorderColor="{StaticResource Dorado}">
-            </Button>
+                <Frame
+                    Grid.Row="1"
+                    BorderColor="{StaticResource Dorado}"
+                    BackgroundColor="Transparent"
+                    Margin="0, 20">
 
-        </VerticalStackLayout>
-    </ScrollView>
+                    <VerticalStackLayout
+                        BindableLayout.ItemsSource="{Binding MovimientoList}">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    ColumnDefinitions="2*, *"
+                                    Margin="0, 5">
+
+                                    <Label
+                                        Text="{Binding Descripcion}"
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        HorizontalTextAlignment="Start"
+                                        VerticalTextAlignment="Center"
+                                        TextColor="#2E3192" />
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="{Binding Fecha, StringFormat='{0:hh:mm tt}'}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Start"
+                                        FontSize="16" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Button
+                    Grid.Row="2"
+                    VerticalOptions="EndAndExpand"
+                    Text="Registrar entrada/salida"
+                    Command="{Binding NextPageCommand}"
+                    FontSize="20"
+                    BackgroundColor="#3775B5"
+                    TextColor="{StaticResource Dorado}"
+                    HorizontalOptions="Center"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="55"
+                    BorderWidth="2"
+                    BorderColor="{StaticResource Dorado}">
+                </Button>
+
+            </Grid>
+        </ScrollView>
+        
+        <Grid
+            BackgroundColor="#AA000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding IsLoading}">
+
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                Color="{StaticResource Dorado}"
+                HeightRequest="70" />
+        </Grid>
+    </Grid>
 </ContentPage>

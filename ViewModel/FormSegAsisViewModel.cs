@@ -101,7 +101,7 @@ public partial class FormSegAsisViewModel : ViewModelBase {
                 Idempleado = UserSession.IdEmpleado,
                 Latitud = currentLocation.Latitude.ToString(),
                 Longitud = currentLocation.Longitude.ToString(),
-                Movimiento = _selectionRadio,
+                Movimiento ="A3" /*_selectionRadio*/,
                 RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
                 Foto = _dbPhotoPath == null ? "" : _dbPhotoPath,
             };
@@ -117,6 +117,7 @@ public partial class FormSegAsisViewModel : ViewModelBase {
                 return;
             }
 
+            await Shell.Current.GoToAsync("..");
             await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
         } catch(Exception) {
             IsBusy = false;

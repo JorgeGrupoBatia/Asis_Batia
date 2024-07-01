@@ -1,4 +1,5 @@
 ﻿using Asis_Batia.Helpers;
+using MauiPopup;
 using System.Windows.Input;
 
 namespace Asis_Batia.ViewModel;
@@ -18,19 +19,18 @@ public class RegExitosoViewModel : BaseViewModel, IQueryAttributable {
         set { _fecha = value; OnPropertyChanged(); }
     }
 
-    public ICommand ExitCommand { get; set; }
+    public ICommand AcceptCommand { get; set; }
 
     public RegExitosoViewModel() {
         NombreCliente = UserSession.Empleado;
-        ExitCommand = new Command(Exit);
+        AcceptCommand = new Command(Accept);
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query) {
-        //NombreCliente = (string)query["NombreEmpleado"];
         Fecha = DateTime.Now;
     }
 
-    private void Exit() {
-        Application.Current.Quit();
+    private void Accept() {
+        PopupAction.ClosePopup();
     }
 }

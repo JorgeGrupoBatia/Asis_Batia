@@ -77,8 +77,8 @@
 
             <Button
                 x:Name="bntNext4"
-                Text="SALIR"
-                Command="{Binding ExitCommand}"
+                Text="Aceptar"
+                Command="{Binding AcceptCommand}"
                 FontSize="Large"
                 FontAttributes="Bold"
                 BackgroundColor="#3775B5"

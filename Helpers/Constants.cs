@@ -9,5 +9,6 @@ public static class Constants {
     //public const string API_PERIODO_NOMINA= "PeriodoNomina";
     public const string API_ENVIO_ARCHIVOS= "FilesAsis/CargaMul";
     public const string API_REGISTRO_BIOMETA = "RegistroBiometaN"; //RegistroBiometa;
+    public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometa"; 
     #endregion
 }
