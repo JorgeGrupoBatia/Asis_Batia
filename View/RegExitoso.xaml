@@ -25,47 +25,7 @@
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center" />
-
-            <Label
-                Text="DATOS DEL EMPLEADO"
-                TextColor="#2E3192"
-                FontSize="25"
-                FontFamily="Regular"
-                FontAttributes="Bold"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"
-                Margin="0,30,0,0"/>
-
-            <Label
-                Text="{Binding NombreCliente}"
-                TextColor="Black"
-                FontSize="18"
-                Scale="1"
-                FontAttributes="Bold"
-                FontFamily="Regular"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center" />
-
-            <Label
-                Text="DATOS DE ENTRADA"
-                TextColor="#2E3192"
-                FontSize="25"
-                FontFamily="Regular"
-                FontAttributes="Bold"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center" 
-                Margin="0,30,0,0"/>
-
-            <Label
-                Text="{Binding Fecha}"
-                TextColor="Black"
-                FontSize="18"
-                Scale="1"
-                FontFamily="Regular"
-                FontAttributes="Bold"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center" />
-
+           
             <Image
                 Source="paloma"
                 Aspect="AspectFill"
@@ -76,7 +36,6 @@
                 Margin="0,30" />
 
             <Button
-                x:Name="bntNext4"
                 Text="Aceptar"
                 Command="{Binding AcceptCommand}"
                 FontSize="Large"
@@ -87,9 +46,8 @@
                 HeightRequest="55"
                 CornerRadius="10"
                 BorderWidth="2"
-                BorderColor="#D4BC88">
+                BorderColor="#D4BC88" />
 
-            </Button>
         </VerticalStackLayout>
     </Frame>
 </mauiPopup:BasePopupPage>
