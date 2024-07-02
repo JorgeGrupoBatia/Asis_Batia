@@ -63,14 +63,22 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     }
 
     void EvaluarShowButton() {
-        if(MovimientoList.Count < 4) {
-            if(MovimientoList.Count > 0) {
-                ShowButton = MovimientoList.Where(m => m.Movimiento == "N").First() is null;
-            } else {
+        try {
+            if(MovimientoList.Count < 4) {
+                if(MovimientoList.Count > 0) {
+                    foreach(MovimientoModel movimiento in MovimientoList) {
+                        if(movimiento.Movimiento.Equals("N")) {
+                            ShowButton = false;
+                            return;
+                        }
+                    }
+                }
                 ShowButton = true;
+            } else {
+                ShowButton = false;
             }
-        } else {
-            ShowButton = false;
+        } catch(Exception) {
+            ShowButton = true;
         }
     }
 

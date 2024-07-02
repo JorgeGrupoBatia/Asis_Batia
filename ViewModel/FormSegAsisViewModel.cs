@@ -11,7 +11,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
     int _count;
     public string _selectionRadio, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
-    List<string> _localFilePathList;
+    List<string> _localFilePathList = new List<string>();
 
     [ObservableProperty]
     bool _isBusy;
@@ -31,20 +31,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     [ObservableProperty]
     bool _isLoading;
 
-    public FormSegAsisViewModel() {
-        _localFilePathList = new List<string>();
-    }
-
     [RelayCommand]
-    async Task Validate() {
-        if(_selectionRadio == null) {
-            await App.Current.MainPage.DisplayAlert("Mensaje", "Seleccione una opción de envío", "Cerrar");
-            return;
-        }
-
-        await Register();
-    }
-
     async Task Register() {
         try {
             _count = 0;
@@ -235,6 +222,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         try {
             Nomenclatura = (string)query[Constants.DATA_KEY];
             TipoRegistro = MovimientoModel.GetTipoRegistro(Nomenclatura);
+            _selectionRadio = Nomenclatura;
         } catch(Exception) { }
     }
 }

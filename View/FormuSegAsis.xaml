@@ -20,13 +20,14 @@
                 <Label
                     Grid.ColumnSpan="2"
                     Text="Seleccione una opción"
+                    IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
                     FontSize="30"
                     FontAttributes="Bold"
                     VerticalTextAlignment="Center"
                     HorizontalTextAlignment="Center"
                     FontFamily="Regular"
                     TextColor="#2E3192"
-                    Margin="0,20" />
+                    Margin="0,20,0,0" />
 
                 <Frame
                     Grid.Row="1"
@@ -35,19 +36,20 @@
                     BackgroundColor="Transparent"
                     BorderColor="#D4BC88"
                     HasShadow="True"
-                    Margin="0,0,0,40">
+                    Margin="0,20,0,40">
 
                     <VerticalStackLayout>
                         
                         <RadioButton
                             Content="{Binding TipoRegistro}"
+                            IsChecked="True"
                             CheckedChanged="RadioButton_CheckedChanged"
                             Value="{Binding Nomenclatura}"
                             FontSize="25"
                             FontFamily="Regular"/>
                         
                         <RadioButton
-                            Grid.Column="1"
+                            IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
                             Content="Descanso"
                             CheckedChanged="RadioButton_CheckedChanged"
                             Value="N"
@@ -59,7 +61,7 @@
                 <Label
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
-                    Text="Adjunta: incapacidad, listas de asistencia, justificante, Etc..."
+                    Text="Adjunta: incapacidad, listas de asistencia, justificante, etc."
                     FontSize="25"
                     FontAttributes="Bold"
                     VerticalTextAlignment="Center"
@@ -126,7 +128,7 @@
                     CornerRadius="10"
                     WidthRequest="250"
                     HeightRequest="55"
-                    Command="{Binding ValidateCommand}" 
+                    Command="{Binding RegisterCommand}" 
                     Margin="0,30,0,0"/>
             </Grid>
         </ScrollView>
