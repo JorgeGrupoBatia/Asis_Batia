@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Asis_Batia"
     xmlns:converters="clr-namespace:Asis_Batia.Converters"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="Asis_Batia.App">
     
     <Application.Resources>
@@ -15,6 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

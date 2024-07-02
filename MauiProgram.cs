@@ -1,31 +1,27 @@
 ﻿using Asis_Batia.View;
-using Asis_Batia.ViewModel;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Media;
-using System;
 
 namespace Asis_Batia;
 
-public static class MauiProgram
-{
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+public static class MauiProgram {
+    public static MauiApp CreateMauiApp() {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
+            .ConfigureFonts(fonts => {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("tw-cen-mt-condensed-3", "Regular");
 
             });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
-		//builder.Services.AddSingleton<IMediaPicker>(MediaPicker.Default);
-		//builder.Services.AddTransient<FormuSegAsis>();
+        //builder.Services.AddSingleton<IMediaPicker>(MediaPicker.Default);
+        //builder.Services.AddTransient<FormuSegAsis>();
 
         //Routing.RegisterRoute("PrinP", typeof(PrincipalPage));
         //Routing.RegisterRoute("MenuP", typeof(MenuPage));
@@ -37,5 +33,5 @@ public static class MauiProgram
 
 
         return builder.Build();
-	}
+    }
 }

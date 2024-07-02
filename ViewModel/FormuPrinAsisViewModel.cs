@@ -4,7 +4,6 @@ using Asis_Batia.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Asis_Batia.ViewModel;
 
@@ -18,9 +17,6 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
 
     [ObservableProperty]
     bool _showButton;
-
-    [ObservableProperty]
-    bool _showFrame;
 
     async Task InitMovimientoList() {
         IsLoading = true;
@@ -76,8 +72,6 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
         } else {
             ShowButton = false;
         }
-
-        ShowFrame = MovimientoList.Count != 0;
     }
 
     public async Task OnAppearing() {
