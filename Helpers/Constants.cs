@@ -9,6 +9,18 @@ public static class Constants {
     //public const string API_PERIODO_NOMINA= "PeriodoNomina";
     public const string API_ENVIO_ARCHIVOS= "FilesAsis/CargaMul";
     public const string API_REGISTRO_BIOMETA = "RegistroBiometaN"; //RegistroBiometa;
-    public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometa"; 
+    public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometa";
+    #endregion
+
+    #region Literales
+    public const string INICIO_LABORES = "Inicio de labores";
+    public const string SALIDA_COMER = "Salida a comer";
+    public const string ENTRADA_COMER = "Entrada de comer";
+    public const string FIN_LABORES = "Fin de labores";
+    public const string DESCANSO = "Descanso";
+    #endregion
+
+    #region Keys
+    public const string DATA_KEY = "Data key";
     #endregion
 }

@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace Asis_Batia.ViewModel;
 
-public partial class FormSegAsisViewModel : ViewModelBase {
+public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
     int _count;
     public string _selectionRadio, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
@@ -18,6 +18,12 @@ public partial class FormSegAsisViewModel : ViewModelBase {
 
     [ObservableProperty]
     string _respuestaTxt;
+
+    [ObservableProperty]
+    string _tipoRegistro;
+
+    [ObservableProperty]
+    string _nomenclatura = string.Empty;
 
     [ObservableProperty]
     bool _isEnabled;
@@ -48,7 +54,7 @@ public partial class FormSegAsisViewModel : ViewModelBase {
 
             Location currentLocation = new Location();
 
-            if(_selectionRadio == "A") {
+            if(_selectionRadio == Nomenclatura) {
 
                 currentLocation = await LocationService.GetCurrentLocation();
 
@@ -101,7 +107,7 @@ public partial class FormSegAsisViewModel : ViewModelBase {
                 Idempleado = UserSession.IdEmpleado,
                 Latitud = currentLocation.Latitude.ToString(),
                 Longitud = currentLocation.Longitude.ToString(),
-                Movimiento ="A3" /*_selectionRadio*/,
+                Movimiento = _selectionRadio,
                 RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
                 Foto = _dbPhotoPath == null ? "" : _dbPhotoPath,
             };
@@ -223,5 +229,12 @@ public partial class FormSegAsisViewModel : ViewModelBase {
             PickerTitle = "Seleccione archivos",
             FileTypes = filePickerFileType
         };
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query) {
+        try {
+            Nomenclatura = (string)query[Constants.DATA_KEY];
+            TipoRegistro = MovimientoModel.GetTipoRegistro(Nomenclatura);
+        } catch(Exception) { }
     }
 }

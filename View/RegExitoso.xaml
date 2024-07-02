@@ -18,7 +18,7 @@
             Spacing="5">
 
             <Label
-                Text="¡Registrado correctamente!"
+                Text="¡ Registro exitoso !"
                 TextColor="#2E3192"
                 FontSize="30"
                 FontFamily="Regular"

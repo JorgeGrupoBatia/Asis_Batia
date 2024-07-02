@@ -16,7 +16,7 @@
             <Grid
                 RowDefinitions="auto, auto, *"
                 VerticalOptions="FillAndExpand"
-                Margin="20, 10">
+                Margin="20, 10, 20, 20">
 
                 <Frame
                     BackgroundColor="Transparent"
@@ -100,6 +100,7 @@
 
                 <Frame
                     Grid.Row="1"
+                    IsVisible="{Binding ShowFrame}"
                     BorderColor="{StaticResource Dorado}"
                     BackgroundColor="Transparent"
                     Margin="0, 20">
@@ -137,16 +138,18 @@
 
                 <Button
                     Grid.Row="2"
-                    VerticalOptions="EndAndExpand"
-                    Text="Registrar entrada/salida"
-                    Command="{Binding NextPageCommand}"
-                    FontSize="20"
-                    BackgroundColor="#3775B5"
+                    Text="REGISTRAR"
                     TextColor="{StaticResource Dorado}"
                     HorizontalOptions="Center"
+                    VerticalOptions="EndAndExpand"
+                    Command="{Binding NextPageCommand}"
+                    IsVisible="{Binding ShowButton}"
+                    FontSize="Large"
+                    BackgroundColor="#3775B5"
                     FontAttributes="Bold"
                     CornerRadius="10"
                     HeightRequest="55"
+                    WidthRequest="250"
                     BorderWidth="2"
                     BorderColor="{StaticResource Dorado}">
                 </Button>

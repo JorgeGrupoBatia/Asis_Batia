@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Asis_Batia.Helpers;
+using System.Text.Json.Serialization;
 
 namespace Asis_Batia.Model;
 
@@ -8,19 +9,23 @@ public class MovimientoModel {
 
     [JsonIgnore]
     public string Descripcion {
-        get {
-            switch(Movimiento) {
-                case "A":
-                    return "Inicio de labores :";
-                case "A2":
-                    return "Salida a comer :";
-                case "A3":
-                    return "Entrada de comer :";
-                case "A4":
-                    return "Fin de labores :";
-                default:
-                    return "";
-            }
+        get => GetTipoRegistro(Movimiento);
+    }
+
+    public static string GetTipoRegistro(string nomenclatura) {
+        switch(nomenclatura) {
+            case "A":
+                return Constants.INICIO_LABORES;
+            case "A2":
+                return Constants.SALIDA_COMER;
+            case "A3":
+                return Constants.ENTRADA_COMER;
+            case "A4":
+                return Constants.FIN_LABORES;
+            case "N":
+                return Constants.DESCANSO;
+            default:
+                return "";
         }
     }
 }
