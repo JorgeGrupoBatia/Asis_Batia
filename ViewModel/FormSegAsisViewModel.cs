@@ -63,7 +63,10 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                         _count++;
                         var result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que estas lejos de tu servicio, ¿Deseas registrarte en otro servicio?", "Si", "No");
                         if(result) {
-                            await Shell.Current.GoToAsync(nameof(SelectInmueble), true);
+                            Dictionary<string, object> data = new Dictionary<string, object>{
+                                {Constants.LOCATION_KEY, currentLocation},
+                            };
+                            await Shell.Current.GoToAsync(nameof(SelectInmueble), true, data);
                         } else {
                             _count = 0;
                             IsBusy = false;
@@ -218,11 +221,22 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         };
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query) {
+    public async void ApplyQueryAttributes(IDictionary<string, object> query) {
         try {
-            Nomenclatura = (string)query[Constants.DATA_KEY];
+            Nomenclatura = (string)query[Constants.NOMENCLATURA_KEY];
             TipoRegistro = MovimientoModel.GetTipoRegistro(Nomenclatura);
             _selectionRadio = Nomenclatura;
+
+            if(query.ContainsKey(Constants.SEND_DATA_KEY)) {
+                bool sendData = (bool)query[Constants.SEND_DATA_KEY];
+                if(sendData) {
+                    await SendData();
+                }
+            }
         } catch(Exception) { }
+    }
+
+    async Task SendData() {
+        await Task.Delay(1000);
     }
 }

@@ -2,19 +2,21 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="Asis_Batia.View.SelectInmueble"
     Title="BIOMETA"
     Style="{StaticResource PageStyle}">
 
-    <ScrollView>
+    <Grid>
+
         <VerticalStackLayout
-            Margin="5,0,5,0"
+            Margin="10"
             HorizontalOptions="Center"
             VerticalOptions="Center">
 
             <Label
-                Text="Selecciona el cliente*"
-                FontSize="35"
+                Text="Seleccione el cliente"
+                FontSize="30"
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
@@ -30,13 +32,22 @@
                 FontSize="25"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
-                ItemsSource="{Binding Clients}"
+                ItemsSource="{Binding ClientList}"
                 ItemDisplayBinding="{Binding nombre}"
-                SelectedItem="{Binding IdClientSelected}" />
+                SelectedItem="{Binding SelectedClient}"
+                IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                Margin="0,0,0,60">
+
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="SelectedIndexChanged"
+                        Command="{Binding SelectClientCommand}" />
+                </Picker.Behaviors>
+            </Picker>
 
             <Label
-                Text="Selecciona tu punto de atencion: *"
-                FontSize="35"
+                Text="Selecciona tu punto de atencion"
+                FontSize="30"
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
@@ -52,18 +63,13 @@
                 FontSize="25"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
-                ItemsSource="{Binding Inmueble}"
+                ItemsSource="{Binding InmuebleList}"
                 ItemDisplayBinding="{Binding nombre}"
-                SelectedItem="{Binding IdInmubleSelected}" />
-
-            <ActivityIndicator
-                IsRunning="{Binding IsBusy}"
-                Color="#D4BC88"
-                VerticalOptions="Fill"
-                Scale="1" />
+                SelectedItem="{Binding SelectedInmueble}"
+                IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                Margin="0,0,0,60" />
 
             <Button
-                x:Name="bntNext2"
                 Text="Siguiente"
                 Command="{Binding NextPageCommand}"
                 FontSize="Large"
@@ -72,11 +78,22 @@
                 HorizontalOptions="Center"
                 FontAttributes="Bold"
                 CornerRadius="10"
-                TranslationY="0"
                 WidthRequest="250"
                 HeightRequest="55"
                 BorderWidth="2"
                 BorderColor="#D4BC88" />
         </VerticalStackLayout>
-    </ScrollView>
+
+        <Grid
+            BackgroundColor="#AA000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding IsLoading}">
+
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                Color="{StaticResource Dorado}"
+                HeightRequest="70" />
+        </Grid>
+    </Grid>
 </ContentPage>

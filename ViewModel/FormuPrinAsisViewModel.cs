@@ -56,7 +56,7 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
         }
 
         Dictionary<string, object> data = new Dictionary<string, object>{
-            { Constants.DATA_KEY, nomenclatura }
+            { Constants.NOMENCLATURA_KEY, nomenclatura }
         };
 
         await Shell.Current.GoToAsync(nameof(FormuSegAsis), true, data);
