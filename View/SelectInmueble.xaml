@@ -5,7 +5,8 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="Asis_Batia.View.SelectInmueble"
     Title="BIOMETA"
-    Style="{StaticResource PageStyle}">
+    Style="{StaticResource PageStyle}"
+    Shell.FlyoutBehavior="Disabled">
 
     <Grid>
 
@@ -70,7 +71,7 @@
                 Margin="0,0,0,60" />
 
             <Button
-                Text="Siguiente"
+                Text="ACEPTAR"
                 Command="{Binding NextPageCommand}"
                 FontSize="Large"
                 BackgroundColor="#3775B5"

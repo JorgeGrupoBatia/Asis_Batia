@@ -9,9 +9,9 @@ namespace Asis_Batia.ViewModel;
 
 public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
-    int _count;
     public string _selectionRadio, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
     List<string> _localFilePathList = new List<string>();
+    Location _currentLocation = new Location();
 
     [ObservableProperty]
     bool _isBusy;
@@ -25,102 +25,100 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     [ObservableProperty]
     string _nomenclatura = string.Empty;
 
-    [ObservableProperty]
-    bool _isEnabled;
+    //[ObservableProperty]
+    //bool _isEnabled;
 
     [ObservableProperty]
+
     bool _isLoading;
+
+    [ObservableProperty]
+    string _textLoading;
 
     [RelayCommand]
     async Task Register() {
-        try {
-            _count = 0;
-            IsEnabled = false;
-            IsBusy = true;
-            IsLoading = true;
-
-            Location currentLocation = new Location();
-
-            if(_selectionRadio == Nomenclatura) {
-
-                currentLocation = await LocationService.GetCurrentLocation();
-
-                if(currentLocation == null) {
-                    IsEnabled = true;
-                    IsBusy = false;
-                    IsLoading = false;
-                    await App.Current.MainPage.DisplayAlert("Mensaje", LocationService.Message, "Cerrar");
-                    return;
-                }
-
-                CultureInfo culture = new CultureInfo("es-MX");
-                Location inmuebleLocation = new Location(double.Parse(UserSession.LatitudeInmueble, culture), double.Parse(UserSession.LongitudInmueble, culture));
-
-                double distanceKm = LocationService.CalcularDistancia(currentLocation, inmuebleLocation);
-                if(distanceKm > .400) {
-                    if(_count == 0) {
-
-                        _count++;
-                        var result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que estas lejos de tu servicio, ¿Deseas registrarte en otro servicio?", "Si", "No");
-                        if(result) {
-                            Dictionary<string, object> data = new Dictionary<string, object>{
-                                {Constants.LOCATION_KEY, currentLocation},
-                            };
-                            await Shell.Current.GoToAsync(nameof(SelectInmueble), true, data);
-                        } else {
-                            _count = 0;
-                            IsBusy = false;
-                            IsEnabled = true;
-                            IsLoading = false;
-                            return;
-                        }
-                        IsBusy = false;
-                        IsEnabled = true;
-                        IsLoading = false;
-                        return;
-                    }
-                }
+        if(_selectionRadio == Nomenclatura) {
+            if(await ValidateLocation()) {
+                await SendData();
             }
-
-            if(!await SendFiles()) {
-                IsEnabled = true;
-                IsBusy = false;
-                IsLoading = false;
-                await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al enviar los archivos", "Cerrar");
-                return;
-            }
-
-            RegistroModel registroModel = new RegistroModel {
-                Adjuntos = _dbFilePathList == null ? "" : _dbFilePathList,
-                Confirma = "BIOMETA",
-                Cubierto = 0,
-                Idempleado = UserSession.IdEmpleado,
-                Latitud = currentLocation.Latitude.ToString(),
-                Longitud = currentLocation.Longitude.ToString(),
-                Movimiento = _selectionRadio,
-                RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
-                Foto = _dbPhotoPath == null ? "" : _dbPhotoPath,
-            };
-
-            int resp = await _httpHelper.PostBodyAsync<RegistroModel, int>(Constants.API_REGISTRO_BIOMETA, registroModel);
-
-            IsBusy = false;
-            IsEnabled = true;
-            IsLoading = false;
-
-            if(resp == 0) {
-                await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Ok");
-                return;
-            }
-
-            await Shell.Current.GoToAsync("..");
-            await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
-        } catch(Exception) {
-            IsBusy = false;
-            IsEnabled = false;
-            IsLoading = false;
-            await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Cerrar");
+            return;
         }
+
+        await SendData();
+    }
+
+    async Task<bool> ValidateLocation() {
+        TextLoading = "Obteniendo ubicación ...";
+        IsLoading = true;
+
+        _currentLocation = await LocationService.GetCurrentLocation();
+
+        if(_currentLocation == null) {
+            TextLoading = "";
+            IsLoading = false;
+            await App.Current.MainPage.DisplayAlert("Mensaje", LocationService.Message, "Cerrar");
+            return false;
+        }
+
+        CultureInfo culture = new CultureInfo("es-MX");
+        Location inmuebleLocation = new Location(double.Parse(UserSession.LatitudeInmueble, culture), double.Parse(UserSession.LongitudInmueble, culture));
+
+        double distanceKm = LocationService.CalcularDistancia(_currentLocation, inmuebleLocation);
+        if(distanceKm > .400) {
+            TextLoading = "";
+            IsLoading = false;
+
+            bool result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que estas lejos de tu servicio, ¿Deseas registrarte en otro servicio?", "Si", "No");
+            if(result) {
+                Dictionary<string, object> data = new Dictionary<string, object>{
+                    {Constants.LOCATION_KEY, _currentLocation},
+                };
+                await Shell.Current.GoToAsync(nameof(SelectInmueble), true, data);
+            }
+            return false;
+        }
+
+        TextLoading = "";
+        IsLoading = false;
+        return true;
+    }
+
+    async Task SendData() {
+        TextLoading = "Enviando registro ...";
+        IsLoading = true;
+
+        if(!await SendFiles()) {
+            TextLoading = "";
+            IsLoading = false;
+            await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al enviar los archivos", "Cerrar");
+            return;
+        }
+
+        RegistroModel registroModel = new RegistroModel {
+            Adjuntos = _dbFilePathList == null ? "" : _dbFilePathList,
+            Confirma = "BIOMETA",
+            Cubierto = 0,
+            Idempleado = UserSession.IdEmpleado,
+            Latitud = _currentLocation.Latitude.ToString(),
+            Longitud = _currentLocation.Longitude.ToString(),
+            Movimiento = _selectionRadio,
+            RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
+            Foto = _dbPhotoPath == null ? "" : _dbPhotoPath,
+        };
+
+        int resp = await _httpHelper.PostBodyAsync<RegistroModel, int>(Constants.API_REGISTRO_BIOMETA, registroModel);
+
+        if(resp == 0) {
+            TextLoading = "";
+            IsLoading = false;
+            await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Ok");
+            return;
+        }
+
+        TextLoading = "";
+        IsLoading = false;
+        await Shell.Current.GoToAsync("..");
+        await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
     }
 
     [RelayCommand]
@@ -234,9 +232,5 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                 }
             }
         } catch(Exception) { }
-    }
-
-    async Task SendData() {
-        await Task.Delay(1000);
     }
 }
