@@ -4,6 +4,7 @@ using Asis_Batia.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Asis_Batia.ViewModel;
 
@@ -13,6 +14,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     List<string> _localFilePathList = new List<string>();
     Location _currentLocation = new Location();
 
+    [NotifyCanExecuteChangedFor(nameof(PhotoCommand), nameof(LoadFileCommand))]
     [ObservableProperty]
     bool _isBusy;
 
@@ -25,11 +27,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     [ObservableProperty]
     string _nomenclatura = string.Empty;
 
-    //[ObservableProperty]
-    //bool _isEnabled;
-
     [ObservableProperty]
-
     bool _isLoading;
 
     [ObservableProperty]
@@ -50,12 +48,14 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     async Task<bool> ValidateLocation() {
         TextLoading = "Obteniendo ubicación ...";
         IsLoading = true;
+        IsBusy = true;
 
         _currentLocation = await LocationService.GetCurrentLocation();
-
+        await Task.Delay(5000); IsLoading = false; IsBusy = false; return false;
         if(_currentLocation == null) {
             TextLoading = "";
             IsLoading = false;
+            IsBusy = false;
             await App.Current.MainPage.DisplayAlert("Mensaje", LocationService.Message, "Cerrar");
             return false;
         }
@@ -67,6 +67,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         if(distanceKm > .400) {
             TextLoading = "";
             IsLoading = false;
+            IsBusy = false;
 
             bool result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que estas lejos de tu servicio, ¿Deseas registrarte en otro servicio?", "Si", "No");
             if(result) {
@@ -80,16 +81,19 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
         TextLoading = "";
         IsLoading = false;
+        IsBusy = false;
         return true;
     }
 
     async Task SendData() {
         TextLoading = "Enviando registro ...";
         IsLoading = true;
+        IsBusy = true;
 
         if(!await SendFiles()) {
             TextLoading = "";
             IsLoading = false;
+            IsBusy = false;
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al enviar los archivos", "Cerrar");
             return;
         }
@@ -111,18 +115,21 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         if(resp == 0) {
             TextLoading = "";
             IsLoading = false;
+            IsBusy = false;
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Ok");
             return;
         }
 
         TextLoading = "";
         IsLoading = false;
+        IsBusy = false;
         await Shell.Current.GoToAsync("..");
         await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanExecute))]
     private async Task LoadFile() {
+        IsBusy = true;
         try {
             var fileResultList = await FilePicker.Default.PickMultipleAsync(GetPickOptions());
             if(fileResultList is not null && fileResultList.Count() > 0) {
@@ -138,10 +145,12 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         } catch(Exception) {
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al seleccionar archivos", "Cerrar");
         }
+        IsBusy = false;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanExecute))]
     private async Task Photo() {
+        IsBusy = true;
         try {
             if(MediaPicker.IsCaptureSupported) {
                 FileResult fileResult = await MediaPicker.CapturePhotoAsync();
@@ -157,6 +166,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         } catch(Exception) {
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al capturar la fotografía", "Cerrar");
         }
+        IsBusy = false;
     }
 
     public async Task<bool> SendFiles() {
@@ -232,5 +242,9 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                 }
             }
         } catch(Exception) { }
+    }
+
+    bool CanExecute() {
+        return !IsBusy;
     }
 }

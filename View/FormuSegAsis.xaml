@@ -9,8 +9,7 @@
 
     <Grid>
         
-        <ScrollView
-            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}">
+        <ScrollView>
 
             <Grid
                 RowDefinitions="auto, auto, auto, auto, auto, *"
@@ -39,16 +38,18 @@
                     Margin="0,20,0,40">
 
                     <VerticalStackLayout>
-                        
+
                         <RadioButton
+                            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
                             Content="{Binding TipoRegistro}"
                             IsChecked="True"
                             CheckedChanged="RadioButton_CheckedChanged"
                             Value="{Binding Nomenclatura}"
                             FontSize="25"
                             FontFamily="Regular"/>
-                        
+
                         <RadioButton
+                            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
                             IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
                             Content="Descanso"
                             CheckedChanged="RadioButton_CheckedChanged"
@@ -107,16 +108,16 @@
                     FontSize="Large"
                     PlaceholderColor="White"
                     TextColor="Black"
-                    Placeholder="  Captura informacion adicional  "
+                    Placeholder="Captura informacion adicional"
                     IsSpellCheckEnabled="True"
                     IsTextPredictionEnabled="True"
-                    Text="{Binding RespuestaTxt}" />
+                    Text="{Binding RespuestaTxt}"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"/>
 
                 <Button
                     Grid.Row="5"
                     Grid.ColumnSpan="2"
-                    Text="REGISTRAR"
-                    IsEnabled="{Binding IsEnabled}"
+                    Text="REGISTRAR"                    
                     FontSize="Large"
                     BackgroundColor="#3775B5"
                     TextColor="#D4BC88"
