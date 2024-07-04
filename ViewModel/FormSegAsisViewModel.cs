@@ -4,7 +4,6 @@ using Asis_Batia.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Asis_Batia.ViewModel;
 
@@ -13,6 +12,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     public string _selectionRadio, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
     List<string> _localFilePathList = new List<string>();
     Location _currentLocation = new Location();
+    bool _getLocation;
 
     [NotifyCanExecuteChangedFor(nameof(PhotoCommand), nameof(LoadFileCommand))]
     [ObservableProperty]
@@ -50,8 +50,11 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         IsLoading = true;
         IsBusy = true;
 
-        _currentLocation = await LocationService.GetCurrentLocation();
-        await Task.Delay(5000); IsLoading = false; IsBusy = false; return false;
+        if(!_getLocation) {
+            _currentLocation = await LocationService.GetCurrentLocation();
+            _getLocation = true;
+        }
+
         if(_currentLocation == null) {
             TextLoading = "";
             IsLoading = false;
@@ -69,7 +72,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             IsLoading = false;
             IsBusy = false;
 
-            bool result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que estas lejos de tu servicio, ¿Deseas registrarte en otro servicio?", "Si", "No");
+            bool result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que está lejos de su servicio. \n¿Desea registrarse en otro servicio?", "Sí", "No");
             if(result) {
                 Dictionary<string, object> data = new Dictionary<string, object>{
                     {Constants.LOCATION_KEY, _currentLocation},
