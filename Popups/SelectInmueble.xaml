@@ -14,8 +14,9 @@
         CornerRadius="25"
         BorderColor="Transparent"
         Margin="30, 0">
-        
-        <Grid RowDefinitions="auto, auto, auto, auto, auto">
+
+        <Grid
+            RowDefinitions="auto, auto, auto, auto, auto">
 
             <Label
                 Text="Seleccione el cliente"

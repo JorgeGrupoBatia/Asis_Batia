@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mauiPopup:BasePopupPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
+    xmlns:const="clr-namespace:Asis_Batia.Helpers"
+    x:Class="Asis_Batia.Popups.PopupRulesPage"
+    HorizontalOptions="FillAndExpand"
+    VerticalOptions="CenterAndExpand"
+    IsCloseOnBackgroundClick="False"
+    ForegroundColor="Transparent">
+
+    <Frame
+        CornerRadius="15"
+        BorderColor="Transparent"
+        Margin="30, 50"
+        Padding="0">
+
+        <Grid
+            RowDefinitions="*, auto"
+            ColumnDefinitions="*, *">
+
+            <ScrollView
+                Grid.ColumnSpan="2">
+
+                <Label
+                    Text="{x:Static const:Constants.AVISO_PRIVACIDAD_MOSTRAR_POUP}"
+                    FontSize="20"
+                    FontAttributes="None"
+                    FontFamily="Regular"
+                    TextColor="Black"
+                    HorizontalTextAlignment="Start" 
+                    Margin="10"/>
+            </ScrollView>
+
+            <Button
+                x:Name="btnCancel"
+                Grid.Row="1"
+                Text="Cancelar"
+                Clicked="Button_Clicked"
+                Margin="10">
+
+                <Button.CommandParameter>
+                    <x:Boolean>false</x:Boolean>
+                </Button.CommandParameter>
+            </Button>
+
+            <Button
+                x:Name="btnClose"
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="Aceptar"
+                Clicked="Button_Clicked"
+                Margin="10">
+
+                <Button.CommandParameter>
+                    <x:Boolean>true</x:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+    </Frame>
+</mauiPopup:BasePopupPage>

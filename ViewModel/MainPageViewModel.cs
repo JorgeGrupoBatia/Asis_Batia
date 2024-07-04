@@ -1,6 +1,6 @@
 ﻿using Asis_Batia.Helpers;
 using Asis_Batia.Model;
-using Asis_Batia.View;
+using Asis_Batia.Popups;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -41,7 +41,12 @@ public partial class MainPageViewModel : ViewModelBase {
 
     async void ShowTermsAndConditions() {
         if(UserSession.ShowTermsConditions) {
-            await MauiPopup.PopupAction.DisplayPopup<bool>(new PopupRulesPage());
+            bool res = await MauiPopup.PopupAction.DisplayPopup<bool>(new PopupRulesPage());
+            if(res) {
+                UserSession.ShowTermsConditions = false;
+            } else {
+                Application.Current.Quit();
+            }
         }
     }
 }
