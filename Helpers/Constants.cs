@@ -23,6 +23,5 @@ public static class Constants {
     #region Keys
     public const string NOMENCLATURA_KEY = "Nomenclatura key";
     public const string LOCATION_KEY = "Location key";
-    public const string SEND_DATA_KEY = "Send data key";
     #endregion
 }

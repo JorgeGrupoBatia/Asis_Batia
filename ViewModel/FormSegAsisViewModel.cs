@@ -65,7 +65,23 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         }
 
         CultureInfo culture = new CultureInfo("es-MX");
-        Location inmuebleLocation = new Location(double.Parse(UserSession.LatitudeInmueble, culture), double.Parse(UserSession.LongitudInmueble, culture));
+        Location inmuebleLocation = new Location();
+        try {
+            inmuebleLocation = new Location(double.Parse(UserSession.LatitudeInmueble, culture), double.Parse(UserSession.LongitudInmueble, culture));
+        } catch(Exception) {
+            TextLoading = "";
+            IsLoading = false;
+            IsBusy = false;
+
+            bool result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Las coordenadas de su servicio no están registradas \n¿Desea registrarse en otro servicio?", "Sí", "No");
+            if(result) {
+                bool respuesta = await MauiPopup.PopupAction.DisplayPopup<bool>(new SelectInmueble(_currentLocation));
+                if(respuesta) {
+                    await SendData();
+                }
+            }
+            return false;
+        }
 
         double distanceKm = LocationService.CalcularDistancia(_currentLocation, inmuebleLocation);
         if(distanceKm > .400) {
@@ -234,18 +250,11 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         };
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query) {
+    public void ApplyQueryAttributes(IDictionary<string, object> query) {
         try {
             Nomenclatura = (string)query[Constants.NOMENCLATURA_KEY];
             TipoRegistro = MovimientoModel.GetTipoRegistro(Nomenclatura);
             _selectionRadio = Nomenclatura;
-
-            if(query.ContainsKey(Constants.SEND_DATA_KEY)) {
-                bool sendData = (bool)query[Constants.SEND_DATA_KEY];
-                if(sendData) {
-                    await SendData();
-                }
-            }
         } catch(Exception) { }
     }
 
