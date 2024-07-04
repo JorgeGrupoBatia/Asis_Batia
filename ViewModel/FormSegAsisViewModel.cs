@@ -1,5 +1,6 @@
 ﻿using Asis_Batia.Helpers;
 using Asis_Batia.Model;
+using Asis_Batia.Popups;
 using Asis_Batia.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -74,10 +75,11 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
             bool result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Parece que está lejos de su servicio. \n¿Desea registrarse en otro servicio?", "Sí", "No");
             if(result) {
-                Dictionary<string, object> data = new Dictionary<string, object>{
-                    {Constants.LOCATION_KEY, _currentLocation},
-                };
-                await Shell.Current.GoToAsync(nameof(SelectInmueble), true, data);
+                bool respuesta = await MauiPopup.PopupAction.DisplayPopup<bool>(new SelectInmueble(_currentLocation));
+                if(respuesta) {
+                    await SendData();
+                }
+
             }
             return false;
         }

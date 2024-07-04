@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<mauiPopup:BasePopupPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:Class="Asis_Batia.View.SelectInmueble"
-    Title="BIOMETA"
-    Style="{StaticResource PageStyle}"
-    Shell.FlyoutBehavior="Disabled">
+    IsCloseOnBackgroundClick="False"
+    xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
+    x:Class="Asis_Batia.Popups.SelectInmueble"
+    VerticalOptions="CenterAndExpand"
+    HorizontalOptions="FillAndExpand"
+    ForegroundColor="Transparent">
 
-    <Grid>
-
-        <VerticalStackLayout
-            Margin="10"
-            HorizontalOptions="Center"
-            VerticalOptions="Center">
+    <Frame
+        CornerRadius="25"
+        BorderColor="Transparent"
+        Margin="30, 0">
+        
+        <Grid RowDefinitions="auto, auto, auto, auto, auto">
 
             <Label
                 Text="Seleccione el cliente"
-                FontSize="30"
+                FontSize="25"
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
@@ -25,12 +27,13 @@
                 TextColor="#2E3192" />
 
             <Picker
+                Grid.Row="1"
                 Title="-Seleccionar-"
                 TitleColor="Black"
                 CharacterSpacing="2"
                 FontAutoScalingEnabled="True"
                 FontFamily="Regular"
-                FontSize="25"
+                FontSize="20"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
                 ItemsSource="{Binding ClientList}"
@@ -47,8 +50,9 @@
             </Picker>
 
             <Label
-                Text="Selecciona tu punto de atencion"
-                FontSize="30"
+                Grid.Row="2"
+                Text="Seleccione su punto de atención"
+                FontSize="25"
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
@@ -56,12 +60,13 @@
                 TextColor="#2E3192" />
 
             <Picker
+                Grid.Row="3"
                 Title="-Seleccionar-"
                 TitleColor="Black"
                 CharacterSpacing="2"
                 FontAutoScalingEnabled="True"
                 FontFamily="Regular"
-                FontSize="25"
+                FontSize="20"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
                 ItemsSource="{Binding InmuebleList}"
@@ -71,30 +76,31 @@
                 Margin="0,0,0,60" />
 
             <Button
-                Text="ACEPTAR"
+                Grid.Row="4"
+                Text="Aceptar"
                 Command="{Binding NextPageCommand}"
-                FontSize="Large"
+                FontSize="18"
                 BackgroundColor="#3775B5"
                 TextColor="#D4BC88"
-                HorizontalOptions="Center"
-                FontAttributes="Bold"
+                HorizontalOptions="End"
                 CornerRadius="10"
-                WidthRequest="250"
-                HeightRequest="55"
+                HeightRequest="45"
                 BorderWidth="2"
                 BorderColor="#D4BC88" />
-        </VerticalStackLayout>
 
-        <Grid
-            BackgroundColor="#AA000000"
-            VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand"
-            IsVisible="{Binding IsLoading}">
-
-            <ActivityIndicator
-                IsRunning="{Binding IsLoading}"
-                Color="{StaticResource Dorado}"
-                HeightRequest="70" />
+            <Button
+                Grid.Row="4"
+                Text="Cancelar"
+                Command="{Binding CancelCommand}"
+                FontSize="18"
+                BackgroundColor="#3775B5"
+                TextColor="#D4BC88"
+                HorizontalOptions="Start"
+                CornerRadius="10"
+                HeightRequest="45"
+                BorderWidth="2"
+                BorderColor="#D4BC88" />
         </Grid>
-    </Grid>
-</ContentPage>
+
+    </Frame>
+</mauiPopup:BasePopupPage>
