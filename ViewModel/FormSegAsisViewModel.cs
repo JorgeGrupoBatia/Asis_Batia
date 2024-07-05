@@ -60,6 +60,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             TextLoading = "";
             IsLoading = false;
             IsBusy = false;
+            _getLocation = false;
             await App.Current.MainPage.DisplayAlert("Mensaje", LocationService.Message, "Cerrar");
             return false;
         }

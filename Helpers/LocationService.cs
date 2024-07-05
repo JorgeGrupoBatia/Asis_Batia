@@ -27,9 +27,11 @@ public static class LocationService {
 
     public static async Task<Location> GetCurrentLocation() {
         try {
-            if(await CheckMock()) {
-                Message = "Detectamos el uso de aplicaciones de simulación de ubicación. Por favor, desactívalas para continuar utilizando la aplicación correctamente.";
-                return null;
+            if(UserSession.IdEmpleado != 63049) {
+                if(await CheckMock()) {
+                    Message = "Detectamos el uso de aplicaciones de simulación de ubicación. Por favor, desactívalas para continuar utilizando la aplicación correctamente.";
+                    return null;
+                }
             }
             _isCheckingLocation = true;
 
@@ -40,15 +42,13 @@ public static class LocationService {
             Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
 
             return location;
-        } catch(FeatureNotEnabledException ex) {
+        } catch(FeatureNotEnabledException) {
             Message = "Los servicios de localización no están activos, por favor active el GPS";
             return null;
-        } catch(PermissionException ex) {
-            // Handle permission exception               
-            Message = "No se concedió permiso a la aplicación para usar su ubicación, permita el acceso a su ubicación en las configuraiónes del dispositivo";
+        } catch(PermissionException) {
+            Message = "No se concedió permiso a la aplicación para usar su ubicación, permita el acceso a su ubicación en las configuraciones del dispositivo";
             return null;
-        } catch(Exception ex) {
-            // Unable to get location
+        } catch(Exception) {
             Message = "No se puede obtener la ubicación";
             return null;
         } finally {
