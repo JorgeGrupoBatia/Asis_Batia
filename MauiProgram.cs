@@ -25,11 +25,11 @@ public static class MauiProgram {
 
         //Routing.RegisterRoute("PrinP", typeof(PrincipalPage));
         //Routing.RegisterRoute("MenuP", typeof(MenuPage));
-        Routing.RegisterRoute("MainPage", typeof(MainPage));
-        Routing.RegisterRoute("FormPrin", typeof(FormuPrinAsis));
-        Routing.RegisterRoute("FormSeg", typeof(FormuSegAsis));
-        Routing.RegisterRoute("FormReg", typeof(RegExitoso));
-        Routing.RegisterRoute("RulesPage", typeof(MainPage));
+        //Routing.RegisterRoute("MainPage", typeof(MainPage));
+        //Routing.RegisterRoute("FormPrin", typeof(FormuPrinAsis));
+        //Routing.RegisterRoute("FormSeg", typeof(FormuSegAsis));
+        //Routing.RegisterRoute("FormReg", typeof(RegExitoso));
+        //Routing.RegisterRoute("RulesPage", typeof(MainPage));
 
 
         return builder.Build();

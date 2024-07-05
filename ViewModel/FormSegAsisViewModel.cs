@@ -73,13 +73,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             IsLoading = false;
             IsBusy = false;
 
-            bool result = await App.Current.MainPage.DisplayAlert("Acción no permitida", "Las coordenadas de su servicio no están registradas \n¿Desea registrarse en otro servicio?", "Sí", "No");
-            if(result) {
-                bool respuesta = await MauiPopup.PopupAction.DisplayPopup<bool>(new SelectInmueble(_currentLocation));
-                if(respuesta) {
-                    await SendData();
-                }
-            }
+            await App.Current.MainPage.DisplayAlert("Acción no permitida", "Las coordenadas de su servicio no están registradas. \nFavor de revisarlo con su jefe inmediato.", "Aceptar");
+            
             return false;
         }
 
