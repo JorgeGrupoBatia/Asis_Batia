@@ -10,8 +10,7 @@ namespace Asis_Batia.ViewModel;
 
 public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
-    public string _selectionRadio, _localPhotoPath, _dbPhotoPath, _dbFilePathList;
-    List<string> _localFilePathList = new List<string>();
+    public string _selectionRadio, _localFilePath, _localPhotoPath, _dbPhotoPathList, _dbFilePathList;
     Location _currentLocation = new Location();
     bool _getLocation;
 
@@ -75,7 +74,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             IsBusy = false;
 
             await App.Current.MainPage.DisplayAlert("Acción no permitida", "Las coordenadas de su servicio no están registradas. \nFavor de revisarlo con su jefe inmediato.", "Aceptar");
-            
+
             return false;
         }
 
@@ -124,7 +123,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             Longitud = _currentLocation.Longitude.ToString(),
             Movimiento = _selectionRadio,
             RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
-            Foto = _dbPhotoPath == null ? "" : _dbPhotoPath,
+            Foto = _dbPhotoPathList == null ? "" : _dbPhotoPathList,
         };
 
         int resp = await _httpHelper.PostBodyAsync<RegistroModel, int>(Constants.API_REGISTRO_BIOMETA, registroModel);
@@ -148,16 +147,14 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     private async Task LoadFile() {
         IsBusy = true;
         try {
-            var fileResultList = await FilePicker.Default.PickMultipleAsync(GetPickOptions());
-            if(fileResultList is not null && fileResultList.Count() > 0) {
-                foreach(FileResult fileResult in fileResultList) {
-                    string localFilePath = Path.Combine(FileSystem.CacheDirectory, fileResult.FileName);
-                    using(Stream stream = await fileResult.OpenReadAsync()) {
-                        using FileStream fileStream = File.OpenWrite(localFilePath);
-                        await stream.CopyToAsync(fileStream);
-                    }
-                    _localFilePathList.Add(localFilePath);
+            FileResult fileResult = await FilePicker.Default.PickAsync(GetPickOptions());
+            if(fileResult is not null) {
+                string localFilePath = Path.Combine(FileSystem.CacheDirectory, fileResult.FileName);
+                using(Stream stream = await fileResult.OpenReadAsync()) {
+                    using FileStream fileStream = File.OpenWrite(localFilePath);
+                    await stream.CopyToAsync(fileStream);
                 }
+                _localFilePath = localFilePath;
             }
         } catch(Exception) {
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al seleccionar archivos", "Cerrar");
@@ -187,12 +184,18 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     }
 
     public async Task<bool> SendFiles() {
+        List<string> list = new List<string>();
+
         if(!string.IsNullOrWhiteSpace(_localPhotoPath)) {
-            _localFilePathList.Add(_localPhotoPath);
+            list.Add(_localPhotoPath);
         }
 
-        if(_localFilePathList.Count > 0) {
-            string dbPaths = await UploadFiles();
+        if(!string.IsNullOrWhiteSpace(_localFilePath)) {
+            list.Add(_localFilePath);
+        }
+
+        if(list.Count > 0) {
+            string dbPaths = await UploadFiles(list);
 
             if(string.IsNullOrWhiteSpace(dbPaths)) {
                 return false;
@@ -201,23 +204,34 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             string[] paths = dbPaths.Split("|");
 
             foreach(string path in paths) {
-                if(path.Contains(".pdf")) {
-                    _dbFilePathList += $"{path}|";
-                } else if(path.Contains(".jpg") || path.Contains(".jpeg") || path.Contains(".png")) {
-                    _dbPhotoPath = path;
+
+                string[] tokens = path.Split('/');
+
+                if(!string.IsNullOrWhiteSpace(_localPhotoPath)) {
+                    string[] tokensLocal = _localPhotoPath.Split('/');
+                    if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
+                        _dbPhotoPathList = path;
+                    }
+                }
+
+                if(!string.IsNullOrWhiteSpace(_localFilePath)) {
+                    string[] tokensLocal = _localFilePath.Split('/');
+                    if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
+                        _dbFilePathList = path;
+                    }
                 }
             }
-            _dbFilePathList = _dbFilePathList.TrimEnd('|');
+
             return true;
         }
 
         return true;
     }
 
-    public async Task<string> UploadFiles() {
+    public async Task<string> UploadFiles(List<string> list) {
         var formData = new MultipartFormDataContent();
 
-        foreach(string localFilePath in _localFilePathList) {
+        foreach(string localFilePath in list) {
             StreamContent streamContent = new StreamContent(File.OpenRead(localFilePath));
             formData.Add(streamContent, "files", Path.GetFileName(localFilePath));
         }
@@ -232,8 +246,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     }
 
     PickOptions GetPickOptions() {
-        List<string> pickerOptionsAndroid = new List<string> { /*"image/jpeg", "image/png",*/ "application/pdf" };
-        List<string> pickerOptionsIOS = new List<string> {/* "public.image",*/ "com.adobe.pdf" };
+        List<string> pickerOptionsAndroid = new List<string> { "image/jpeg", "image/png", "application/pdf" };
+        List<string> pickerOptionsIOS = new List<string> { "public.image", "com.adobe.pdf" };
 
         FilePickerFileType filePickerFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> {
             {DevicePlatform.Android, pickerOptionsAndroid},
