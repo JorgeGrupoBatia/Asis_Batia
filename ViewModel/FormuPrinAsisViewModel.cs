@@ -12,14 +12,25 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     [ObservableProperty]
     ObservableCollection<MovimientoModel> _movimientoList;
 
+    [NotifyCanExecuteChangedFor(nameof(NextPageCommand))]
     [ObservableProperty]
     bool _isLoading;
 
     [ObservableProperty]
     bool _showButton;
 
+    [NotifyCanExecuteChangedFor(nameof(NextPageCommand))]
+    [ObservableProperty]
+    bool _isRefreshing;
+
+    [RelayCommand]
+    async Task Refresh() {
+        await InitMovimientoList();
+        IsRefreshing = false;
+    }
+
+    [RelayCommand]
     async Task InitMovimientoList() {
-        IsLoading = true;
         string url = $"{Constants.API_MOVIMIENTOS_BIOMETA}?idempleado={UserSession.IdEmpleado}";
         MovimientoList = await _httpHelper.GetAsync<ObservableCollection<MovimientoModel>>(url);
 
@@ -28,12 +39,10 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
             MovimientoList = new ObservableCollection<MovimientoModel>();
         }
 
-        EvaluarShowButton();
-
-        IsLoading = false;
+        EvaluarShowButton(); 
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute =nameof(CanExecuteNextPageCommand))]
     private async Task NextPage() {
         int size = MovimientoList.Count;
         string nomenclatura;
@@ -62,6 +71,10 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
         await Shell.Current.GoToAsync(nameof(FormuSegAsis), true, data);
     }
 
+    bool CanExecuteNextPageCommand() {
+        return !IsLoading && !IsRefreshing;
+    }
+
     void EvaluarShowButton() {
         try {
             if(MovimientoList.Count < 4) {
@@ -83,6 +96,8 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     }
 
     public async Task OnAppearing() {
+        IsLoading = true;
         await InitMovimientoList();
+        IsLoading = false;
     }
 }
