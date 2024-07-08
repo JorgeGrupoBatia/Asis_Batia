@@ -27,12 +27,6 @@ public static class LocationService {
 
     public static async Task<Location> GetCurrentLocation() {
         try {
-            if(UserSession.IdEmpleado != 63049) {
-                if(await CheckMock()) {
-                    Message = "Detectamos el uso de aplicaciones de simulación de ubicación. Por favor, desactívalas para continuar utilizando la aplicación correctamente.";
-                    return null;
-                }
-            }
             _isCheckingLocation = true;
 
             GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
@@ -40,6 +34,11 @@ public static class LocationService {
             _cancelTokenSource = new CancellationTokenSource();
 
             Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
+
+            if(location is not null && location.IsFromMockProvider && UserSession.IdEmpleado != 63049) {
+                Message = "Detectamos el uso de aplicaciones de simulación de ubicación. Por favor, desactívalas para continuar utilizando la aplicación correctamente.";
+                return null;
+            }
 
             return location;
         } catch(FeatureNotEnabledException) {
@@ -54,16 +53,6 @@ public static class LocationService {
         } finally {
             _isCheckingLocation = false;
         }
-    }
-
-    public static async Task<bool> CheckMock() {
-        GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium);
-        Location location = await Geolocation.Default.GetLocationAsync(request);
-
-        if(location != null && location.IsFromMockProvider) {
-            return true;
-        }
-        return false;
     }
 
     public static void CancelRequest() {
