@@ -80,27 +80,15 @@
                 Grid.Row="4"
                 Text="Aceptar"
                 Command="{Binding NextPageCommand}"
-                FontSize="18"
-                BackgroundColor="#3775B5"
-                TextColor="#D4BC88"
-                HorizontalOptions="End"
-                CornerRadius="10"
-                HeightRequest="45"
-                BorderWidth="2"
-                BorderColor="#D4BC88" />
+                Style="{StaticResource ButtonPopup}"
+                HorizontalOptions="End"/>
 
             <Button
                 Grid.Row="4"
                 Text="Cancelar"
                 Command="{Binding CancelCommand}"
-                FontSize="18"
-                BackgroundColor="#3775B5"
-                TextColor="#D4BC88"
-                HorizontalOptions="Start"
-                CornerRadius="10"
-                HeightRequest="45"
-                BorderWidth="2"
-                BorderColor="#D4BC88" />
+                Style="{StaticResource ButtonPopup}"
+                HorizontalOptions="Start"/>
         </Grid>
 
     </Frame>

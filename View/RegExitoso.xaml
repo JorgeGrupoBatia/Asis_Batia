@@ -37,16 +37,7 @@
 
             <Button
                 Text="Aceptar"
-                Command="{Binding AcceptCommand}"
-                FontSize="Large"
-                FontAttributes="Bold"
-                BackgroundColor="#3775B5"
-                TextColor="#D4BC88"
-                WidthRequest="250"
-                HeightRequest="55"
-                CornerRadius="10"
-                BorderWidth="2"
-                BorderColor="#D4BC88" />
+                Command="{Binding AcceptCommand}" />
 
         </VerticalStackLayout>
     </Frame>

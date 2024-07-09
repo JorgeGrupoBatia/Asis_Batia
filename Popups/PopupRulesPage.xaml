@@ -29,16 +29,15 @@
                     FontAttributes="None"
                     FontFamily="Regular"
                     TextColor="Black"
-                    HorizontalTextAlignment="Start" 
-                    Margin="10"/>
+                    HorizontalTextAlignment="Start"
+                    Margin="10" />
             </ScrollView>
 
             <Button
-                x:Name="btnCancel"
                 Grid.Row="1"
                 Text="Cancelar"
                 Clicked="Button_Clicked"
-                Margin="10">
+                Style="{StaticResource ButtonPopup}">
 
                 <Button.CommandParameter>
                     <x:Boolean>false</x:Boolean>
@@ -46,12 +45,11 @@
             </Button>
 
             <Button
-                x:Name="btnClose"
                 Grid.Row="1"
                 Grid.Column="1"
                 Text="Aceptar"
                 Clicked="Button_Clicked"
-                Margin="10">
+                Style="{StaticResource ButtonPopup}">
 
                 <Button.CommandParameter>
                     <x:Boolean>true</x:Boolean>

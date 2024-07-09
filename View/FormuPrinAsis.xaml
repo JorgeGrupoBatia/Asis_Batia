@@ -143,19 +143,9 @@
                     <Button
                         Grid.Row="2"
                         Text="SIGUIENTE"
-                        TextColor="{StaticResource Dorado}"
-                        HorizontalOptions="Center"
-                        VerticalOptions="EndAndExpand"
                         Command="{Binding NextPageCommand}"
                         IsVisible="{Binding ShowButton}"
-                        FontSize="Large"
-                        BackgroundColor="#3775B5"
-                        FontAttributes="Bold"
-                        CornerRadius="10"
-                        HeightRequest="55"
-                        WidthRequest="250"
-                        BorderWidth="2"
-                        BorderColor="{StaticResource Dorado}" />
+                        VerticalOptions="EndAndExpand" />
                 </Grid>
             </ScrollView>
         </RefreshView>       

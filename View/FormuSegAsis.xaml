@@ -73,26 +73,18 @@
 
                 <Button
                     Grid.Row="3"
-                    x:Name="btn_archivo"
                     Text="Archivo"
-                    FontSize="25"
                     WidthRequest="150"
                     Command="{Binding LoadFileCommand}"
-                    BorderWidth="2"
-                    BorderColor="#D4BC88"
-                    Margin="0,0,0,20" />
+                    Margin="0, 0, 0, 20" />
 
                 <Button
                     Grid.Row="3"
                     Grid.Column="1"
-                    x:Name="btn_camara"
                     Text="Foto"
-                    FontSize="25"
-                    WidthRequest="150"
                     Command="{Binding PhotoCommand}"
-                    BorderWidth="2"
-                    BorderColor="#D4BC88"
-                    Margin="0,0,0,20" />
+                    WidthRequest="150"
+                    Margin="0, 0, 0, 20" />
 
                 <Image
                     x:Name="lblFile"
@@ -132,7 +124,7 @@
                     FontSize="Large"
                     PlaceholderColor="White"
                     TextColor="Black"
-                    Placeholder="Captura informacion adicional"
+                    Placeholder="Capture informacion adicional"
                     IsSpellCheckEnabled="True"
                     IsTextPredictionEnabled="True"
                     Text="{Binding RespuestaTxt}"
@@ -142,19 +134,9 @@
                     Grid.Row="6"
                     Grid.ColumnSpan="2"
                     Text="REGISTRAR"
-                    FontSize="Large"
-                    BackgroundColor="#3775B5"
-                    TextColor="#D4BC88"
-                    BorderWidth="2"
-                    BorderColor="#D4BC88"
-                    HorizontalOptions="Center"
-                    VerticalOptions="EndAndExpand"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    WidthRequest="250"
-                    HeightRequest="55"
                     Command="{Binding RegisterCommand}"
-                    Margin="0,30,0,0" />
+                    VerticalOptions="EndAndExpand"
+                    Margin="0, 30, 0, 0" />
             </Grid>
         </ScrollView>
 
