@@ -10,7 +10,7 @@ namespace Asis_Batia.ViewModel;
 
 public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
-    public string _selectionRadio, _localFilePath, _localPhotoPath, _dbPhotoPathList, _dbFilePathList;
+    public string _selectionRadio, _dbPhotoPathList, _dbFilePathList;
     Location _currentLocation = new Location();
     bool _getLocation;
 
@@ -32,6 +32,18 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
     [ObservableProperty]
     string _textLoading;
+
+    [ObservableProperty]
+    string _localPhotoPath;
+
+    [ObservableProperty]
+    string _localFilePath;
+
+    [ObservableProperty]
+    string _fileName;
+
+    [ObservableProperty]
+    bool _showFile;
 
     [RelayCommand]
     async Task Register() {
@@ -154,7 +166,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                     using FileStream fileStream = File.OpenWrite(localFilePath);
                     await stream.CopyToAsync(fileStream);
                 }
-                _localFilePath = localFilePath;
+                LocalFilePath = localFilePath;
+                SetFileName();
             }
         } catch(Exception) {
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al seleccionar archivos", "Cerrar");
@@ -174,7 +187,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
                         using FileStream fileStream = File.OpenWrite(localPhotoPath);
                         await photoStream.CopyToAsync(fileStream);
                     }
-                    _localPhotoPath = localPhotoPath;
+                    LocalPhotoPath = localPhotoPath;
                 }
             }
         } catch(Exception) {
@@ -186,12 +199,12 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     public async Task<bool> SendFiles() {
         List<string> list = new List<string>();
 
-        if(!string.IsNullOrWhiteSpace(_localPhotoPath)) {
-            list.Add(_localPhotoPath);
+        if(!string.IsNullOrWhiteSpace(LocalPhotoPath)) {
+            list.Add(LocalPhotoPath);
         }
 
-        if(!string.IsNullOrWhiteSpace(_localFilePath)) {
-            list.Add(_localFilePath);
+        if(!string.IsNullOrWhiteSpace(LocalFilePath)) {
+            list.Add(LocalFilePath);
         }
 
         if(list.Count > 0) {
@@ -207,15 +220,15 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
                 string[] tokens = path.Split('/');
 
-                if(!string.IsNullOrWhiteSpace(_localPhotoPath)) {
-                    string[] tokensLocal = _localPhotoPath.Split('/');
+                if(!string.IsNullOrWhiteSpace(LocalPhotoPath)) {
+                    string[] tokensLocal = LocalPhotoPath.Split('/');
                     if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
                         _dbPhotoPathList = path;
                     }
                 }
 
-                if(!string.IsNullOrWhiteSpace(_localFilePath)) {
-                    string[] tokensLocal = _localFilePath.Split('/');
+                if(!string.IsNullOrWhiteSpace(LocalFilePath)) {
+                    string[] tokensLocal = LocalFilePath.Split('/');
                     if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
                         _dbFilePathList = path;
                     }
@@ -270,5 +283,16 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
     bool CanExecute() {
         return !IsBusy;
+    }
+
+    void SetFileName() {
+        if(!string.IsNullOrWhiteSpace(LocalFilePath)) {
+            string[] tokens = LocalFilePath.Split('/');
+            FileName = tokens[tokens.Length - 1];
+            ShowFile = FileName.EndsWith(".jpg") || FileName.EndsWith(".jpeg") || FileName.EndsWith(".png");
+            return;
+        }
+        FileName = string.Empty;
+        ShowFile = false;
     }
 }

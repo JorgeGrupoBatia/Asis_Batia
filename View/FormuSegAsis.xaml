@@ -8,13 +8,13 @@
     Shell.FlyoutBehavior="Disabled">
 
     <Grid>
-        
+
         <ScrollView>
 
             <Grid
-                RowDefinitions="auto, auto, auto, auto, auto, *"
-                ColumnDefinitions="*,*"
-                Margin="10,10,10,20">
+                RowDefinitions="auto, auto, auto, auto, auto, *, *"
+                ColumnDefinitions="*, *"
+                Margin="10, 10, 10, 20">
 
                 <Label
                     Grid.ColumnSpan="2"
@@ -35,7 +35,7 @@
                     BackgroundColor="Transparent"
                     BorderColor="#D4BC88"
                     HasShadow="True"
-                    Margin="0,20,0,40">
+                    Margin="0,20,0,30">
 
                     <VerticalStackLayout>
 
@@ -45,8 +45,8 @@
                             IsChecked="True"
                             CheckedChanged="RadioButton_CheckedChanged"
                             Value="{Binding Nomenclatura}"
-                            FontSize="25"
-                            FontFamily="Regular"/>
+                            FontSize="20"
+                            FontFamily="Regular" />
 
                         <RadioButton
                             IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
@@ -54,7 +54,7 @@
                             Content="Descanso"
                             CheckedChanged="RadioButton_CheckedChanged"
                             Value="N"
-                            FontSize="25"
+                            FontSize="20"
                             FontFamily="Regular" />
                     </VerticalStackLayout>
                 </Frame>
@@ -62,14 +62,13 @@
                 <Label
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
-                    Text="Adjunta: incapacidad, listas de asistencia, justificante, etc."
-                    FontSize="25"
-                    FontAttributes="Bold"
+                    Text="Adjunte: incapacidad, listas de asistencia, justificante, etc."
+                    FontSize="20"
                     VerticalTextAlignment="Center"
                     HorizontalTextAlignment="Center"
                     FontFamily="Regular"
                     TextColor="#2E3192"
-                    Margin="0,0,0,40" />
+                    Margin="0,0,0,30" />
 
                 <Button
                     Grid.Row="3"
@@ -80,8 +79,7 @@
                     Command="{Binding LoadFileCommand}"
                     BorderWidth="2"
                     BorderColor="#D4BC88"
-                    Margin="0,0,0,40">
-                </Button>
+                    Margin="0,0,0,20" />
 
                 <Button
                     Grid.Row="3"
@@ -93,14 +91,39 @@
                     Command="{Binding PhotoCommand}"
                     BorderWidth="2"
                     BorderColor="#D4BC88"
-                    Margin="0,0,0,40">
-                </Button>
+                    Margin="0,0,0,20" />
+
+                <Image
+                    x:Name="lblFile"
+                    Grid.Row="4"
+                    Source="{Binding LocalFilePath}"
+                    IsVisible="{Binding ShowFile}"
+                    Aspect="AspectFit"
+                    HeightRequest="150"
+                    Margin="10" />
+
+                <Label
+                    Grid.Row="4"
+                    Text="{Binding FileName}"
+                    IsVisible="{Binding Source={x:Reference lblFile}, Path=IsVisible, Converter={StaticResource InvertedBoolConverter}}"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="MiddleTruncation"
+                    FontSize="18"
+                    Margin="10" />
+
+                <Image
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Source="{Binding LocalPhotoPath}"
+                    Aspect="AspectFit"
+                    HeightRequest="150"
+                    Margin="10" />
 
                 <Entry
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.ColumnSpan="2"
                     HeightRequest="50"
-                    HorizontalOptions="Center"
+                    VerticalOptions="EndAndExpand"
                     FontFamily="Regular"
                     VerticalTextAlignment="Center"
                     HorizontalTextAlignment="Center"
@@ -112,12 +135,12 @@
                     IsSpellCheckEnabled="True"
                     IsTextPredictionEnabled="True"
                     Text="{Binding RespuestaTxt}"
-                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"/>
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
 
                 <Button
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.ColumnSpan="2"
-                    Text="REGISTRAR"                    
+                    Text="REGISTRAR"
                     FontSize="Large"
                     BackgroundColor="#3775B5"
                     TextColor="#D4BC88"
@@ -129,11 +152,11 @@
                     CornerRadius="10"
                     WidthRequest="250"
                     HeightRequest="55"
-                    Command="{Binding RegisterCommand}" 
-                    Margin="0,30,0,0"/>
+                    Command="{Binding RegisterCommand}"
+                    Margin="0,30,0,0" />
             </Grid>
         </ScrollView>
-        
+
         <Grid
             RowDefinitions="*, *"
             BackgroundColor="#AA000000"
@@ -148,12 +171,12 @@
                 HeightRequest="70" />
 
             <Label
-                Grid.Row="1" 
+                Grid.Row="1"
                 Text="{Binding TextLoading}"
                 VerticalOptions="StartAndExpand"
                 HorizontalTextAlignment="Center"
                 FontSize="16"
-                TextColor="{StaticResource Dorado}"/>
+                TextColor="{StaticResource Dorado}" />
         </Grid>
-    </Grid>   
+    </Grid>
 </ContentPage>
