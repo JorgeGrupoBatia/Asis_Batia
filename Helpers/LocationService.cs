@@ -35,7 +35,7 @@ public static class LocationService {
 
             Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
 
-            if(location is not null && location.IsFromMockProvider && UserSession.IdEmpleado != 63049) {
+            if(location is not null && location.IsFromMockProvider) {
                 Message = "Detectamos el uso de aplicaciones de simulación de ubicación. Por favor, desactívalas para continuar utilizando la aplicación correctamente.";
                 return null;
             }
