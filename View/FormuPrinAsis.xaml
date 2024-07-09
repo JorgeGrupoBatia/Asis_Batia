@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:user="clr-namespace:Asis_Batia.Helpers"
     x:Class="Asis_Batia.View.FormuPrinAsis"
-    Title="Bienvenido"
+    Title="{Binding CurrentDate}"
     Style="{StaticResource PageStyle}">   
 
     <Grid>

@@ -23,6 +23,9 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     [ObservableProperty]
     bool _isRefreshing;
 
+    [ObservableProperty]
+    string _currentDate = DateTime.Now.ToString("dddd d \\de MMMM");
+
     [RelayCommand]
     async Task Refresh() {
         await InitMovimientoList();
@@ -39,10 +42,10 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
             MovimientoList = new ObservableCollection<MovimientoModel>();
         }
 
-        EvaluarShowButton(); 
+        EvaluarShowButton();
     }
 
-    [RelayCommand(CanExecute =nameof(CanExecuteNextPageCommand))]
+    [RelayCommand(CanExecute = nameof(CanExecuteNextPageCommand))]
     private async Task NextPage() {
         int size = MovimientoList.Count;
         string nomenclatura;

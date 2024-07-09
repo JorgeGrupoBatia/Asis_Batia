@@ -35,7 +35,8 @@
                     BackgroundColor="Transparent"
                     BorderColor="#D4BC88"
                     HasShadow="True"
-                    Margin="0,20,0,30">
+                    Margin="0,20,0,30"
+                    Padding="10">
 
                     <VerticalStackLayout>
 
