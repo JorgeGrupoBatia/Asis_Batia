@@ -82,6 +82,10 @@ public class UserSession {
         set => Preferences.Default.Set(SHOW_TERMS_CONDITIONS_KEY, value);
     }
 
+    public static bool EsEmpleadoElektra {
+        get => IdCliente == 130;
+    }
+
     public static void SetData(InfoEmpleadoModel data) {
         Empleado = data.empleado;
         IdEmpleado = data.idEmpleado;
