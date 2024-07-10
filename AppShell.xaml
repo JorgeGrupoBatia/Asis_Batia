@@ -3,7 +3,9 @@
     x:Class="Asis_Batia.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Asis_Batia.View">
+    xmlns:templates="clr-namespace:Asis_Batia.Templates"
+    xmlns:local="clr-namespace:Asis_Batia.View"
+    FlyoutFooterTemplate="{DataTemplate templates:FlyoutFooterTemplate}">
 
     <ShellContent
         Icon="iconminfo.png"

@@ -122,6 +122,9 @@
 	  <MauiXaml Update="Resources\Styles\Styles.xaml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </MauiXaml>
+	  <MauiXaml Update="Templates\FlyoutFooterTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\FormuPrinAsis.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<HorizontalStackLayout
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:const="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
+    x:Class="Asis_Batia.Templates.FlyoutFooterTemplate"
+    HorizontalOptions="EndAndExpand"
+    Padding="10">
+
+    <Label
+        Text="{x:Static const:AppInfo.Name}"
+        HorizontalTextAlignment="End"
+        FontAttributes="Bold" />
+    
+    <Label
+        Text="versión"
+        HorizontalTextAlignment="End" 
+        Margin="20, 0, 5, 0"/>
+
+    <Label
+        Text="{x:Static const:AppInfo.VersionString}"
+        HorizontalTextAlignment="End" />
+</HorizontalStackLayout>
