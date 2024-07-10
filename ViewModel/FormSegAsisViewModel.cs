@@ -47,6 +47,16 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
     [RelayCommand]
     async Task Register() {
+        if(UserSession.EsEmpleadoElektra) {
+            if(string.IsNullOrWhiteSpace(FileName)) {
+                await App.Current.MainPage.DisplayAlert("", "Ingrese captura de pantalla de \'Proveedores GS\'", "Ok");
+                return;
+            }
+        }
+        await ValidateNomenclature();
+    }
+
+    async Task ValidateNomenclature() {
         if(_selectionRadio == Nomenclatura) {
             if(await ValidateLocation()) {
                 await SendData();
