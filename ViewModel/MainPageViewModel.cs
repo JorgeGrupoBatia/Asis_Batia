@@ -3,6 +3,7 @@ using Asis_Batia.Model;
 using Asis_Batia.Popups;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Runtime.InteropServices;
 
 namespace Asis_Batia.ViewModel;
 
@@ -45,8 +46,17 @@ public partial class MainPageViewModel : ViewModelBase {
             if(res) {
                 UserSession.ShowTermsConditions = false;
             } else {
+#if IOS
+                exit(0);
+#else
                 Application.Current.Quit();
+#endif
             }
         }
     }
+
+#if IOS
+    [DllImport("__Internal", EntryPoint = "exit")]
+    public static extern void exit(int status);
+#endif
 }

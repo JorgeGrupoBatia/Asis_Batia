@@ -25,7 +25,7 @@
 
                 <Label
                     Text="{x:Static const:Constants.AVISO_PRIVACIDAD_MOSTRAR_POUP}"
-                    FontSize="20"
+                    FontSize="{OnPlatform Android=20, iOS=16}"
                     FontAttributes="None"
                     FontFamily="Regular"
                     TextColor="Black"

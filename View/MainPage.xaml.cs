@@ -4,12 +4,14 @@ namespace Asis_Batia.View;
 
 public partial class MainPage : ContentPage {
 
+    int _cont = 0;
+
     public MainPage() {
         InitializeComponent();
     }
 
-    protected override async void OnAppearing() {
-        base.OnAppearing();  
+    protected override void OnAppearing() {
+        base.OnAppearing();
         Loaded += MainPage_Loaded;
     }
 
@@ -19,6 +21,9 @@ public partial class MainPage : ContentPage {
     }
 
     private void MainPage_Loaded(object sender, EventArgs e) {
-        BindingContext = new MainPageViewModel();
+        if(_cont < 1) {
+            _cont++;
+            BindingContext = new MainPageViewModel();
+        }
     }
 }
