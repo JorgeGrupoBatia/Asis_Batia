@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Asis_Batia.Controls"
     x:Class="Asis_Batia.View.MainPage"
     Style="{StaticResource PageStyle}">
 
@@ -22,7 +23,7 @@
                 <Label
                     Grid.Row="1"
                     Text="BIOMETA"
-                    FontSize="100"
+                    FontSize="{OnPlatform Android=90, iOS=70}"
                     FontFamily="Regular"
                     FontAttributes="Bold"
                     TextColor="#2E3192"
@@ -40,9 +41,10 @@
                     HorizontalOptions="FillAndExpand"
                     CornerRadius="5"
                     WidthRequest="180"
-                    HeightRequest="70">
+                    HeightRequest="70"
+                    Margin="0, 40">
 
-                    <Entry
+                    <controls:TransparentEntry
                         IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
                         Text="{Binding IdEmpleado, Mode=TwoWay}"
                         TextColor="Black"
@@ -50,14 +52,24 @@
                         PlaceholderColor="White"
                         FontFamily="Regular"
                         CharacterSpacing="1"
-                        FontSize="25"
+                        FontSize="{OnPlatform Android=25, iOS=20}"
                         HorizontalTextAlignment="Center"
-                        HorizontalOptions="Center"
                         VerticalOptions="Center"
                         ReturnCommand="{Binding GetInfoEmpleadoCommand}"
                         ReturnType="Send"
                         Keyboard="Numeric" />
                 </Frame>
+
+                <ImageButton
+                    Grid.Row="2"
+                    Source="flecha"
+                    Aspect="AspectFit"
+                    HeightRequest="50"
+                    WidthRequest="50"
+                    HorizontalOptions="End"
+                    Command="{Binding GetInfoEmpleadoCommand}"
+                    IsVisible="{OnPlatform Android=false, iOS=true}"
+                    Margin="0, 0, 10, 0"/>
 
                 <Image
                     Grid.Row="3"
