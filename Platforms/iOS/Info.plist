@@ -50,5 +50,17 @@
 			</dict>
 		</dict>
 	</dict>
+
+	<key>NSCameraUsageDescription</key>
+	<string>Biometa necesita acceder a la cámara para tomar fotos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Biometa necesita acceder al micrófono para tomar videos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF.</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Biometa necesita acceder a la localización para validar el lugar de donde se hace el registro de asistencia.</string>
 </dict>
 </plist>
