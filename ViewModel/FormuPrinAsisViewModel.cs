@@ -54,7 +54,11 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
                 nomenclatura = "A";
                 break;
             case 1:
-                nomenclatura = "A2";
+                if(UserSession.EsEmpleadoElektra) {
+                    nomenclatura = "A2";
+                } else {
+                    nomenclatura = "A4";
+                }                
                 break;
             case 2:
                 nomenclatura = "A3";
@@ -95,7 +99,7 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
                     ShowButton = false;
                 }
             } else {
-                if(MovimientoList.Count > 0) {                   
+                if(MovimientoList.Count > 1) {                   
                     ShowButton = false;
                 } else {
                     ShowButton = true;

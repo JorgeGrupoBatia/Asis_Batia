@@ -7,7 +7,7 @@ public static class Constants {
     public const string API_EMPLEADO_APP = "EmpleadoApp";
     public const string API_INMUEBLES = "Inmueble";
     public const string API_ENVIO_ARCHIVOS= "FilesAsis/CargaMul";
-    public const string API_REGISTRO_BIOMETA = "RegistroBiometaN"; //RegistroBiometa;
+    public const string API_REGISTRO_BIOMETA = "RegistroBiometaN";
     public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometa";
     public const string API_CLIENTE = "cliente";
     #endregion
