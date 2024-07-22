@@ -3,7 +3,7 @@ using Android.Runtime;
 
 namespace Asis_Batia;
 
-[Application(UsesCleartextTraffic = true)]
+[Application]
 public class MainApplication : MauiApplication
 {
 	public MainApplication(IntPtr handle, JniHandleOwnership ownership)

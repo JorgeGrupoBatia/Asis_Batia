@@ -3,7 +3,7 @@
 public static class Constants {
 
     #region API URI´s
-    public const string API_BASE_URL = "http://singa.com.mx:5500/api/";
+    public const string API_BASE_URL = "https://www.singa.com.mx:5500/api/";
     public const string API_EMPLEADO_APP = "EmpleadoApp";
     public const string API_INMUEBLES = "Inmueble";
     public const string API_ENVIO_ARCHIVOS= "FilesAsis/CargaMul";

@@ -102,6 +102,14 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
                 if(MovimientoList.Count > 1) {                   
                     ShowButton = false;
                 } else {
+                    if(MovimientoList.Count > 0) {
+                        foreach(MovimientoModel movimiento in MovimientoList) {
+                            if(movimiento.Movimiento.Equals("N")) {
+                                ShowButton = false;
+                                return;
+                            }
+                        }
+                    }
                     ShowButton = true;
                 }
             }
