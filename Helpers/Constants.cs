@@ -13,6 +13,9 @@ public static class Constants {
     #endregion
 
     #region Literales
+    public const string SI = "Sí";
+    public const string NO = "No";
+
     public const string INICIO_LABORES = "Inicio de labores";
     public const string SALIDA_COMER = "Salida a comer";
     public const string ENTRADA_COMER = "Entrada de comer";
@@ -23,6 +26,7 @@ public static class Constants {
     #region Keys
     public const string NOMENCLATURA_KEY = "Nomenclatura key";
     public const string LOCATION_KEY = "Location key";
+    public const string INICIO_LABORES_KEY = "Inicio labores key";
     #endregion
 
     public const string AVISO_PRIVACIDAD_PARTE_1 =

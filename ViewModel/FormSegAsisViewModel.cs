@@ -13,6 +13,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     public string _selectionRadio, _dbPhotoPathList, _dbFilePathList;
     Location _currentLocation = new Location();
     bool _getLocation;
+    DateTime _iniciolabores;
 
     [NotifyCanExecuteChangedFor(nameof(PhotoCommand), nameof(LoadFileCommand))]
     [ObservableProperty]
@@ -68,6 +69,15 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     }
 
     async Task<bool> ValidateLocation() {
+        if(TipoRegistro.Equals(Constants.FIN_LABORES)) {
+            bool resp = await App.Current.MainPage.DisplayAlert(""
+                , $"Está a punto de registrar {Constants.FIN_LABORES.ToUpper()}, su {Constants.INICIO_LABORES.ToUpper()} fue a la(s) {_iniciolabores.ToString("hh:mm tt")}\n\n¿Desea continuar?"
+                , Constants.SI, Constants.NO);
+            if(!resp) {
+                return false;
+            }
+        }
+
         TextLoading = "Obteniendo ubicación ...";
         IsLoading = true;
         IsBusy = true;
@@ -288,6 +298,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             Nomenclatura = (string)query[Constants.NOMENCLATURA_KEY];
             TipoRegistro = MovimientoModel.GetTipoRegistro(Nomenclatura);
             _selectionRadio = Nomenclatura;
+            _iniciolabores = (DateTime)query[Constants.INICIO_LABORES_KEY];
         } catch(Exception) { }
     }
 

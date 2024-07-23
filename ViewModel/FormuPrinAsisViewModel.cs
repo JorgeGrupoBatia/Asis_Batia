@@ -49,6 +49,8 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     private async Task NextPage() {
         int size = MovimientoList.Count;
         string nomenclatura;
+        DateTime inicioLabores = new DateTime();
+
         switch(size) {
             case 0:
                 nomenclatura = "A";
@@ -58,7 +60,7 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
                     nomenclatura = "A2";
                 } else {
                     nomenclatura = "A4";
-                }                
+                }
                 break;
             case 2:
                 nomenclatura = "A3";
@@ -71,8 +73,13 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
                 break;
         }
 
+        if(size != 0) {
+            inicioLabores = MovimientoList.ElementAt(0).Fecha;
+        }
+
         Dictionary<string, object> data = new Dictionary<string, object>{
-            { Constants.NOMENCLATURA_KEY, nomenclatura }
+            { Constants.NOMENCLATURA_KEY, nomenclatura },
+            { Constants.INICIO_LABORES_KEY, inicioLabores }
         };
 
         await Shell.Current.GoToAsync(nameof(FormuSegAsis), true, data);
@@ -99,7 +106,7 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
                     ShowButton = false;
                 }
             } else {
-                if(MovimientoList.Count > 1) {                   
+                if(MovimientoList.Count > 1) {
                     ShowButton = false;
                 } else {
                     if(MovimientoList.Count > 0) {
