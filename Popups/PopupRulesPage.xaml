@@ -25,17 +25,17 @@
 
                 <Label
                     Text="{x:Static const:Constants.AVISO_PRIVACIDAD_MOSTRAR_POUP}"
-                    FontSize="{OnPlatform Android=20, iOS=16}"
+                    FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=26}, iOS=16}"
                     FontAttributes="None"
                     FontFamily="Regular"
                     TextColor="Black"
                     HorizontalTextAlignment="Start"
-                    Margin="10" />
+                    Margin="{OnPlatform Android={OnIdiom Phone=10, Tablet=20}, iOS=10}" />
             </ScrollView>
 
             <Button
                 Grid.Row="1"
-                Text="Cancelar"
+                Text="{x:Static const:Constants.RECHAZAR}"
                 Clicked="Button_Clicked"
                 Style="{StaticResource ButtonPopup}">
 
@@ -47,7 +47,7 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
-                Text="Aceptar"
+                Text="{x:Static const:Constants.ACEPTAR}"
                 Clicked="Button_Clicked"
                 Style="{StaticResource ButtonPopup}">
 

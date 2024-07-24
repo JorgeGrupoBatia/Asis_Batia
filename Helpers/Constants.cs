@@ -15,6 +15,9 @@ public static class Constants {
     #region Literales
     public const string SI = "Sí";
     public const string NO = "No";
+    public const string RECHAZAR = "Rechazar";
+    public const string CANCELAR = "Cancelar";
+    public const string ACEPTAR = "Aceptar";
 
     public const string INICIO_LABORES = "Inicio de labores";
     public const string SALIDA_COMER = "Salida a comer";
