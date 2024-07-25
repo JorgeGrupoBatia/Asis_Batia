@@ -19,6 +19,11 @@ public static class Constants {
     public const string CANCELAR = "Cancelar";
     public const string ACEPTAR = "Aceptar";
     public const string BIOMETA = "BIOMETA";
+    public const string EMPLEADO = "EMPLEADO";
+    public const string EMPRESA_CLIENTE= "EMPRESA/CLIENTE";
+    public const string ESTADO = "ESTADO";
+    public const string PUNTO_ATENCION= "PUNTO DE ATENCION O AREA DE TRABAJO";
+    public const string SIGUIENTE = "SIGUIENTE";
 
     public const string INICIO_LABORES = "Inicio de labores";
     public const string SALIDA_COMER = "Salida a comer";

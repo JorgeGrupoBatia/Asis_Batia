@@ -5,14 +5,14 @@
     xmlns:user="clr-namespace:Asis_Batia.Helpers"
     x:Class="Asis_Batia.View.FormuPrinAsis"
     Title="{Binding CurrentDate}"
-    Style="{StaticResource PageStyle}">   
+    Style="{StaticResource PageStyle}">
 
     <Grid>
         <RefreshView
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsRefreshing}"
             RefreshColor="{StaticResource Primary}">
-            
+
             <ScrollView
                 VerticalOptions="FillAndExpand"
                 IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}">
@@ -33,72 +33,37 @@
                             VerticalOptions="Center">
 
                             <Label
-                                Text="EMPLEADO"
-                                FontSize="18"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Center"
-                                TextColor="#2E3192" />
+                                Text="{x:Static user:Constants.EMPLEADO}"
+                                Style="{StaticResource FormTitleLabelStyle}" />
 
                             <Label
                                 Text="{x:Static user:UserSession.Empleado}"
-                                TextTransform="Uppercase"
-                                TextColor="Black"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Start"
-                                FontSize="16"
-                                Margin="0,0,0,20" />
+                                Style="{StaticResource FormSubtitleLabelStyle}" />
 
                             <Label
-                                Text="EMPRESA/CLIENTE"
-                                FontSize="18"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Center"
-                                TextColor="#2E3192" />
+                                Text="{x:Static user:Constants.EMPRESA_CLIENTE}"
+                                Style="{StaticResource FormTitleLabelStyle}" />
 
                             <Label
                                 Text="{x:Static user:UserSession.Cliente}"
-                                TextTransform="Uppercase"
-                                TextColor="Black"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Start"
-                                FontSize="16"
-                                Margin="0,0,0,20" />
+                                Style="{StaticResource FormSubtitleLabelStyle}" />
 
                             <Label
-                                Text="ESTADO"
-                                FontSize="18"
-                                FontAttributes="Bold"
-                                VerticalOptions="Center"
-                                HorizontalOptions="Start"
-                                TextColor="#2E3192" />
+                                Text="{x:Static user:Constants.ESTADO}"
+                                Style="{StaticResource FormTitleLabelStyle}" />
 
                             <Label
-                                x:Name="lbl_Estado"
                                 Text="{x:Static user:UserSession.Estado}"
-                                TextTransform="Uppercase"
-                                TextColor="Black"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Start"
-                                FontSize="16"
-                                Margin="0,0,0,20" />
+                                Style="{StaticResource FormSubtitleLabelStyle}" />
 
                             <Label
-                                Text="PUNTO DE ATENCION O AREA DE TRABAJO"
-                                FontSize="18"
-                                FontAttributes="Bold"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Start"
-                                TextColor="#2E3192" />
+                                Text="{x:Static user:Constants.PUNTO_ATENCION}"
+                                Style="{StaticResource FormTitleLabelStyle}" />
 
                             <Label
                                 Text="{x:Static user:UserSession.Inmueble}"
-                                TextTransform="Uppercase"
-                                TextColor="Black"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Start"
-                                FontSize="16" />
+                                Style="{StaticResource FormSubtitleLabelStyle}"
+                                Margin="0" />
                         </VerticalStackLayout>
                     </Frame>
 
@@ -120,19 +85,13 @@
 
                                         <Label
                                             Text="{Binding Descripcion}"
-                                            FontSize="18"
-                                            FontAttributes="Bold"
-                                            HorizontalTextAlignment="Start"
-                                            VerticalTextAlignment="Center"
-                                            TextColor="#2E3192" />
+                                            Style="{StaticResource FormTitleLabelStyle}" />
 
                                         <Label
                                             Grid.Column="1"
                                             Text="{Binding Fecha, StringFormat='{0:hh:mm tt}'}"
-                                            TextColor="Black"
-                                            VerticalTextAlignment="Center"
-                                            HorizontalTextAlignment="Start"
-                                            FontSize="16" />
+                                            Style="{StaticResource FormSubtitleLabelStyle}"
+                                            Margin="0" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
@@ -142,14 +101,14 @@
 
                     <Button
                         Grid.Row="2"
-                        Text="SIGUIENTE"
+                        Text="{x:Static user:Constants.SIGUIENTE}"
                         Command="{Binding NextPageCommand}"
                         IsVisible="{Binding ShowButton}"
                         VerticalOptions="EndAndExpand" />
                 </Grid>
             </ScrollView>
-        </RefreshView>       
-        
+        </RefreshView>
+
         <Grid
             BackgroundColor="#AA000000"
             VerticalOptions="FillAndExpand"
