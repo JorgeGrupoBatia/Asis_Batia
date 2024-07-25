@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:const="clr-namespace:Asis_Batia.Helpers"
     IsCloseOnBackgroundClick="False"
     xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
     x:Class="Asis_Batia.Popups.SelectInmueble"
@@ -13,12 +14,15 @@
     <Frame
         CornerRadius="25"
         BorderColor="Transparent"
-        Margin="30, 0">
+        Margin="{OnPlatform Android={OnIdiom Phone='30, 0', Tablet='70, 0'}, iOS='30, 0'}"
+        Padding="{OnPlatform Android={OnIdiom Phone='20', Tablet='20,70,20,20'}, iOS='20'}">
 
         <Grid
-            RowDefinitions="auto, auto, auto, auto, auto">
+            RowDefinitions="auto, auto, auto, auto, auto"
+            ColumnDefinitions="*, *">
 
             <Label
+                Grid.ColumnSpan="2"
                 Text="Seleccione el cliente"
                 FontSize="{OnPlatform Android={OnIdiom Phone=25, Tablet=35}, iOS=25}"
                 FontAttributes="Bold"
@@ -29,6 +33,7 @@
 
             <Picker
                 Grid.Row="1"
+                Grid.ColumnSpan="2"
                 Title="-Seleccionar-"
                 TitleColor="Black"
                 CharacterSpacing="2"
@@ -41,7 +46,7 @@
                 ItemDisplayBinding="{Binding nombre}"
                 SelectedItem="{Binding SelectedClient}"
                 IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                Margin="0,0,0,60">
+                Margin="{OnPlatform Android={OnIdiom Phone='0,0,0,60', Tablet='0,0,0,100'}, iOS='0,0,0,60'}">
 
                 <Picker.Behaviors>
                     <toolkit:EventToCommandBehavior
@@ -52,8 +57,9 @@
 
             <Label
                 Grid.Row="2"
+                Grid.ColumnSpan="2"
                 Text="Seleccione su punto de atención"
-                FontSize="25"
+                FontSize="{OnPlatform Android={OnIdiom Phone=25, Tablet=35}, iOS=25}"
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
@@ -62,33 +68,35 @@
 
             <Picker
                 Grid.Row="3"
+                Grid.ColumnSpan="2"
                 Title="-Seleccionar-"
                 TitleColor="Black"
                 CharacterSpacing="2"
                 FontAutoScalingEnabled="True"
                 FontFamily="Regular"
-                FontSize="20"
+                FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
                 ItemsSource="{Binding InmuebleList}"
                 ItemDisplayBinding="{Binding nombre}"
                 SelectedItem="{Binding SelectedInmueble}"
                 IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                Margin="0,0,0,60" />
+                Margin="{OnPlatform Android={OnIdiom Phone='0,0,0,60', Tablet='0,0,0,100'}, iOS='0,0,0,60'}" />
 
             <Button
                 Grid.Row="4"
-                Text="Aceptar"
+                Grid.Column="1"
+                Text="{x:Static const:Constants.ACEPTAR}"
                 Command="{Binding NextPageCommand}"
                 Style="{StaticResource ButtonPopup}"
-                HorizontalOptions="End"/>
+                HorizontalOptions="Center"/>
 
             <Button
                 Grid.Row="4"
-                Text="Cancelar"
+                Text="{x:Static const:Constants.CANCELAR}"
                 Command="{Binding CancelCommand}"
                 Style="{StaticResource ButtonPopup}"
-                HorizontalOptions="Start"/>
+                HorizontalOptions="Center"/>
         </Grid>
 
     </Frame>
