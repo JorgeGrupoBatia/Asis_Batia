@@ -10,7 +10,7 @@
     <ScrollView>
         <VerticalStackLayout
             VerticalOptions="Start"
-            Margin="10, 10, 10, 0">
+            Margin="{OnPlatform Android={OnIdiom Phone=10, Tablet=20}, iOS=10}">
 
             <Label
                 Text="POLÍTICA DE PRIVACIDAD DE USUARIO PARA APLICACIÓN MÓVIL BIOMETA DESARROLLADA POR EL ÁREA DE SISTEMAS GRUPO BATIA."
@@ -20,13 +20,13 @@
                 HorizontalTextAlignment="Center"
                 FontFamily="Regular"
                 TextColor="#2E3192"
-                FontSize="25"
+                FontSize="{OnPlatform Android={OnIdiom Phone=25, Tablet=40}, iOS=25}"
                 FontAttributes="Bold"
-                Margin="0,0,0,30" />
+                Margin="{OnPlatform Android={OnIdiom Phone='0,0,0,30', Tablet='0,0,0,45'}, iOS='0,0,0,30'}" />
 
             <Label
                 Text="{x:Static const:Constants.AVISO_PRIVACIDAD_MOSTRAR_PAGE}"
-                FontSize="20"
+                FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=25}, iOS=20}"
                 FontAttributes="None"
                 FontFamily="Regular"
                 TextColor="Black"
