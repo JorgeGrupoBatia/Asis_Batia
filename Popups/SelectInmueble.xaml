@@ -20,7 +20,7 @@
 
             <Label
                 Text="Seleccione el cliente"
-                FontSize="25"
+                FontSize="{OnPlatform Android={OnIdiom Phone=25, Tablet=35}, iOS=25}"
                 FontAttributes="Bold"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
@@ -34,7 +34,7 @@
                 CharacterSpacing="2"
                 FontAutoScalingEnabled="True"
                 FontFamily="Regular"
-                FontSize="20"
+                FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
                 VerticalTextAlignment="Center"
                 HorizontalTextAlignment="Center"
                 ItemsSource="{Binding ClientList}"

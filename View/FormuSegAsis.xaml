@@ -2,8 +2,9 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:const="clr-namespace:Asis_Batia.Helpers"
     x:Class="Asis_Batia.View.FormuSegAsis"
-    Title="Registrar entrada / salida"
+    Title="{x:Static const:Constants.REGISTRAR_ENTRADA_SALIDA}"
     Style="{StaticResource PageStyle}"
     Shell.FlyoutBehavior="Disabled">
 
@@ -18,15 +19,15 @@
 
                 <Label
                     Grid.ColumnSpan="2"
-                    Text="Seleccione una opción"
+                    Text="{x:Static const:Constants.SELECCIONE_OPCION}"
                     IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
-                    FontSize="{OnPlatform Android=28, iOS=22}"
+                    FontSize="{OnPlatform Android={OnIdiom Phone=28, Tablet=36}, iOS=22}"
                     FontAttributes="Bold"
                     VerticalTextAlignment="Center"
                     HorizontalTextAlignment="Center"
                     FontFamily="Regular"
                     TextColor="#2E3192"
-                    Margin="0,20,0,0" />
+                    Margin="{OnPlatform Android={OnIdiom Phone='0,20,0,0', Tablet='0,30,0,0'}, iOS='0,20,0,0'}" />
 
                 <Frame
                     Grid.Row="1"
@@ -35,8 +36,8 @@
                     BackgroundColor="Transparent"
                     BorderColor="#D4BC88"
                     HasShadow="True"
-                    Margin="0,20,0,30"
-                    Padding="10">
+                    Margin="{OnPlatform Android={OnIdiom Phone='0,10,0,30', Tablet='50, 20, 50, 50'}, iOS='0,10,0,30'}"
+                    Padding="{OnPlatform Android={OnIdiom Phone=10, Tablet=30}, iOS=10}">
 
                     <VerticalStackLayout>
 
@@ -46,7 +47,7 @@
                             IsChecked="True"
                             CheckedChanged="RadioButton_CheckedChanged"
                             Value="{Binding Nomenclatura}"
-                            FontSize="20"
+                            FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
                             FontFamily="Regular" />
 
                         <RadioButton
@@ -55,7 +56,7 @@
                             Content="Descanso"
                             CheckedChanged="RadioButton_CheckedChanged"
                             Value="N"
-                            FontSize="20"
+                            FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
                             FontFamily="Regular" />
                     </VerticalStackLayout>
                 </Frame>
@@ -64,26 +65,26 @@
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
                     Text="Adjunte: incapacidad, listas de asistencia, justificante, etc."
-                    FontSize="{OnPlatform Android=20, iOS=16}"
+                    FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=16}"
                     VerticalTextAlignment="Center"
                     HorizontalTextAlignment="Center"
                     FontFamily="Regular"
                     TextColor="#2E3192"
-                    Margin="0,0,0,30" />
+                    Margin="{OnPlatform Android={OnIdiom Phone='0,0,0,30', Tablet='0,0,0,50'}, iOS='0,0,0,30'}" />
 
                 <Button
                     Grid.Row="3"
-                    Text="Archivo"
-                    WidthRequest="150"
+                    Text="{x:Static const:Constants.ARCHIVO}"
+                    WidthRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=230}, iOS=150}"
                     Command="{Binding LoadFileCommand}"
                     Margin="0, 0, 0, 20" />
 
                 <Button
                     Grid.Row="3"
                     Grid.Column="1"
-                    Text="Foto"
+                    Text="{x:Static const:Constants.FOTO}"
                     Command="{Binding PhotoCommand}"
-                    WidthRequest="150"
+                    WidthRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=230}, iOS=150}"
                     Margin="0, 0, 0, 20" />
 
                 <Image
@@ -92,7 +93,7 @@
                     Source="{Binding LocalFilePath}"
                     IsVisible="{Binding ShowFile}"
                     Aspect="AspectFit"
-                    HeightRequest="150"
+                    HeightRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=250}, iOS=150}"
                     Margin="10" />
 
                 <Label
@@ -101,7 +102,7 @@
                     IsVisible="{Binding Source={x:Reference lblFile}, Path=IsVisible, Converter={StaticResource InvertedBoolConverter}}"
                     HorizontalTextAlignment="Center"
                     LineBreakMode="MiddleTruncation"
-                    FontSize="18"
+                    FontSize="{OnPlatform Android={OnIdiom Phone=18, Tablet=22}, iOS=18}"
                     Margin="10" />
 
                 <Image
@@ -109,7 +110,7 @@
                     Grid.Column="1"
                     Source="{Binding LocalPhotoPath}"
                     Aspect="AspectFit"
-                    HeightRequest="150"
+                    HeightRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=250}, iOS=150}"
                     Margin="10" />
 
                 <Entry
@@ -121,7 +122,7 @@
                     VerticalTextAlignment="Center"
                     HorizontalTextAlignment="Center"
                     CharacterSpacing="1"
-                    FontSize="{OnPlatform Android=22, iOS=18}"
+                    FontSize="{OnPlatform Android={OnIdiom Phone=22, Tablet=30}, iOS=18}"
                     PlaceholderColor="LightGray"
                     TextColor="Black"
                     Placeholder="Capture informacion adicional"
