@@ -36,24 +36,24 @@
         <Setter Property="TextColor" Value="{StaticResource Dorado}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
         <Setter Property="CornerRadius" Value="10"/>
-        <Setter Property="BorderWidth" Value="{OnPlatform Android={OnIdiom Phone=2, Tablet=4}, iOS=2}" />
+        <Setter Property="BorderWidth" Value="{x:OnPlatform Android={x:OnIdiom Phone=2, Tablet=4}, iOS=2}" />
         <Setter Property="BorderColor" Value="{StaticResource Dorado}" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
-        <Setter Property="FontSize" Value="{OnPlatform Android={OnIdiom Phone=20, Tablet=32}, iOS=20}"/>
+        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=20, Tablet=32}, iOS=20}"/>
         <Setter Property="FontAttributes" Value="Bold"/>        
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="Padding" Value="14,10"/>
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>        
-        <Setter Property="HeightRequest" Value="{OnPlatform Android={OnIdiom Phone=45, Tablet=70}, iOS=45}"/>        
-        <Setter Property="WidthRequest" Value="{OnPlatform Android={OnIdiom Phone=250, Tablet=400}, iOS=250}"/>        
+        <Setter Property="HeightRequest" Value="{x:OnPlatform Android={x:OnIdiom Phone=45, Tablet=70}, iOS=45}"/>        
+        <Setter Property="WidthRequest" Value="{x:OnPlatform Android={x:OnIdiom Phone=250, Tablet=400}, iOS=250}"/>        
     </Style>
 
     <Style TargetType="Button" x:Key="ButtonPopup">
-        <Setter Property="HeightRequest" Value="{OnPlatform Android={OnIdiom Phone=45, Tablet=70}, iOS=45}"/>        
-        <Setter Property="WidthRequest" Value="{OnPlatform Android={OnIdiom Phone=120, Tablet=170}, iOS=120}"/> 
-        <Setter Property="FontSize" Value="{OnPlatform Android={OnIdiom Phone=18, Tablet=24}, iOS=18}"/> 
-        <Setter Property="Margin" Value="{OnPlatform Android={OnIdiom Phone=10, Tablet=20}, iOS=10}"/> 
+        <Setter Property="HeightRequest" Value="{x:OnPlatform Android={x:OnIdiom Phone=45, Tablet=70}, iOS=45}"/>        
+        <Setter Property="WidthRequest" Value="{x:OnPlatform Android={x:OnIdiom Phone=120, Tablet=170}, iOS=120}"/> 
+        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=18, Tablet=24}, iOS=18}"/> 
+        <Setter Property="Margin" Value="{x:OnPlatform Android={x:OnIdiom Phone=10, Tablet=20}, iOS=10}"/> 
     </Style>
     
     <Style TargetType="CheckBox">
@@ -186,7 +186,7 @@
     </Style>
 
     <Style TargetType="Label" x:Key="FormTitleLabelStyle">
-        <Setter Property="FontSize" Value="{OnPlatform Android={OnIdiom Phone=18, Tablet=22}, iOS=18}" />
+        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=18, Tablet=22}, iOS=18}" />
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="HorizontalTextAlignment" Value="Start"/>
@@ -194,7 +194,7 @@
     </Style>
 
     <Style TargetType="Label" x:Key="FormSubtitleLabelStyle">
-        <Setter Property="FontSize" Value="{OnPlatform Android={OnIdiom Phone=16, Tablet=20}, iOS=16}" />
+        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=16, Tablet=20}, iOS=16}" />
         <Setter Property="TextTransform" Value="Uppercase"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="HorizontalTextAlignment" Value="Start"/>
@@ -408,7 +408,7 @@
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
         <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}" />
-        <Setter Property="Shell.ForegroundColor" Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
+        <Setter Property="Shell.ForegroundColor" Value="{x:OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
         <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
         <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
