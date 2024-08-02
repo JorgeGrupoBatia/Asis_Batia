@@ -15,7 +15,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     bool _getLocation;
     DateTime _iniciolabores;
 
-    [NotifyCanExecuteChangedFor(nameof(PhotoCommand), nameof(LoadFileCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RegisterCommand), nameof(PhotoCommand), nameof(LoadFileCommand))]
     [ObservableProperty]
     bool _isBusy;
 
@@ -46,18 +46,20 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     [ObservableProperty]
     bool _showFile;
 
-    [RelayCommand]
-    async Task Register() {
+    [RelayCommand(CanExecute = nameof(CanExecute))]
+    async void Register() {
+        IsBusy = true;
         if(UserSession.EsEmpleadoElektra) {
             if(string.IsNullOrWhiteSpace(FileName)) {
                 await App.Current.MainPage.DisplayAlert("", "Ingrese captura de pantalla de \'Proveedores GS\'", "Ok");
                 return;
             }
         }
-        await ValidateNomenclature();
+        ValidateNomenclature();
+        IsBusy = false;
     }
 
-    async Task ValidateNomenclature() {
+    async void ValidateNomenclature() {
         if(_selectionRadio == Nomenclatura) {
             if(await ValidateLocation()) {
                 await SendData();
