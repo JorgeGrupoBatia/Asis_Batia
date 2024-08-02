@@ -166,7 +166,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             TextLoading = "";
             IsLoading = false;
             IsBusy = false;
-            await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un error al registrar los datos", "Ok");
+            await Shell.Current.GoToAsync("..");
+            await App.Current.MainPage.DisplayAlert("Error", "Ocurrió una interrupción en el flujo del envío de datos.\n\nRevise sus registros y de ser necesario vuelva a intentarlo.", "Ok");
             return;
         }
 
