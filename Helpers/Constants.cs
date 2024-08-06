@@ -5,11 +5,16 @@ public static class Constants {
     #region API URI´s
     public const string API_BASE_URL = "https://www.singa.com.mx:5500/api/";
     public const string API_EMPLEADO_APP = "EmpleadoApp";
-    public const string API_INMUEBLES = "Inmueble";
-    public const string API_ENVIO_ARCHIVOS= "FilesAsis/CargaMul";
-    public const string API_REGISTRO_BIOMETA = "RegistroBiometaN";
+#if DEBUG
+    public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometaPrueba";
+    public const string API_REGISTRO_BIOMETA = "RegistroBiometaPrueba";
+#elif RELEASE
     public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometa";
+    public const string API_REGISTRO_BIOMETA = "RegistroBiometaN";
+#endif
     public const string API_CLIENTE = "cliente";
+    public const string API_INMUEBLES = "Inmueble";
+    public const string API_ENVIO_ARCHIVOS = "FilesAsis/CargaMul";
     #endregion
 
     #region Literales
@@ -20,20 +25,43 @@ public static class Constants {
     public const string ACEPTAR = "Aceptar";
     public const string BIOMETA = "BIOMETA";
     public const string EMPLEADO = "EMPLEADO";
-    public const string EMPRESA_CLIENTE= "EMPRESA/CLIENTE";
+    public const string EMPRESA_CLIENTE = "EMPRESA/CLIENTE";
     public const string ESTADO = "ESTADO";
-    public const string PUNTO_ATENCION= "PUNTO DE ATENCION O AREA DE TRABAJO";
+    public const string PUNTO_ATENCION = "PUNTO DE ATENCION O AREA DE TRABAJO";
     public const string SIGUIENTE = "SIGUIENTE";
     public const string REGISTRAR_ENTRADA_SALIDA = "Registrar entrada / salida";
     public const string SELECCIONE_OPCION = "Seleccione una opción";
     public const string ARCHIVO = "Archivo";
     public const string FOTO = "Foto";
+    public const string ULTIMO_REGISTRO = "Últimos registros";
+
+    public const string A = "A";
+    public const string A2 = "A2";
+    public const string A3 = "A3";
+    public const string A4 = "A4";
+    public const string N = "N";
 
     public const string INICIO_LABORES = "Inicio de labores";
     public const string SALIDA_COMER = "Salida a comer";
     public const string ENTRADA_COMER = "Entrada de comer";
     public const string FIN_LABORES = "Fin de labores";
     public const string DESCANSO = "Descanso";
+
+    public static string NextMovement(string movement) {
+        switch(movement) {
+            case A:
+                return UserSession.EsEmpleadoElektra ? A2 : A4;
+            case A2:
+                return A3;
+            case A3:
+                return A4;
+            case A4:
+            case N:
+                return A;
+            default:
+                return string.Empty;
+        }
+    }
     #endregion
 
     #region Keys
@@ -64,6 +92,6 @@ public static class Constants {
         + "\n\nLe recomendamos que lea detenidamente nuestra política de privacidad que se encuentran al inicio de esta ventana.";
     public const string AVISO_PRIVACIDAD_PARTE_3 = "\n\nAgradecemos su confianza en nosotros y estamos comprometidos en proteger toda información utilizada en BIOMETA.";
 
-    public const string AVISO_PRIVACIDAD_MOSTRAR_POUP=$"{AVISO_PRIVACIDAD_PARTE_1}{AVISO_PRIVACIDAD_PARTE_2}{AVISO_PRIVACIDAD_PARTE_3}";
-    public const string AVISO_PRIVACIDAD_MOSTRAR_PAGE=$"{AVISO_PRIVACIDAD_PARTE_1}{AVISO_PRIVACIDAD_PARTE_3}";
-} 
+    public const string AVISO_PRIVACIDAD_MOSTRAR_POUP = $"{AVISO_PRIVACIDAD_PARTE_1}{AVISO_PRIVACIDAD_PARTE_2}{AVISO_PRIVACIDAD_PARTE_3}";
+    public const string AVISO_PRIVACIDAD_MOSTRAR_PAGE = $"{AVISO_PRIVACIDAD_PARTE_1}{AVISO_PRIVACIDAD_PARTE_3}";
+}

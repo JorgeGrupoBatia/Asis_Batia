@@ -26,7 +26,7 @@
                         BackgroundColor="Transparent"
                         BorderColor="{StaticResource Dorado}"
                         IsClippedToBounds="True"
-                        Padding="20">
+                        Padding="10">
 
                         <VerticalStackLayout
                             Spacing="0"
@@ -72,38 +72,46 @@
                         IsVisible="{Binding MovimientoList, Converter={StaticResource IsListNotNullOrEmptyConverter}}"
                         BorderColor="{StaticResource Dorado}"
                         BackgroundColor="Transparent"
-                        Margin="0, 20">
+                        Margin="0, 20"
+                        Padding="10">
+                        
+                        <Grid>
+                            
+                            <Label
+                                Text="{x:Static user:Constants.ULTIMO_REGISTRO}" 
+                                HorizontalTextAlignment="Center"
+                                TextColor="Gray"
+                                FontSize="18"/>
+                            
+                            <VerticalStackLayout
+                                BindableLayout.ItemsSource="{Binding MovimientoList}"
+                                Margin="0,30,0,0">
 
-                        <VerticalStackLayout
-                            BindableLayout.ItemsSource="{Binding MovimientoList}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid
+                                            RowDefinitions="*, *">
 
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid
-                                        ColumnDefinitions="2*, *"
-                                        Margin="0, 5">
+                                            <Label
+                                                Text="{Binding Descripcion}"
+                                                Style="{StaticResource FormTitleLabelStyle}" />
 
-                                        <Label
-                                            Text="{Binding Descripcion}"
-                                            Style="{StaticResource FormTitleLabelStyle}" />
+                                            <Label
+                                                Grid.Row="1"
+                                                Text="{Binding Fecha, StringFormat='{0:dddd      dd-MMMM      hh:mm tt}'}"
+                                                Style="{StaticResource FormSubtitleLabelStyle}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
 
-                                        <Label
-                                            Grid.Column="1"
-                                            Text="{Binding Fecha, StringFormat='{0:hh:mm tt}'}"
-                                            Style="{StaticResource FormSubtitleLabelStyle}"
-                                            Margin="0" />
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-
-                        </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>                     
                     </Frame>
-
+                    
                     <Button
                         Grid.Row="2"
                         Text="{x:Static user:Constants.SIGUIENTE}"
                         Command="{Binding NextPageCommand}"
-                        IsVisible="{Binding ShowButton}"
                         VerticalOptions="EndAndExpand" />
                 </Grid>
             </ScrollView>

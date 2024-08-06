@@ -52,6 +52,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         if(UserSession.EsEmpleadoElektra) {
             if(string.IsNullOrWhiteSpace(FileName)) {
                 await App.Current.MainPage.DisplayAlert("", "Ingrese captura de pantalla de \'Proveedores GS\'", "Ok");
+                IsBusy = false;
                 return;
             }
         }
@@ -73,7 +74,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     async Task<bool> ValidateLocation() {
         if(TipoRegistro.Equals(Constants.FIN_LABORES)) {
             bool resp = await App.Current.MainPage.DisplayAlert(""
-                , $"Está a punto de registrar {Constants.FIN_LABORES.ToUpper()}, su {Constants.INICIO_LABORES.ToUpper()} fue a la(s) {_iniciolabores.ToString("hh:mm tt")}\n\n¿Desea continuar?"
+                , $"Está a punto de registrar {Constants.FIN_LABORES.ToUpper()}, su {Constants.INICIO_LABORES.ToUpper()} fue el día {_iniciolabores.ToString("dddd dd-MMMM a la(\\s) hh:mm tt")}\n\n¿Desea continuar?"
                 , Constants.SI, Constants.NO);
             if(!resp) {
                 return false;
@@ -166,8 +167,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             TextLoading = "";
             IsLoading = false;
             IsBusy = false;
-            await Shell.Current.GoToAsync("..");
             await App.Current.MainPage.DisplayAlert("Error", "Ocurrió una interrupción en el flujo del envío de datos.\n\nRevise sus registros y de ser necesario vuelva a intentarlo.", "Ok");
+            await Shell.Current.GoToAsync("..");
             return;
         }
 

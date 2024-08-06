@@ -14,18 +14,18 @@ public class MovimientoModel {
 
     public static string GetTipoRegistro(string nomenclatura) {
         switch(nomenclatura) {
-            case "A":
+            case Constants.A:
                 return Constants.INICIO_LABORES;
-            case "A2":
+            case Constants.A2:
                 return Constants.SALIDA_COMER;
-            case "A3":
+            case Constants.A3:
                 return Constants.ENTRADA_COMER;
-            case "A4":
+            case Constants.A4:
                 return Constants.FIN_LABORES;
-            case "N":
+            case Constants.N:
                 return Constants.DESCANSO;
             default:
-                return "";
+                return string.Empty;
         }
     }
 }

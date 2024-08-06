@@ -186,7 +186,7 @@
     </Style>
 
     <Style TargetType="Label" x:Key="FormTitleLabelStyle">
-        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=18, Tablet=22}, iOS=18}" />
+        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=16, Tablet=22}, iOS=18}" />
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="HorizontalTextAlignment" Value="Start"/>
@@ -194,12 +194,12 @@
     </Style>
 
     <Style TargetType="Label" x:Key="FormSubtitleLabelStyle">
-        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=16, Tablet=20}, iOS=16}" />
+        <Setter Property="FontSize" Value="{x:OnPlatform Android={x:OnIdiom Phone=14, Tablet=20}, iOS=16}" />
         <Setter Property="TextTransform" Value="Uppercase"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="HorizontalTextAlignment" Value="Start"/>
         <Setter Property="TextColor" Value="Black"/>
-        <Setter Property="Margin" Value="0,0,0,20"/>
+        <Setter Property="Margin" Value="0,0,0,15"/>
     </Style>
     
     <Style TargetType="ListView">

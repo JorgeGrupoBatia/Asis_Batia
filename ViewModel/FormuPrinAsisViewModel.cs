@@ -16,9 +16,6 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     [ObservableProperty]
     bool _isLoading;
 
-    [ObservableProperty]
-    bool _showButton;
-
     [NotifyCanExecuteChangedFor(nameof(NextPageCommand))]
     [ObservableProperty]
     bool _isRefreshing;
@@ -40,41 +37,32 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
         if(MovimientoList is null) {
             await App.Current.MainPage.DisplayAlert("", "Error al obtener los datos, refresque la pantalla", "Ok");
             MovimientoList = new ObservableCollection<MovimientoModel>();
+            return;
         }
 
-        EvaluarShowButton();
+        MovimientoList = new ObservableCollection<MovimientoModel>(MovimientoList.Reverse());
+
+        if(!UserSession.EsEmpleadoElektra) {
+            while(MovimientoList.Count > 2) {
+                MovimientoList.RemoveAt(0);
+            }
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanExecuteNextPageCommand))]
     private async Task NextPage() {
-        int size = MovimientoList.Count;
         string nomenclatura;
-        DateTime inicioLabores = new DateTime();
 
-        switch(size) {
-            case 0:
-                nomenclatura = "A";
-                break;
-            case 1:
-                if(UserSession.EsEmpleadoElektra) {
-                    nomenclatura = "A2";
-                } else {
-                    nomenclatura = "A4";
-                }
-                break;
-            case 2:
-                nomenclatura = "A3";
-                break;
-            case 3:
-                nomenclatura = "A4";
-                break;
-            default:
-                nomenclatura = "";
-                break;
+        if(MovimientoList.Count == 0) {
+            nomenclatura = Constants.A;
+        } else {
+            nomenclatura = Constants.NextMovement(MovimientoList[MovimientoList.Count - 1].Movimiento);
         }
 
-        if(size != 0) {
-            inicioLabores = MovimientoList.ElementAt(0).Fecha;
+        DateTime inicioLabores = new DateTime();
+
+        if(MovimientoList.Count != 0) {
+            inicioLabores = MovimientoList.Where(m => m.Movimiento == Constants.A).First().Fecha; 
         }
 
         Dictionary<string, object> data = new Dictionary<string, object>{
@@ -87,42 +75,6 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
 
     bool CanExecuteNextPageCommand() {
         return !IsLoading && !IsRefreshing;
-    }
-
-    void EvaluarShowButton() {
-        try {
-            if(UserSession.EsEmpleadoElektra) {
-                if(MovimientoList.Count < 4) {
-                    if(MovimientoList.Count > 0) {
-                        foreach(MovimientoModel movimiento in MovimientoList) {
-                            if(movimiento.Movimiento.Equals("N")) {
-                                ShowButton = false;
-                                return;
-                            }
-                        }
-                    }
-                    ShowButton = true;
-                } else {
-                    ShowButton = false;
-                }
-            } else {
-                if(MovimientoList.Count > 1) {
-                    ShowButton = false;
-                } else {
-                    if(MovimientoList.Count > 0) {
-                        foreach(MovimientoModel movimiento in MovimientoList) {
-                            if(movimiento.Movimiento.Equals("N")) {
-                                ShowButton = false;
-                                return;
-                            }
-                        }
-                    }
-                    ShowButton = true;
-                }
-            }
-        } catch(Exception) {
-            ShowButton = true;
-        }
     }
 
     public async Task OnAppearing() {
