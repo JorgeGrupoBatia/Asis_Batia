@@ -33,7 +33,7 @@ public static class Constants {
     public const string SELECCIONE_OPCION = "Seleccione una opción";
     public const string ARCHIVO = "Archivo";
     public const string FOTO = "Foto";
-    public const string ULTIMO_REGISTRO = "Últimos registros";
+    public const string ULTIMO_REGISTRO = "Último registro";
 
     public const string A = "A";
     public const string A2 = "A2";

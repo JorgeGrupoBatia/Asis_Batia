@@ -39,30 +39,21 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
             MovimientoList = new ObservableCollection<MovimientoModel>();
             return;
         }
-
-        MovimientoList = new ObservableCollection<MovimientoModel>(MovimientoList.Reverse());
-
-        if(!UserSession.EsEmpleadoElektra) {
-            while(MovimientoList.Count > 2) {
-                MovimientoList.RemoveAt(0);
-            }
-        }
     }
 
     [RelayCommand(CanExecute = nameof(CanExecuteNextPageCommand))]
     private async Task NextPage() {
         string nomenclatura;
-
-        if(MovimientoList.Count == 0) {
-            nomenclatura = Constants.A;
-        } else {
-            nomenclatura = Constants.NextMovement(MovimientoList[MovimientoList.Count - 1].Movimiento);
-        }
-
         DateTime inicioLabores = new DateTime();
 
-        if(MovimientoList.Count != 0) {
-            inicioLabores = MovimientoList.Where(m => m.Movimiento == Constants.A).First().Fecha; 
+        if(MovimientoList.Count > 0) {
+            nomenclatura = Constants.NextMovement(MovimientoList[MovimientoList.Count - 1].Movimiento);
+
+            if(MovimientoList[0].Movimiento == Constants.A) {
+                inicioLabores = MovimientoList[0].Fecha;
+            }
+        } else {
+            nomenclatura = Constants.A;            
         }
 
         Dictionary<string, object> data = new Dictionary<string, object>{
