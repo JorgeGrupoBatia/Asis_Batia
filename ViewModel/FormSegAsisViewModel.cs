@@ -300,7 +300,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     public void ApplyQueryAttributes(IDictionary<string, object> query) {
         try {
             Nomenclatura = (string)query[Constants.NOMENCLATURA_KEY];
-            TipoRegistro = MovimientoModel.GetTipoRegistro(Nomenclatura);
+            TipoRegistro = Constants.GetRegisterType(Nomenclatura);
             _selectionRadio = Nomenclatura;
             _iniciolabores = (DateTime)query[Constants.INICIO_LABORES_KEY];
         } catch(Exception) { }

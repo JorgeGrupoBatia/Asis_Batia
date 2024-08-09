@@ -47,7 +47,7 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
         DateTime inicioLabores = new DateTime();
 
         if(MovimientoList.Count > 0) {
-            nomenclatura = Constants.NextMovement(MovimientoList[MovimientoList.Count - 1].Movimiento);
+            nomenclatura = Constants.GetNextRegister(MovimientoList[MovimientoList.Count - 1].Movimiento);
 
             if(MovimientoList[0].Movimiento == Constants.A) {
                 inicioLabores = MovimientoList[0].Fecha;

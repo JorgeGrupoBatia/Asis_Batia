@@ -40,15 +40,27 @@ public static class Constants {
     public const string A3 = "A3";
     public const string A4 = "A4";
     public const string N = "N";
+    public const string D = "D";
+    public const string F = "F";
+    public const string FJ = "FJ";
+    public const string IEG = "IEG";
+    public const string IRT = "IRT";
+    public const string V = "V";
 
     public const string INICIO_LABORES = "Inicio de labores";
     public const string SALIDA_COMER = "Salida a comer";
     public const string ENTRADA_COMER = "Entrada de comer";
     public const string FIN_LABORES = "Fin de labores";
     public const string DESCANSO = "Descanso";
+    public const string DOBLETE= "Doblete";
+    public const string FALTA= "Falta";
+    public const string FALTA_JUSTIFICADA= "Falta justificada";
+    public const string INCAPACIDAD_ENFERMEDAD_GENERAL= "Incapacidad por enfermedad general";
+    public const string INCAPACIDAD_RIESGO_TRABAJO= "Incapacidad por riesgo de trabajo";
+    public const string VACACIONES= "Vacaciones";
 
-    public static string NextMovement(string movement) {
-        switch(movement) {
+    public static string GetNextRegister(string currentRegister) {
+        switch(currentRegister) {
             case A:
                 return UserSession.EsEmpleadoElektra ? A2 : A4;
             case A2:
@@ -58,6 +70,35 @@ public static class Constants {
             case A4:
             case N:
                 return A;
+            default:
+                return A;
+        }
+    }
+
+    public static string GetRegisterType(string nomenclatura) {
+        switch(nomenclatura) {
+            case A:
+                return INICIO_LABORES;
+            case A2:
+                return SALIDA_COMER;
+            case A3:
+                return ENTRADA_COMER;
+            case A4:
+                return FIN_LABORES;
+            case N:
+                return DESCANSO;
+            case D:
+                return DOBLETE;
+            case F:
+                return FALTA;
+            case FJ:
+                return FALTA_JUSTIFICADA;
+            case IEG:
+                return INCAPACIDAD_ENFERMEDAD_GENERAL;
+            case IRT:
+                return INCAPACIDAD_RIESGO_TRABAJO;
+            case V:
+                return VACACIONES;
             default:
                 return string.Empty;
         }

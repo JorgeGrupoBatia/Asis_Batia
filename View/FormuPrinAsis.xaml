@@ -94,7 +94,8 @@
 
                                             <Label
                                                 Text="{Binding Descripcion}"
-                                                Style="{StaticResource FormTitleLabelStyle}" />
+                                                Style="{StaticResource FormTitleLabelStyle}"
+                                                LineBreakMode="TailTruncation"/>
 
                                             <Label
                                                 Grid.Row="1"
