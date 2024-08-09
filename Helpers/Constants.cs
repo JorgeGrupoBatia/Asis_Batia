@@ -27,6 +27,7 @@ public static class Constants {
     public const string EMPLEADO = "EMPLEADO";
     public const string EMPRESA_CLIENTE = "EMPRESA/CLIENTE";
     public const string ESTADO = "ESTADO";
+    public const string TURNO = "TURNO";
     public const string PUNTO_ATENCION = "PUNTO DE ATENCION O AREA DE TRABAJO";
     public const string SIGUIENTE = "SIGUIENTE";
     public const string REGISTRAR_ENTRADA_SALIDA = "Registrar entrada / salida";

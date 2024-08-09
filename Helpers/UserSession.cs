@@ -15,6 +15,8 @@ public class UserSession {
     static readonly string ESTADO_KEY = "Estado key";
     static readonly string ID_ESTADO_KEY = "Id estado key";
     static readonly string SHOW_TERMS_CONDITIONS_KEY = "Show terms and conditions";
+    static readonly string TURNO_KEY = "Turno key";
+    static readonly string ID_TURNO_KEY = "Id turno key";  
 
     public static string Empleado {
         get => Preferences.Default.ContainsKey(EMPLEADO_KEY)
@@ -82,6 +84,18 @@ public class UserSession {
         set => Preferences.Default.Set(SHOW_TERMS_CONDITIONS_KEY, value);
     }
 
+    public static string Turno {
+        get => Preferences.Default.ContainsKey(TURNO_KEY)
+            ? (string)Preferences.Default.Get(TURNO_KEY, string.Empty) : string.Empty;
+        set => Preferences.Default.Set(TURNO_KEY, value);
+    }
+
+    public static int IdTurno {
+        get => Preferences.Default.ContainsKey(ID_TURNO_KEY)
+            ? (int)Preferences.Default.Get(ID_TURNO_KEY, 0) : 0;
+        set => Preferences.Default.Set(ID_TURNO_KEY, value);
+    }
+
     public static bool EsEmpleadoElektra {
         get => IdCliente == 130;
     }
@@ -97,6 +111,8 @@ public class UserSession {
         IdEstado = data.idEstado;
         LatitudeInmueble = data.LatitudInmueble;
         LongitudInmueble = data.LongitudInmueble;
+        Turno = data.Turno;
+        IdTurno = data.IdTurno;
     }
 
     public static void ClearSession() {

@@ -62,6 +62,14 @@
 
                             <Label
                                 Text="{x:Static user:UserSession.Inmueble}"
+                                Style="{StaticResource FormSubtitleLabelStyle}" />
+
+                            <Label
+                                Text="{x:Static user:Constants.TURNO}"
+                                Style="{StaticResource FormTitleLabelStyle}" />
+
+                            <Label
+                                Text="{x:Static user:UserSession.Turno}"
                                 Style="{StaticResource FormSubtitleLabelStyle}"
                                 Margin="0" />
                         </VerticalStackLayout>
@@ -74,15 +82,15 @@
                         BackgroundColor="Transparent"
                         Margin="0, 20"
                         Padding="10">
-                        
+
                         <Grid>
-                            
+
                             <Label
-                                Text="{x:Static user:Constants.ULTIMO_REGISTRO}" 
+                                Text="{x:Static user:Constants.ULTIMO_REGISTRO}"
                                 HorizontalTextAlignment="Center"
                                 TextColor="Gray"
-                                FontSize="18"/>
-                            
+                                FontSize="18" />
+
                             <VerticalStackLayout
                                 BindableLayout.ItemsSource="{Binding MovimientoList}"
                                 Margin="0,30,0,0">
@@ -95,20 +103,20 @@
                                             <Label
                                                 Text="{Binding Descripcion}"
                                                 Style="{StaticResource FormTitleLabelStyle}"
-                                                LineBreakMode="TailTruncation"/>
+                                                LineBreakMode="TailTruncation" />
 
                                             <Label
                                                 Grid.Row="1"
                                                 Text="{Binding Fecha, StringFormat='{0:dddd      dd-MMMM      hh:mm tt}'}"
-                                                Style="{StaticResource FormSubtitleLabelStyle}"/>
+                                                Style="{StaticResource FormSubtitleLabelStyle}" />
                                         </Grid>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
 
                             </VerticalStackLayout>
-                        </Grid>                     
+                        </Grid>
                     </Frame>
-                    
+
                     <Button
                         Grid.Row="2"
                         Text="{x:Static user:Constants.SIGUIENTE}"
