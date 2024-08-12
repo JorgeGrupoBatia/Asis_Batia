@@ -100,6 +100,10 @@ public class UserSession {
         get => IdCliente == 130;
     }
 
+    public static bool EsTurnoNocturno {
+        get => IdTurno == 3;
+    }
+
     public static void SetData(InfoEmpleadoModel data) {
         Empleado = data.empleado;
         IdEmpleado = data.idEmpleado;

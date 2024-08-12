@@ -55,7 +55,7 @@
                             IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
                             Content="Descanso"
                             CheckedChanged="RadioButton_CheckedChanged"
-                            Value="N"
+                            Value="{x:Static const:Constants.N}"
                             FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
                             FontFamily="Regular" />
                     </VerticalStackLayout>

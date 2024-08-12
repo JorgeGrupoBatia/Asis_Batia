@@ -19,6 +19,7 @@
             <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
             <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter"/>
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+            <converters:NomenclatureToBoolConverter x:Key="NomenclatureToBoolConverter"/>
             
         </ResourceDictionary>
     </Application.Resources>

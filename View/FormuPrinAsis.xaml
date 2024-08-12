@@ -98,16 +98,32 @@
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Grid
-                                            RowDefinitions="*, *">
+                                            RowDefinitions="*, *"
+                                            ColumnDefinitions="auto, *, auto"
+                                            ColumnSpacing="10">
 
                                             <Label
+                                                Grid.ColumnSpan="3"
                                                 Text="{Binding Descripcion}"
                                                 Style="{StaticResource FormTitleLabelStyle}"
                                                 LineBreakMode="TailTruncation" />
 
                                             <Label
                                                 Grid.Row="1"
-                                                Text="{Binding Fecha, StringFormat='{0:dddd      dd-MMMM      hh:mm tt}'}"
+                                                Text="{Binding Fecha, StringFormat='{0:dddd}'}"
+                                                Style="{StaticResource FormSubtitleLabelStyle}" />
+
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Text="{Binding Fecha, StringFormat='{0:dd-MMMM}'}"
+                                                Style="{StaticResource FormSubtitleLabelStyle}"
+                                                HorizontalOptions="Center" />
+
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                Text="{Binding Fecha, StringFormat='{0:hh:mm tt}'}"
                                                 Style="{StaticResource FormSubtitleLabelStyle}" />
                                         </Grid>
                                     </DataTemplate>
@@ -121,7 +137,8 @@
                         Grid.Row="2"
                         Text="{x:Static user:Constants.SIGUIENTE}"
                         Command="{Binding NextPageCommand}"
-                        VerticalOptions="EndAndExpand" />
+                        VerticalOptions="EndAndExpand"
+                        IsVisible="{Binding SiguienteNomenclatura, Converter={StaticResource NomenclatureToBoolConverter}}"/>
                 </Grid>
             </ScrollView>
         </RefreshView>

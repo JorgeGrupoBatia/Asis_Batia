@@ -10,6 +10,9 @@ namespace Asis_Batia.ViewModel;
 public partial class FormuPrinAsisViewModel : ViewModelBase {
 
     [ObservableProperty]
+    string _siguienteNomenclatura = "";
+
+    [ObservableProperty]
     ObservableCollection<MovimientoModel> _movimientoList;
 
     [NotifyCanExecuteChangedFor(nameof(NextPageCommand))]
@@ -39,25 +42,24 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
             MovimientoList = new ObservableCollection<MovimientoModel>();
             return;
         }
+
+        if(MovimientoList.Count > 0) {
+            SiguienteNomenclatura = Constants.GetNextRegister(MovimientoList[MovimientoList.Count - 1]);
+        } else {
+            SiguienteNomenclatura = Constants.A;
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanExecuteNextPageCommand))]
     private async Task NextPage() {
-        string nomenclatura;
         DateTime inicioLabores = new DateTime();
 
-        if(MovimientoList.Count > 0) {
-            nomenclatura = Constants.GetNextRegister(MovimientoList[MovimientoList.Count - 1].Movimiento);
-
-            if(MovimientoList[0].Movimiento == Constants.A) {
-                inicioLabores = MovimientoList[0].Fecha;
-            }
-        } else {
-            nomenclatura = Constants.A;            
+        if(MovimientoList.Count > 0 && MovimientoList[0].Movimiento == Constants.A) {
+            inicioLabores = MovimientoList[0].Fecha;
         }
 
         Dictionary<string, object> data = new Dictionary<string, object>{
-            { Constants.NOMENCLATURA_KEY, nomenclatura },
+            { Constants.NOMENCLATURA_KEY, SiguienteNomenclatura },
             { Constants.INICIO_LABORES_KEY, inicioLabores }
         };
 

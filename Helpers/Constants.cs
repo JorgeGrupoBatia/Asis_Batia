@@ -1,4 +1,6 @@
-﻿namespace Asis_Batia.Helpers;
+﻿using Asis_Batia.Model;
+
+namespace Asis_Batia.Helpers;
 
 public static class Constants {
 
@@ -53,26 +55,52 @@ public static class Constants {
     public const string ENTRADA_COMER = "Entrada de comer";
     public const string FIN_LABORES = "Fin de labores";
     public const string DESCANSO = "Descanso";
-    public const string DOBLETE= "Doblete";
-    public const string FALTA= "Falta";
-    public const string FALTA_JUSTIFICADA= "Falta justificada";
-    public const string INCAPACIDAD_ENFERMEDAD_GENERAL= "Incapacidad por enfermedad general";
-    public const string INCAPACIDAD_RIESGO_TRABAJO= "Incapacidad por riesgo de trabajo";
-    public const string VACACIONES= "Vacaciones";
+    public const string DOBLETE = "Doblete";
+    public const string FALTA = "Falta";
+    public const string FALTA_JUSTIFICADA = "Falta justificada";
+    public const string INCAPACIDAD_ENFERMEDAD_GENERAL = "Incapacidad por enfermedad general";
+    public const string INCAPACIDAD_RIESGO_TRABAJO = "Incapacidad por riesgo de trabajo";
+    public const string VACACIONES = "Vacaciones";
 
-    public static string GetNextRegister(string currentRegister) {
-        switch(currentRegister) {
-            case A:
-                return UserSession.EsEmpleadoElektra ? A2 : A4;
-            case A2:
-                return A3;
-            case A3:
-                return A4;
-            case A4:
-            case N:
-                return A;
-            default:
-                return A;
+    public const string SIN_REGISTRO = "-";
+
+    public static string GetNextRegister(MovimientoModel ultimoRegistro) {
+
+        bool esMismoDia = ultimoRegistro.Fecha.Day == DateTime.Now.Day;
+
+        if(UserSession.EsTurnoNocturno) {
+            switch(ultimoRegistro.Movimiento) {
+                case A:
+                    return A4;
+                case A4:
+                    return A;
+                default: // A2, A3, N, D, F, FJ, IEG, IRT, V
+                    return A;
+            }
+        } else {
+            if(!UserSession.EsEmpleadoElektra) {
+                switch(ultimoRegistro.Movimiento) {
+                    case A:
+                        return esMismoDia ? A4 : A;
+                    case A4:
+                        return esMismoDia ? SIN_REGISTRO : A;
+                    default: // A2, A3, N, D, F, FJ, IEG, IRT, V
+                        return esMismoDia ? SIN_REGISTRO : A;
+                }
+            } else {
+                switch(ultimoRegistro.Movimiento) {
+                    case A:
+                        return esMismoDia ? A2 : A;
+                    case A2:
+                        return esMismoDia ? A3 : A;
+                    case A3:
+                        return esMismoDia ? A4 : A;
+                    case A4:
+                        return esMismoDia ? SIN_REGISTRO : A;
+                    default: // N, D, F, FJ, IEG, IRT, V
+                        return esMismoDia ? SIN_REGISTRO : A;
+                }
+            }
         }
     }
 
@@ -112,6 +140,7 @@ public static class Constants {
     public const string INICIO_LABORES_KEY = "Inicio labores key";
     #endregion
 
+    #region Aviso de privacidad
     public const string AVISO_PRIVACIDAD_PARTE_1 =
         "Gracias por utilizar nuestra aplicación móvil. La protección de su privacidad es de suma importancia para nosotros. Por lo tanto, hemos desarrollado esta Política de Privacidad para que comprenda cómo recopilamos, usamos, comunicamos, divulgamos y utilizamos su información personal."
         + "\n\nLe recomendamos encarecidamente que revise cuidadosamente esta Política de Privacidad antes de usar la aplicación o proporcionar cualquier tipo de información personal."
@@ -136,4 +165,5 @@ public static class Constants {
 
     public const string AVISO_PRIVACIDAD_MOSTRAR_POUP = $"{AVISO_PRIVACIDAD_PARTE_1}{AVISO_PRIVACIDAD_PARTE_2}{AVISO_PRIVACIDAD_PARTE_3}";
     public const string AVISO_PRIVACIDAD_MOSTRAR_PAGE = $"{AVISO_PRIVACIDAD_PARTE_1}{AVISO_PRIVACIDAD_PARTE_3}";
+    #endregion
 }
