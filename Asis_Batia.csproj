@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-ios;net7.0-maccatalyst;net7.0-android33.0</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
@@ -37,61 +37,69 @@
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+		<PublishTrimmed>True</PublishTrimmed>
+		<AndroidLinkTool>r8</AndroidLinkTool>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <AndroidLinkTool>r8</AndroidLinkTool>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+		<PublishTrimmed>True</PublishTrimmed>
+		<EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
-	  <MtouchLink>Full</MtouchLink>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+		<MtouchLink>Full</MtouchLink>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
-	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <AndroidPackageFormat>aab</AndroidPackageFormat>
-	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android33.0|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+		<AndroidUseAapt2>True</AndroidUseAapt2>
+		<AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+		<EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
-	  <MtouchLink>Full</MtouchLink>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+		<MtouchLink>Full</MtouchLink>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+	<!--<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
+		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+		--><!--Only needed when you have a need for entitlements 
+		 <CodesignEntitlement>Entitlements.plist</CodesignEntitlement>--><!--
+		<CodesignKey>Apple Distribution: Jesus Ricardo Beristain Ramos (5AB67MUU5A)</CodesignKey>
+		<CodesignProvision>BiometaDistribution</CodesignProvision>
+	</PropertyGroup>-->
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
-	  <AndroidLinkTool>r8</AndroidLinkTool>
-	  <AndroidPackageFormat>aab</AndroidPackageFormat>
-	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android33.0|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+		<AndroidUseAapt2>True</AndroidUseAapt2>
+		<AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
-	  <CodesignKey>Apple Development: Created via API (N87R2G7GAK)</CodesignKey>
-	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+		<CodesignKey>Apple Development: Created via API (TYX24HGVUA)</CodesignKey>
+		<CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -116,7 +124,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\flecha.svg" />
+		<None Remove="Resources\Images\flecha.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -129,41 +137,45 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\Colors.xaml">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\Resources.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\Styles.xaml">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </MauiXaml>
-	  <MauiXaml Update="Templates\FlyoutFooterTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\FormuPrinAsis.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\FormuSegAsis.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\MainPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Popups\PopupRulesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\RegExitoso.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\RulesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Popups\SelectInmueble.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Resources\Styles\Colors.xaml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\Resources.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\Styles.xaml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiXaml>
+		<MauiXaml Update="Templates\FlyoutFooterTemplate.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="View\FormuPrinAsis.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="View\FormuSegAsis.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="View\MainPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Popups\PopupRulesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="View\RegExitoso.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="View\RulesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Popups\SelectInmueble.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionAsis_BatiaHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionAsis_BatiaHideInfoBar="True" />
+		</VisualStudio>
+	</ProjectExtensions>
 
 </Project>
