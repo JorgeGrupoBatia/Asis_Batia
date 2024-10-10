@@ -31,18 +31,24 @@
 	<key>CFBundleDisplayName</key>
 	<string>BIOMETA</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
-
+	<string>3</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.1</string>
+	<key>MinimumOSVersion</key>
+	<string>11.0</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Biometa necesita acceder a la cámara para tomar fotos.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Biometa necesita acceder al micrófono para tomar videos.</string>
+	<!--<key>NSMicrophoneUsageDescription</key>
+	<string>Biometa necesita acceder al micrófono para tomar videos.</string>-->
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF.</string>
-
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Biometa necesita acceder a la localización para validar el lugar de donde se hace el registro de asistencia.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
 </dict>
 </plist>

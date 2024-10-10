@@ -27,29 +27,30 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+		<!--<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
 		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
 		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
 		<GenerateTestArtifacts>True</GenerateTestArtifacts>
 		<AppInstallerUri>C:\Users\LAP_Sistemas3\OneDrive - MANTENIMIENTO INTEGRAL SCMX S.A. DE C.V\Desktop</AppInstallerUri>
 		<HoursBetweenUpdateChecks>16800</HoursBetweenUpdateChecks>
 		<PlatformTarget>AnyCPU</PlatformTarget>
-		<Nullable>disable</Nullable>
+		<Nullable>disable</Nullable>-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
 		<PublishTrimmed>True</PublishTrimmed>
 		<AndroidLinkTool>r8</AndroidLinkTool>
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 		<PublishTrimmed>True</PublishTrimmed>
-		<EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
-		<MtouchLink>Full</MtouchLink>
+		<MtouchLink>None</MtouchLink>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
@@ -73,13 +74,14 @@
 		<MtouchLink>Full</MtouchLink>
 	</PropertyGroup>
 
-	<!--<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
 		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-		--><!--Only needed when you have a need for entitlements 
-		 <CodesignEntitlement>Entitlements.plist</CodesignEntitlement>--><!--
-		<CodesignKey>Apple Distribution: Jesus Ricardo Beristain Ramos (5AB67MUU5A)</CodesignKey>
-		<CodesignProvision>BiometaDistribution</CodesignProvision>
-	</PropertyGroup>-->
+		<!--Only needed when you have a need for entitlements
+		<CodesignEntitlement>Entitlements.plist</CodesignEntitlement>-->
+		<ProvisioningType>manual</ProvisioningType>
+		<CodesignKey>iPhone Distribution: Jesus Ricardo Beristain Ramos (5AB67MUU5A)</CodesignKey>
+		<CodesignProvision>BiometaProvisioningP</CodesignProvision>
+	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
 		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
@@ -98,33 +100,34 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-		<CodesignKey>Apple Development: Created via API (TYX24HGVUA)</CodesignKey>
-		<CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
+	  <ProvisioningType>manual</ProvisioningType>
+	  <CodesignKey>iPhone Distribution: Jesus Ricardo Beristain Ramos (5AB67MUU5A)</CodesignKey>
+	  <CodesignProvision>BiometaProvisioningP</CodesignProvision>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#3775B5" />
+		<MauiIcon Include="Res\AppIcon\appicon.svg" ForegroundFile="Res\AppIcon\appiconfg.svg" Color="#3775B5" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#3775B5" BaseSize="200,200" />
+		<MauiSplashScreen Include="Res\Splash\splash.svg" Color="#3775B5" BaseSize="200,200" />
 
 		<!-- Images -->
-		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-		<MauiImage Update="Resources\Images\biometa_icoq.svg" BaseSize="560,643" />
-		<MauiImage Update="Resources\Images\logo_batia.svg" BaseSize="652,586" />
-		<MauiImage Update="Resources\Images\logo_batia.svg" paloma="32,29" />
+		<MauiImage Include="Res\Images\*" />
+		<MauiImage Update="Res\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Update="Res\Images\biometa_icoq.svg" BaseSize="560,643" />
+		<MauiImage Update="Res\Images\logo_batia.svg" BaseSize="652,586" />
+		<MauiImage Update="Res\Images\logo_batia.svg" paloma="32,29" />
 
 		<!-- Custom Fonts -->
-		<MauiFont Include="Resources\Fonts\*" />
+		<MauiFont Include="Res\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiAsset Include="Res\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Resources\Images\flecha.svg" />
+		<None Remove="Res\Images\flecha.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -137,13 +140,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Resources\Styles\Colors.xaml">
+		<MauiXaml Update="Res\Styles\Colors.xaml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiXaml>
-		<MauiXaml Update="Resources\Styles\Resources.xaml">
+		<MauiXaml Update="Res\Styles\Resources.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Resources\Styles\Styles.xaml">
+		<MauiXaml Update="Res\Styles\Styles.xaml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiXaml>
 		<MauiXaml Update="Templates\FlyoutFooterTemplate.xaml">

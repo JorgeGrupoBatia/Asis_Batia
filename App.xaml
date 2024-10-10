@@ -11,9 +11,9 @@
         <ResourceDictionary>
             
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Resources.xaml" />
+                <ResourceDictionary Source="Res/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Res/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Res/Styles/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
