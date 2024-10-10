@@ -45,7 +45,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 		<PublishTrimmed>True</PublishTrimmed>
-		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+		<EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
@@ -101,8 +101,8 @@
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
 	  <ProvisioningType>manual</ProvisioningType>
-	  <CodesignKey>iPhone Distribution: Jesus Ricardo Beristain Ramos (5AB67MUU5A)</CodesignKey>
-	  <CodesignProvision>BiometaProvisioningP</CodesignProvision>
+	  <CodesignKey>Apple Development: Created via API (2TM67M3664)</CodesignKey>
+	  <CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -176,9 +176,7 @@
 	</ItemGroup>
 
 	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionAsis_BatiaHideInfoBar="True" />
-		</VisualStudio>
+		<VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionAsis_BatiaHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarAsis_BatiaHideInfoBar="True" /></VisualStudio>
 	</ProjectExtensions>
 
 </Project>

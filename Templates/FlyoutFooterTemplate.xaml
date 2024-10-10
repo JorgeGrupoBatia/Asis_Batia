@@ -2,14 +2,14 @@
 <Grid
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:const="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
     x:Class="Asis_Batia.Templates.FlyoutFooterTemplate"
+    xmlns:helpers="clr-namespace:Asis_Batia.Helpers"
     ColumnDefinitions="*, auto, auto, auto"
     HeightRequest="{OnPlatform Android=45, iOS=70}"
     Padding="10">
 
     <Label
-        Text="{x:Static const:AppInfo.Name}"
+        Text="{x:Static helpers:Constants.APP_NAME}"
         HorizontalTextAlignment="End"
         FontFamily="OpenSansSemibold" />
 
@@ -24,8 +24,8 @@
         Grid.Column="1"
         Text="iOS"
         FontFamily="OpenSansSemibold"
-        IsVisible="{OnPlatform Android=false, iOS=true}" 
-        Margin="10,0,30,0"/>
+        IsVisible="{OnPlatform Android=false, iOS=true}"
+        Margin="10,0,30,0" />
 
     <Label
         Grid.Column="2"
@@ -34,5 +34,5 @@
 
     <Label
         Grid.Column="3"
-        Text="{x:Static const:AppInfo.VersionString}" />
+        Text="{x:Static helpers:Constants.APP_VERSION_STRING}" />
 </Grid>
