@@ -222,56 +222,63 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     }
 
     public async Task<bool> SendFiles() {
-        List<string> list = new List<string>();
-
-        if(!string.IsNullOrWhiteSpace(LocalPhotoPath)) {
-            list.Add(LocalPhotoPath);
-        }
-
-        if(!string.IsNullOrWhiteSpace(LocalFilePath)) {
-            list.Add(LocalFilePath);
-        }
-
-        if(list.Count > 0) {
-            string dbPaths = await UploadFiles(list);
-
-            if(string.IsNullOrWhiteSpace(dbPaths)) {
-                return false;
-            }
-
-            string[] paths = dbPaths.Split("|");
-
-            foreach(string path in paths) {
-
-                string[] tokens = path.Split('/');
-
-                if(!string.IsNullOrWhiteSpace(LocalPhotoPath)) {
-                    string[] tokensLocal = LocalPhotoPath.Split('/');
-                    if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
-                        _dbPhotoPathList = path;
-                    }
-                }
-
-                if(!string.IsNullOrWhiteSpace(LocalFilePath)) {
-                    string[] tokensLocal = LocalFilePath.Split('/');
-                    if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
-                        _dbFilePathList = path;
-                    }
-                }
-            }
-
+        if(string.IsNullOrWhiteSpace(LocalPhotoPath) && string.IsNullOrWhiteSpace(LocalFilePath)) {
             return true;
+        }
+
+        string dbPaths = await UploadFiles();
+
+        if(string.IsNullOrWhiteSpace(dbPaths)) {
+            return false;
+        }
+
+        string[] paths = dbPaths.Split("|");
+
+        foreach(string path in paths) {
+
+            string[] tokens = path.Split('/');
+
+            if(!string.IsNullOrWhiteSpace(LocalPhotoPath)) {
+                string[] tokensLocal = LocalPhotoPath.Split('/');
+                if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
+                    _dbPhotoPathList = path;
+                }
+            }
+
+            if(!string.IsNullOrWhiteSpace(LocalFilePath)) {
+                string[] tokensLocal = LocalFilePath.Split('/');
+                if(tokens[tokens.Length - 1].Equals(tokensLocal[tokensLocal.Length - 1])) {
+                    _dbFilePathList = path;
+                }
+            }
         }
 
         return true;
     }
 
-    public async Task<string> UploadFiles(List<string> list) {
+    public async Task<string> UploadFiles() {
+
         var formData = new MultipartFormDataContent();
 
-        foreach(string localFilePath in list) {
-            StreamContent streamContent = new StreamContent(File.OpenRead(localFilePath));
-            formData.Add(streamContent, "files", Path.GetFileName(localFilePath));
+        if(!string.IsNullOrWhiteSpace(LocalPhotoPath)) {
+            byte[] fileBytesArray = File.ReadAllBytes(LocalPhotoPath);
+            byte[] resizedImage = await ImageResizerHelper.ResizeImage(fileBytesArray, 300, 300);
+            ByteArrayContent byteArrayContent = new ByteArrayContent(resizedImage);
+            formData.Add(byteArrayContent, "files", Path.GetFileName(LocalPhotoPath));
+        }
+
+        if(!string.IsNullOrWhiteSpace(LocalFilePath)) {
+            byte[] fileBytesArray = File.ReadAllBytes(LocalFilePath);
+            string fileName = Path.GetFileName(LocalFilePath);
+
+            if(fileName.EndsWith(".pdf")) {
+                ByteArrayContent byteArrayContent = new ByteArrayContent(fileBytesArray);
+                formData.Add(byteArrayContent, "files", fileName);
+            } else {
+                byte[] resizedImage = await ImageResizerHelper.ResizeImage(fileBytesArray, 300, 300, false);
+                ByteArrayContent byteArrayContent = new ByteArrayContent(resizedImage);
+                formData.Add(byteArrayContent, "files", fileName);
+            }
         }
 
         string filePathListResponse = await _httpHelper.PostMultipartAsync<string>(Constants.API_ENVIO_ARCHIVOS, formData);
