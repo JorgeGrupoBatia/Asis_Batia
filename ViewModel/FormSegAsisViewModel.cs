@@ -113,8 +113,9 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             return false;
         }
 
-        double distanceKm = LocationService.CalcularDistancia(_currentLocation, inmuebleLocation);
-        if(distanceKm > .400) {
+        double distanciaKm = LocationService.CalcularDistancia(_currentLocation, inmuebleLocation);
+        float radioTolerancia = UserSession.IdInmueble == 14029 ? 0.750f : 0.400f;
+        if(distanciaKm > radioTolerancia) {
             TextLoading = "";
             IsLoading = false;
             IsBusy = false;

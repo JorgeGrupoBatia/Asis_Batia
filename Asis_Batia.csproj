@@ -60,8 +60,8 @@
 	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <AndroidPackageFormat>aab</AndroidPackageFormat>
-	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
@@ -80,7 +80,7 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
 	  <ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
 	  <AndroidLinkTool>r8</AndroidLinkTool>
-	  <AndroidPackageFormat>aab</AndroidPackageFormat>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	</PropertyGroup>
