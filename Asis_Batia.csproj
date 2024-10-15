@@ -71,7 +71,8 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
-		<MtouchLink>Full</MtouchLink>
+		<MtouchLink>None</MtouchLink>
+		<MtouchUseLlvm>False</MtouchUseLlvm>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
@@ -98,12 +99,18 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
 		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+	
+	<Target Name="DoNotLinkWithBrowserEngineKit" AfterTargets="_ComputeLinkNativeExecutableInputs">
+		<ItemGroup>
+			<_NativeExecutableFrameworks Remove="BrowserEngineKit" />
+		</ItemGroup>
+	</Target>
+	
+	<!--<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
 	  <ProvisioningType>manual</ProvisioningType>
 	  <CodesignKey>Apple Development: Created via API (2TM67M3664)</CodesignKey>
 	  <CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
-	</PropertyGroup>
+	</PropertyGroup>-->
 
 	<ItemGroup>
 		<!-- App Icon -->
