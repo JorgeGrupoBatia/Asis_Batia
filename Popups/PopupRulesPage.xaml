@@ -14,7 +14,8 @@
         CornerRadius="15"
         BorderColor="Transparent"
         Margin="30, 50"
-        Padding="0">
+        Padding="0"
+        BackgroundColor="White">
 
         <Grid
             RowDefinitions="*, auto"
