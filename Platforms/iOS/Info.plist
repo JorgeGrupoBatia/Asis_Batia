@@ -35,19 +35,19 @@
 	<key>MinimumOSVersion</key>
 	<string>11.0</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Biometa necesita acceder a la cámara para tomar fotos.</string>
+	<string>Biometa necesita acceder a la cámara para capturar fotos como evidencia. Estas se utilizarán para validar el registro de entrada o salida de labores.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Biometa necesita acceder al micrófono para tomar videos.</string>
+	<string>Biometa necesita acceder al micrófono para tomar videos como evidencia. Estas se utilizarán para validar el registro de entrada o salida de labores.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF.</string>
+	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF como evidencia. Estos se utilizarán para validar el registro de entrada o salida de labores.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF.</string>
+	<string>Biometa necesita acceder a la galería para seleccionar fotos y/o archivos PDF como evidencia. Estos se utilizarán para validar el registro de entrada o salida de labores.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Biometa necesita acceder a la localización para validar el lugar de donde se hace el registro de asistencia.</string>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Biometa necesita acceder a los archivos para seleccionar archivos multimedia.</string>
+	<string>Biometa necesita acceder a los archivos para seleccionar archivos multimedia como evidencia. Estas se utilizarán para validar el registro de entrada o salida de labores.</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Biometa necesita acceder al calendario para validar fecha de registro.</string>
+	<string>Biometa necesita acceder al calendario para validar fecha de registro como evidencia. Esto se utilizarán para validar el registro de entrada o salida de labores.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Biometa necesita acceder a sus contactos para mejorar la experiencia del usuario.</string>
 	<key>NSSiriUsageDescription</key>
@@ -57,6 +57,6 @@
 		<string>fetch</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>12</string>
 </dict>
 </plist>

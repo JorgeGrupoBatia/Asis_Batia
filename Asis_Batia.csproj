@@ -107,7 +107,6 @@
 	</Target>
 	
 	<!--<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-	  <ProvisioningType>manual</ProvisioningType>
 	  <CodesignKey>Apple Development: Created via API (2TM67M3664)</CodesignKey>
 	  <CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
 	</PropertyGroup>-->
