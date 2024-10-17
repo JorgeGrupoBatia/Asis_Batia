@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.GrupoBatia.AsisBatiaXYZ" android:versionName="3.1.0" android:versionCode="65">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="Dev"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.GrupoBatia.AsisBatiaWXYZ" android:versionName="3.1.0" android:versionCode="65">
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="Demo Biometric"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -11,6 +11,8 @@
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="34" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="34" />
+	<uses-permission android:name="android.permission.USE_BIOMETRIC" />
+	<uses-permission android:name="android.permission.USE_FINGERPRINT" />
 	<!-- Required only if your app needs to access images or photos that other apps created -->
 	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 	<!-- Required only if your app needs to access videos that other apps created -->

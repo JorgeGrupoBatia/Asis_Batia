@@ -52,6 +52,8 @@
 	<string>Biometa necesita acceder a sus contactos para mejorar la experiencia del usuario.</string>
 	<key>NSSiriUsageDescription</key>
 	<string>Biometa necesita acceder a Siri para mejorar la experiencia del usuario.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Biometa necesita acceder a la biometría para validar que el registro se realice por la persona correcta.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

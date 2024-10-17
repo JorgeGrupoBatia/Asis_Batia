@@ -4,6 +4,8 @@ using Asis_Batia.Popups;
 using Asis_Batia.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Plugin.Fingerprint;
+using Plugin.Fingerprint.Abstractions;
 using System.Globalization;
 
 namespace Asis_Batia.ViewModel;
@@ -49,15 +51,44 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     [RelayCommand(CanExecute = nameof(CanExecute))]
     async void Register() {
         IsBusy = true;
+
+        if(!await ValidateBiometricAsync()) {
+            await App.Current.MainPage.DisplayAlert("Error", Constants.NO_COINCIDE_BIOMETRIA, Constants.ACEPTAR);
+            IsBusy = false;
+            return;
+        }
+
         if(UserSession.EsEmpleadoElektra) {
             if(string.IsNullOrWhiteSpace(FileName)) {
-                await App.Current.MainPage.DisplayAlert("", "Ingrese captura de pantalla de \'Proveedores GS\'", "Ok");
+                await App.Current.MainPage.DisplayAlert("", "Ingrese captura de pantalla de \'Proveedores GS\'", Constants.ACEPTAR);
                 IsBusy = false;
                 return;
             }
         }
         ValidateNomenclature();
         IsBusy = false;
+    }
+
+    async Task<bool> ValidateBiometricAsync() {
+        try {
+            bool isAvailableBiometric = await CrossFingerprint.Current.IsAvailableAsync();
+
+            if(!isAvailableBiometric) {
+                return true;
+            }
+
+            var request = new AuthenticationRequestConfiguration(Constants.INGRESE_DATOS_BIOMETRICOS, Constants.COLOQUE_ROSTRO_HUELLA);
+            var result = await CrossFingerprint.Current.AuthenticateAsync(request);
+
+            if(!result.Authenticated) {
+                return false;
+            }
+
+            return true;
+
+        } catch(Exception ex) {
+            return true;
+        }      
     }
 
     async void ValidateNomenclature() {

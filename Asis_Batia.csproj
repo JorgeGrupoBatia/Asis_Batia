@@ -106,10 +106,10 @@
 		</ItemGroup>
 	</Target>
 	
-	<!--<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
 	  <CodesignKey>Apple Development: Created via API (2TM67M3664)</CodesignKey>
 	  <CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
-	</PropertyGroup>-->
+	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
@@ -141,6 +141,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Plugin.Fingerprint" Version="3.0.0-beta.1" />
 		<PackageReference Include="Plugin.Maui.Popup" Version="1.0.5" />
 		<PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
 	</ItemGroup>
@@ -179,6 +180,12 @@
 		<MauiXaml Update="Popups\SelectInmueble.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+	  <PackageReference Include="Xamarin.AndroidX.Migration">
+	    <Version>1.0.10</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 	<ProjectExtensions>

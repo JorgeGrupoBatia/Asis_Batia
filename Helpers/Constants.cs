@@ -40,6 +40,9 @@ public static class Constants {
     public const string ARCHIVO = "Archivo";
     public const string FOTO = "Foto";
     public const string ULTIMO_REGISTRO = "Último registro";
+    public const string NO_COINCIDE_BIOMETRIA = "Los datos biométricos no coinciden";
+    public const string INGRESE_DATOS_BIOMETRICOS = "Captura de datos biométricos";
+    public const string COLOQUE_ROSTRO_HUELLA = "Coloque su rostro frente a la cámara o ingrese sus huella dactilar para verificar identidad";
 
     public const string A = "A";
     public const string A2 = "A2";
