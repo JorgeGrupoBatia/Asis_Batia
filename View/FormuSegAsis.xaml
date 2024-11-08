@@ -33,8 +33,8 @@
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
                     CornerRadius="25"
-                    BackgroundColor="Transparent"
-                    BorderColor="#D4BC88"
+                    BackgroundColor="{AppThemeBinding Light='Transparent', Dark={StaticResource Primary}}"
+                    BorderColor="{AppThemeBinding Light='#D4BC88', Dark='Transparent'}"
                     HasShadow="True"
                     Margin="{OnPlatform Android={OnIdiom Phone='0,10,0,30', Tablet='50, 20, 50, 50'}, iOS='0,10,0,30'}"
                     Padding="{OnPlatform Android={OnIdiom Phone=10, Tablet=30}, iOS=10}">

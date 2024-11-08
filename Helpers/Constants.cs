@@ -4,6 +4,9 @@ namespace Asis_Batia.Helpers;
 
 public static class Constants {
 
+    public static string APP_NAME = AppInfo.Name;
+    public static string APP_VERSION_STRING = AppInfo.VersionString;
+
     #region API URI´s
     public const string API_BASE_URL = "https://www.singa.com.mx:5500/api/";
     public const string API_EMPLEADO_APP = "EmpleadoApp";
