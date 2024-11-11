@@ -16,7 +16,8 @@ public class UserSession {
     static readonly string ID_ESTADO_KEY = "Id estado key";
     static readonly string SHOW_TERMS_CONDITIONS_KEY = "Show terms and conditions";
     static readonly string TURNO_KEY = "Turno key";
-    static readonly string ID_TURNO_KEY = "Id turno key";  
+    static readonly string ID_TURNO_KEY = "Id turno key";
+    static readonly string IS_BIOMETRICS_ACTIVATED_KEY = "Biometric activated key";
 
     public static string Empleado {
         get => Preferences.Default.ContainsKey(EMPLEADO_KEY)
@@ -96,8 +97,23 @@ public class UserSession {
         set => Preferences.Default.Set(ID_TURNO_KEY, value);
     }
 
+    public static bool IsBiometricsActivated {
+        get => Preferences.Default.ContainsKey(IS_BIOMETRICS_ACTIVATED_KEY)
+            ? (bool)Preferences.Default.Get(IS_BIOMETRICS_ACTIVATED_KEY, false) : false;
+        set => Preferences.Default.Set(IS_BIOMETRICS_ACTIVATED_KEY, value);
+    }
+
     public static bool EsEmpleadoElektra {
         get => IdCliente == 130;
+    }
+
+    public static bool EsEmpleadoAeropuerto {
+        get => IdCliente == 2387;
+    }
+
+    public static bool EsEmpleadoTerminal1 {
+        get => IdCliente == 14029 || IdCliente == 14189 || IdCliente == 14191 || IdCliente == 14192 
+            || IdCliente == 14193 || IdCliente == 14194 || IdCliente == 14195 || IdCliente == 14196;
     }
 
     public static bool EsTurnoNocturno {
@@ -120,7 +136,9 @@ public class UserSession {
     }
 
     public static void ClearSession() {
+        bool isActivatedBiometric = IsBiometricsActivated;
         Preferences.Default.Clear();
+        IsBiometricsActivated = isActivatedBiometric;
         ShowTermsConditions = false;
     }
 }

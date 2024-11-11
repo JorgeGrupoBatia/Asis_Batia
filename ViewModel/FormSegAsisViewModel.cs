@@ -73,7 +73,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         try {
             bool isAvailableBiometric = await CrossFingerprint.Current.IsAvailableAsync();
 
-            if(!isAvailableBiometric) {
+            if(!isAvailableBiometric || !UserSession.IsBiometricsActivated) {
                 return true;
             }
 
@@ -88,7 +88,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
         } catch(Exception ex) {
             return true;
-        }      
+        }
     }
 
     async void ValidateNomenclature() {
@@ -145,7 +145,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         }
 
         double distanciaKm = LocationService.CalcularDistancia(_currentLocation, inmuebleLocation);
-        float radioTolerancia = UserSession.IdInmueble == 14029 ? 0.750f : 0.400f;
+        float radioTolerancia = UserSession.EsEmpleadoTerminal1 ? 0.750f : 0.400f;
         if(distanciaKm > radioTolerancia) {
             TextLoading = "";
             IsLoading = false;

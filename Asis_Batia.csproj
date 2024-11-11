@@ -107,8 +107,8 @@
 	</Target>
 	
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-	  <CodesignKey>Apple Development: Created via API (2TM67M3664)</CodesignKey>
-	  <CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
+	  <CodesignKey>Apple Development: Created via API (NSMS5C332M)</CodesignKey>
+	  <CodesignProvision>Generic Provisioning Profile</CodesignProvision>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -133,6 +133,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Res\Images\conf.svg" />
 		<None Remove="Res\Images\flecha.svg" />
 	</ItemGroup>
 
@@ -147,6 +148,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Popups\BiometricsPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Res\Styles\Colors.xaml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiXaml>
@@ -158,6 +162,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Templates\FlyoutFooterTemplate.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="View\ConfigurationPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="View\FormuPrinAsis.xaml">
 			<Generator>MSBuild:Compile</Generator>

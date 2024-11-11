@@ -3,6 +3,7 @@ using Asis_Batia.Model;
 using Asis_Batia.Popups;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Plugin.Fingerprint;
 using System.Runtime.InteropServices;
 
 namespace Asis_Batia.ViewModel;
@@ -35,8 +36,14 @@ public partial class MainPageViewModel : ViewModelBase {
         if(res is not null && res.Count > 0) {
             UserSession.SetData(res[0]);
             App.Current.MainPage = new AppShell();
+
+            bool isAvailableBiometric = await CrossFingerprint.Current.IsAvailableAsync();
+
+            if(isAvailableBiometric && !UserSession.IsBiometricsActivated && !UserSession.EsEmpleadoAeropuerto) { 
+                await MauiPopup.PopupAction.DisplayPopup(new BiometricsPopup());
+            }
         } else {
-            await App.Current.MainPage.DisplayAlert("Error", "No se encontró ningún usuario", "Cerrar");
+            await App.Current.MainPage.DisplayAlert("Error", "No se encontró ningún empleado", "Cerrar");
         }
     }
 
