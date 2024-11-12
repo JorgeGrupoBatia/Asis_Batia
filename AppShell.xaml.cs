@@ -23,6 +23,6 @@ public partial class AppShell : Shell {
 
     async void InitValues() {
         bool isAvailableBiometric = await CrossFingerprint.Current.IsAvailableAsync();
-        ShowConfiguracion = isAvailableBiometric;
+        ShowConfiguracion = isAvailableBiometric && !UserSession.EsEmpleadoAeropuerto;
     }
 }

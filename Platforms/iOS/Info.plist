@@ -27,9 +27,9 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>CFBundleIdentifier</key>
-	<string></string>
+	<string>com.GrupoBatia.AsisBatiaXXX</string>
 	<key>CFBundleDisplayName</key>
-	<string>BIOMETA</string>
+	<string>Dev Biometa</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.1</string>
 	<key>MinimumOSVersion</key>

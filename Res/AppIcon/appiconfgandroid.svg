@@ -5,7 +5,7 @@
    width="456"
    height="456"
    id="svg1"
-   sodipodi:docname="appiconfg.svg"
+   sodipodi:docname="appiconfgandroid.svg"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -21,7 +21,7 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="1.8355263"
-     inkscape:cx="227.7276"
+     inkscape:cx="228"
      inkscape:cy="228"
      inkscape:window-width="1920"
      inkscape:window-height="1051"
@@ -41,6 +41,6 @@
      id="style1" />
   <use
      href="#img1"
-     transform="matrix(0.89914642,0,0,0.89914642,29.288641,29.288641)"
+     transform="matrix(.591,0,0,.591,97,97)"
      id="use1" />
 </svg>

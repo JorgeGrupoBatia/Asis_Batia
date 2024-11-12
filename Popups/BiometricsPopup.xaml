@@ -32,7 +32,7 @@
                 Padding="{OnPlatform Android={OnIdiom Phone=15, Tablet=25}, iOS=10}">
 
                 <Label
-                    Text="¿Desea activar la biometría para realizar sus registros?"
+                    Text="¿Desea activar el reconocimiento facial y/o huella dactilar para realizar sus registros?"
                     TextColor="#2E3192"
                     FontSize="{OnPlatform Android={OnIdiom Phone=25, Tablet=40}, iOS=20}"
                     FontFamily="Regular"

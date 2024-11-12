@@ -15,11 +15,12 @@
     <Grid
         ColumnDefinitions="*, auto"
         RowDefinitions="auto"
+        ColumnSpacing="10"
         VerticalOptions="FillAndExpand"
         Margin="10">
 
         <Label
-            Text="Activar biometría para realizar registros "
+            Text="Activar el reconocimiento facial y/o huella dactilar para realizar registros."
             FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=25}, iOS=18}"
             FontAttributes="None"
             FontFamily="Regular"

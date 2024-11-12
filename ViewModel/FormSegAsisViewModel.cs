@@ -73,7 +73,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         try {
             bool isAvailableBiometric = await CrossFingerprint.Current.IsAvailableAsync();
 
-            if(!isAvailableBiometric || !UserSession.IsBiometricsActivated) {
+            if(!isAvailableBiometric || !UserSession.IsBiometricsActivated || UserSession.EsEmpleadoAeropuerto) {
                 return true;
             }
 
@@ -206,8 +206,15 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
         TextLoading = "";
         IsLoading = false;
-        IsBusy = false;
-        await Shell.Current.GoToAsync("..");
+        IsBusy = false;       
+
+        if(UserSession.EsEmpleadoAeropuerto) {            
+            App.Current.MainPage = new MainPage();
+            UserSession.ClearSession();
+        } else {
+            await Shell.Current.GoToAsync("..");
+        }
+
         await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
     }
 
