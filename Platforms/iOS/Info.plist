@@ -27,11 +27,13 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.GrupoBatia.AsisBatiaXXX</string>
+	<string>com.GrupoBatia.AsisBatia</string>
 	<key>CFBundleDisplayName</key>
-	<string>Dev Biometa</string>
+	<string>Biometa</string>
+	<key>CFBundleVersion</key>
+	<string>14</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.1.0</string>
 	<key>MinimumOSVersion</key>
 	<string>11.0</string>
 	<key>NSCameraUsageDescription</key>
@@ -58,7 +60,5 @@
 	<array>
 		<string>fetch</string>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>12</string>
 </dict>
 </plist>

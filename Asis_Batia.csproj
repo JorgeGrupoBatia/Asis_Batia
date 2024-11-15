@@ -27,14 +27,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<!--<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
-		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
-		<GenerateTestArtifacts>True</GenerateTestArtifacts>
-		<AppInstallerUri>C:\Users\LAP_Sistemas3\OneDrive - MANTENIMIENTO INTEGRAL SCMX S.A. DE C.V\Desktop</AppInstallerUri>
-		<HoursBetweenUpdateChecks>16800</HoursBetweenUpdateChecks>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<Nullable>disable</Nullable>-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
@@ -71,17 +63,27 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 		<ApplicationId>com.GrupoBatia.AsisBatia</ApplicationId>
-		<MtouchLink>None</MtouchLink>
+		<MtouchLink>SdkOnly</MtouchLink>
 		<MtouchUseLlvm>False</MtouchUseLlvm>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+	  <CodesignKey>Apple Development: Created via API (NSMS5C332M)</CodesignKey>
+	  <CodesignProvision>Generic Provisioning Profile</CodesignProvision>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
 		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
 		<!--Only needed when you have a need for entitlements
-		<CodesignEntitlement>Entitlements.plist</CodesignEntitlement>-->
+		<CodesignEntitlement>Entitlements.plist</CodesignEntitlement>-->		
 		<ProvisioningType>manual</ProvisioningType>
 		<CodesignKey>iPhone Distribution: Jesus Ricardo Beristain Ramos (5AB67MUU5A)</CodesignKey>
 		<CodesignProvision>BiometaProvisioningP</CodesignProvision>
+		<ArchiveOnBuild>true</ArchiveOnBuild>
+		<TcpPort>58181</TcpPort>
+		<ServerAddress>192.168.3.34</ServerAddress>
+		<ServerUser>ricardoberistain</ServerUser>
+		<EnableAssemblyILStripping>false</EnableAssemblyILStripping>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
@@ -104,12 +106,7 @@
 		<ItemGroup>
 			<_NativeExecutableFrameworks Remove="BrowserEngineKit" />
 		</ItemGroup>
-	</Target>
-	
-	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-	  <CodesignKey>Apple Development: Created via API (NSMS5C332M)</CodesignKey>
-	  <CodesignProvision>Generic Provisioning Profile</CodesignProvision>
-	</PropertyGroup>
+	</Target>	
 
 	<ItemGroup>
 		<!-- App Icon -->
