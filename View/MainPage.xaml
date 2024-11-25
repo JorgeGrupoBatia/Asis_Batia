@@ -8,21 +8,32 @@
     Style="{StaticResource PageStyle}">
 
     <Grid>
-
-        <ScrollView>
+        <ScrollView
+            VerticalOptions="FillAndExpand">
 
             <Grid
-                RowDefinitions="auto, auto, auto, auto"
-                ColumnDefinitions="*"
-                VerticalOptions="CenterAndExpand"
-                Margin="20,10">
-
-                <Image
-                    Source="logo_batia"
-                    HeightRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}" />
+                RowDefinitions="auto, auto, auto, auto, auto"
+                RowSpacing="10">
 
                 <Label
+                    Style="{StaticResource ConectivityLabelStyle}"
+                    IsVisible="{Binding ShowConnectivityMsg}" />
+
+                <Image
                     Grid.Row="1"
+                    x:Name="batia"
+                    Source="logo_batia"
+                    HeightRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}">
+
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            NumberOfTapsRequired="2"
+                            Command="{Binding Source={x:Reference batia}, Path=BindingContext.PrecargarDatosCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label
+                    Grid.Row="2"
                     Text="{x:Static const:Constants.BIOMETA}"
                     FontSize="{OnPlatform Android={OnIdiom Phone=90, Tablet=110}, iOS=70}"
                     FontFamily="Regular"
@@ -34,7 +45,7 @@
                     Margin="0,10" />
 
                 <Frame
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Padding="0"
                     HasShadow="True"
                     BackgroundColor="Transparent"
@@ -62,7 +73,7 @@
                 </Frame>
 
                 <ImageButton
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Source="flecha"
                     Aspect="AspectFit"
                     HeightRequest="50"
@@ -70,10 +81,10 @@
                     HorizontalOptions="End"
                     Command="{Binding GetInfoEmpleadoCommand}"
                     IsVisible="{OnPlatform Android=false, iOS=true}"
-                    Margin="0, 0, 10, 0"/>
+                    Margin="0, 0, 10, 0" />
 
                 <ImageButton
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Source="biometa_icoq"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
@@ -85,6 +96,7 @@
         </ScrollView>
 
         <Grid
+            RowDefinitions="*, *"
             BackgroundColor="#AA000000"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand"
@@ -93,7 +105,16 @@
             <ActivityIndicator
                 IsRunning="{Binding IsLoading}"
                 Color="{StaticResource Dorado}"
+                VerticalOptions="EndAndExpand"
                 HeightRequest="70" />
+
+            <Label
+                Grid.Row="1"
+                Text="{Binding TextLoading}"
+                VerticalOptions="StartAndExpand"
+                HorizontalTextAlignment="Center"
+                FontSize="16"
+                TextColor="{StaticResource Dorado}" />
         </Grid>
     </Grid>
 

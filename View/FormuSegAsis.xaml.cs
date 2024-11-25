@@ -1,21 +1,22 @@
+using Asis_Batia.Data;
 using Asis_Batia.ViewModel;
 
 namespace Asis_Batia.View;
 
 public partial class FormuSegAsis : ContentPage {
 
-    FormSegAsisViewModel formSegAsisViewModel;
+    FormSegAsisViewModel _viewModel;
 
-    public FormuSegAsis() {
+    public FormuSegAsis(DbContext dbContext) {
         InitializeComponent();
-        formSegAsisViewModel = new FormSegAsisViewModel();
-        BindingContext = formSegAsisViewModel;
+        _viewModel = new FormSegAsisViewModel(dbContext);
+        BindingContext = _viewModel;
     }
 
     private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e) {
         RadioButton radio = sender as RadioButton;
         if(radio.IsChecked) {
-            formSegAsisViewModel._selectionRadio = radio.Value.ToString();
+            _viewModel._selectionRadio = radio.Value.ToString();
         }
     }
 
@@ -40,5 +41,16 @@ public partial class FormuSegAsis : ContentPage {
                 await DisplayAlert("Permisos necesarios", "Los permisos de ubicación son obligatorios para continuar.", "OK");
             }
         }
+
+        Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+    }
+
+    protected override void OnDisappearing() {
+        base.OnDisappearing();
+        Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChanged;
+    }
+
+    private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e) {
+        _viewModel.ShowConnectivityError = e.NetworkAccess != NetworkAccess.Internet;
     }
 }

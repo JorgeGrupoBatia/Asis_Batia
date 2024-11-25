@@ -9,135 +9,129 @@
     Shell.FlyoutBehavior="Disabled">
 
     <Grid>
-
         <ScrollView>
-
             <Grid
-                RowDefinitions="auto, auto, auto, auto, auto, *, *"
-                ColumnDefinitions="*, *"
-                Margin="10, 10, 10, 20">
+                RowDefinitions="auto, *">
 
                 <Label
-                    Grid.ColumnSpan="2"
-                    Text="{x:Static const:Constants.SELECCIONE_OPCION}"
-                    IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
-                    FontSize="{OnPlatform Android={OnIdiom Phone=28, Tablet=36}, iOS=22}"
-                    FontAttributes="Bold"
-                    VerticalTextAlignment="Center"
-                    HorizontalTextAlignment="Center"
-                    FontFamily="Regular"
-                    TextColor="#2E3192"
-                    Margin="{OnPlatform Android={OnIdiom Phone='0,20,0,0', Tablet='0,30,0,0'}, iOS='0,20,0,0'}" />
+                    Style="{StaticResource ConectivityLabelStyle}"
+                    IsVisible="{Binding ShowConnectivityError}" />
 
-                <Frame
+                <Grid
                     Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    CornerRadius="25"
-                    BackgroundColor="{AppThemeBinding Light='Transparent', Dark={StaticResource Primary}}"
-                    BorderColor="{AppThemeBinding Light='#D4BC88', Dark='Transparent'}"
-                    HasShadow="True"
-                    Margin="{OnPlatform Android={OnIdiom Phone='0,10,0,30', Tablet='50, 20, 50, 50'}, iOS='0,10,0,30'}"
-                    Padding="{OnPlatform Android={OnIdiom Phone=10, Tablet=30}, iOS=10}">
+                    RowDefinitions="auto, auto, auto, auto, *, auto"
+                    ColumnDefinitions="*, *"
+                    Margin="10">
 
-                    <VerticalStackLayout>
+                    <Frame
+                        Grid.ColumnSpan="2"
+                        CornerRadius="25"
+                        BackgroundColor="{AppThemeBinding Light='Transparent', Dark={StaticResource Primary}}"
+                        BorderColor="{AppThemeBinding Light='#D4BC88', Dark='Transparent'}"
+                        HasShadow="True"
+                        Margin="{OnPlatform Android={OnIdiom Phone='0,10,0,30', Tablet='50, 20, 50, 50'}, iOS='0,10,0,30'}"
+                        Padding="{OnPlatform Android={OnIdiom Phone=10, Tablet=30}, iOS=10}">
 
-                        <RadioButton
-                            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                            Content="{Binding TipoRegistro}"
-                            IsChecked="True"
-                            CheckedChanged="RadioButton_CheckedChanged"
-                            Value="{Binding Nomenclatura}"
-                            FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
-                            FontFamily="Regular" />
+                        <VerticalStackLayout>
 
-                        <RadioButton
-                            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                            IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
-                            Content="Descanso"
-                            CheckedChanged="RadioButton_CheckedChanged"
-                            Value="{x:Static const:Constants.N}"
-                            FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
-                            FontFamily="Regular" />
-                    </VerticalStackLayout>
-                </Frame>
+                            <RadioButton
+                                IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                                Content="{Binding TipoRegistro}"
+                                IsChecked="True"
+                                CheckedChanged="RadioButton_CheckedChanged"
+                                Value="{Binding Nomenclatura}"
+                                FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
+                                FontFamily="Regular" />
 
-                <Label
-                    Grid.Row="2"
-                    Grid.ColumnSpan="2"
-                    Text="Adjunte: incapacidad, listas de asistencia, justificante, etc."
-                    FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=16}"
-                    VerticalTextAlignment="Center"
-                    HorizontalTextAlignment="Center"
-                    FontFamily="Regular"
-                    TextColor="#2E3192"
-                    Margin="{OnPlatform Android={OnIdiom Phone='0,0,0,30', Tablet='0,0,0,50'}, iOS='0,0,0,30'}" />
+                            <RadioButton
+                                IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                                IsVisible="{Binding Nomenclatura, Converter={StaticResource StringToBoolConverter}}"
+                                Content="Descanso"
+                                CheckedChanged="RadioButton_CheckedChanged"
+                                Value="{x:Static const:Constants.N}"
+                                FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=20}"
+                                FontFamily="Regular" />
+                        </VerticalStackLayout>
+                    </Frame>
 
-                <Button
-                    Grid.Row="3"
-                    Text="{x:Static const:Constants.ARCHIVO}"
-                    WidthRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=230}, iOS=150}"
-                    Command="{Binding LoadFileCommand}"
-                    Margin="0, 0, 0, 20" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Text="Adjunte: incapacidad, listas de asistencia, justificante, etc."
+                        FontSize="{OnPlatform Android={OnIdiom Phone=20, Tablet=30}, iOS=16}"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        FontFamily="Regular"
+                        TextColor="#2E3192"
+                        Margin="{OnPlatform Android={OnIdiom Phone='0,0,0,30', Tablet='0,0,0,50'}, iOS='0,0,0,30'}" />
 
-                <Button
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Text="{x:Static const:Constants.FOTO}"
-                    Command="{Binding PhotoCommand}"
-                    WidthRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=230}, iOS=150}"
-                    Margin="0, 0, 0, 20" />
+                    <Button
+                        Grid.Row="2"
+                        Text="{x:Static const:Constants.ARCHIVO}"
+                        WidthRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=230}, iOS=150}"
+                        Command="{Binding LoadFileCommand}"
+                        Margin="0, 0, 0, 20" />
 
-                <Image
-                    x:Name="lblFile"
-                    Grid.Row="4"
-                    Source="{Binding LocalFilePath}"
-                    IsVisible="{Binding ShowFile}"
-                    Aspect="AspectFit"
-                    HeightRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=250}, iOS=150}"
-                    Margin="10" />
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Text="{x:Static const:Constants.FOTO}"
+                        Command="{Binding PhotoCommand}"
+                        WidthRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=230}, iOS=150}"
+                        Margin="0, 0, 0, 20" />
 
-                <Label
-                    Grid.Row="4"
-                    Text="{Binding FileName}"
-                    IsVisible="{Binding Source={x:Reference lblFile}, Path=IsVisible, Converter={StaticResource InvertedBoolConverter}}"
-                    HorizontalTextAlignment="Center"
-                    LineBreakMode="MiddleTruncation"
-                    FontSize="{OnPlatform Android={OnIdiom Phone=18, Tablet=22}, iOS=18}"
-                    Margin="10" />
+                    <Image
+                        x:Name="lblFile"
+                        Grid.Row="3"
+                        Source="{Binding LocalFilePath}"
+                        IsVisible="{Binding ShowFile}"
+                        Aspect="AspectFit"
+                        HeightRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=250}, iOS=150}"
+                        Margin="10" />
 
-                <Image
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Source="{Binding LocalPhotoPath}"
-                    Aspect="AspectFit"
-                    HeightRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=250}, iOS=150}"
-                    Margin="10" />
+                    <Label
+                        Grid.Row="3"
+                        Text="{Binding FileName}"
+                        IsVisible="{Binding Source={x:Reference lblFile}, Path=IsVisible, Converter={StaticResource InvertedBoolConverter}}"
+                        HorizontalTextAlignment="Center"
+                        LineBreakMode="MiddleTruncation"
+                        FontSize="{OnPlatform Android={OnIdiom Phone=18, Tablet=22}, iOS=18}"
+                        Margin="10" />
 
-                <Entry
-                    Grid.Row="5"
-                    Grid.ColumnSpan="2"
-                    HeightRequest="50"
-                    VerticalOptions="EndAndExpand"
-                    FontFamily="Regular"
-                    VerticalTextAlignment="Center"
-                    HorizontalTextAlignment="Center"
-                    CharacterSpacing="1"
-                    FontSize="{OnPlatform Android={OnIdiom Phone=22, Tablet=30}, iOS=18}"
-                    PlaceholderColor="LightGray"
-                    TextColor="Black"
-                    Placeholder="Capture informacion adicional"
-                    IsSpellCheckEnabled="True"
-                    IsTextPredictionEnabled="True"
-                    Text="{Binding RespuestaTxt}"
-                    IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
+                    <Image
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Source="{Binding LocalPhotoPath}"
+                        Aspect="AspectFit"
+                        HeightRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=250}, iOS=150}"
+                        Margin="10" />
 
-                <Button
-                    Grid.Row="6"
-                    Grid.ColumnSpan="2"
-                    Text="REGISTRAR"
-                    Command="{Binding RegisterCommand}"
-                    VerticalOptions="EndAndExpand"
-                    Margin="0, 30, 0, 0" />
+                    <Entry
+                        Grid.Row="4"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="50"
+                        VerticalOptions="EndAndExpand"
+                        FontFamily="Regular"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        CharacterSpacing="1"
+                        FontSize="{OnPlatform Android={OnIdiom Phone=22, Tablet=30}, iOS=18}"
+                        PlaceholderColor="LightGray"
+                        TextColor="Black"
+                        Placeholder="Capture informacion adicional"
+                        IsSpellCheckEnabled="True"
+                        IsTextPredictionEnabled="True"
+                        Text="{Binding RespuestaTxt}"
+                        IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
+
+                    <Button
+                        Grid.Row="5"
+                        Grid.ColumnSpan="2"
+                        Text="REGISTRAR"
+                        Command="{Binding RegisterCommand}"
+                        VerticalOptions="EndAndExpand"
+                        Margin="0, 30, 0, 0" />
+                </Grid>
             </Grid>
         </ScrollView>
 

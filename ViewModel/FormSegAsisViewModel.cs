@@ -1,4 +1,5 @@
-﻿using Asis_Batia.Helpers;
+﻿using Asis_Batia.Data;
+using Asis_Batia.Helpers;
 using Asis_Batia.Model;
 using Asis_Batia.Popups;
 using Asis_Batia.View;
@@ -6,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Asis_Batia.ViewModel;
@@ -16,6 +18,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     Location _currentLocation = new Location();
     bool _getLocation;
     DateTime _iniciolabores;
+    DbContext _dbContext;
 
     [NotifyCanExecuteChangedFor(nameof(RegisterCommand), nameof(PhotoCommand), nameof(LoadFileCommand))]
     [ObservableProperty]
@@ -48,25 +51,43 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     [ObservableProperty]
     bool _showFile;
 
+    [ObservableProperty]
+    bool _showConnectivityError;
+
+    public FormSegAsisViewModel(DbContext dbContext) {
+        ShowConnectivityError = !Utils.IsConnectedInternet();
+        _dbContext = dbContext;
+    }
+
     [RelayCommand(CanExecute = nameof(CanExecute))]
-    async void Register() {
+    async Task Register() {
         IsBusy = true;
 
-        if(!await ValidateBiometricAsync()) {
-            await App.Current.MainPage.DisplayAlert("Error", Constants.NO_COINCIDE_BIOMETRIA, Constants.ACEPTAR);
-            IsBusy = false;
-            return;
-        }
-
-        if(UserSession.EsEmpleadoElektra) {
-            if(string.IsNullOrWhiteSpace(FileName)) {
-                await App.Current.MainPage.DisplayAlert("", "Ingrese captura de pantalla de \'Proveedores GS\'", Constants.ACEPTAR);
+        if(Utils.IsConnectedInternet()) {
+            if(!await ValidateBiometricAsync()) {
+                await App.Current.MainPage.DisplayAlert(Constants.ERROR, Constants.NO_COINCIDE_BIOMETRIA, Constants.ACEPTAR);
                 IsBusy = false;
                 return;
             }
+
+            if(UserSession.EsEmpleadoElektra) {
+                if(string.IsNullOrWhiteSpace(FileName)) {
+                    await App.Current.MainPage.DisplayAlert("", "Ingrese captura de pantalla de \'Proveedores GS\'", Constants.ACEPTAR);
+                    IsBusy = false;
+                    return;
+                }
+            }
+            ValidateNomenclature();
+            IsBusy = false;
+
+        } else {            
+            if(UserSession.EsEmpleadoAeropuerto) {
+                await SaveLocalData();
+            } else {
+                await App.Current.MainPage.DisplayAlert(Constants.ERROR, Constants.SIN_CONEXION, Constants.ACEPTAR);
+            }
+            IsBusy = false;
         }
-        ValidateNomenclature();
-        IsBusy = false;
     }
 
     async Task<bool> ValidateBiometricAsync() {
@@ -206,14 +227,24 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
         TextLoading = "";
         IsLoading = false;
-        IsBusy = false;       
+        IsBusy = false;
 
-        if(UserSession.EsEmpleadoAeropuerto) {            
+        if(UserSession.EsEmpleadoAeropuerto) {
+            try {
+                string url = $"{Constants.API_MOVIMIENTOS_BIOMETA}?idempleado={UserSession.IdEmpleado}";
+                var listMovs = await _httpHelper.GetAsync<ObservableCollection<MovimientoModel>>(url);
+
+                var lastMovimiento = listMovs[0];
+                lastMovimiento.IdEmpleado = UserSession.IdEmpleado;
+                await _dbContext.SaveMovimientoAsync(lastMovimiento);
+
+            } catch { }
+
             App.Current.MainPage = new MainPage();
             UserSession.ClearSession();
         } else {
             await Shell.Current.GoToAsync("..");
-        }
+        }       
 
         await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
     }
@@ -365,5 +396,45 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         }
         FileName = string.Empty;
         ShowFile = false;
+    }
+
+    async Task SaveLocalData() {
+        TextLoading = "Guardando registro ...";
+        IsLoading = true;
+        IsBusy = true;
+
+        RegistroModel registroLocal = new RegistroModel {
+            // Adjuntos = _dbFilePathList == null ? "" : _dbFilePathList,
+            Confirma = "BIOMETA",
+            Cubierto = 0,
+            Idempleado = UserSession.IdEmpleado,
+            Latitud = "",
+            Longitud = "",
+            Movimiento = _selectionRadio,
+            RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
+            Fecha = DateTime.Now
+            //Foto = _dbPhotoPathList == null ? "" : _dbPhotoPathList,
+        };
+
+        MovimientoModel movimiento = new MovimientoModel {
+            IdEmpleado = registroLocal.Idempleado,
+            Fecha = registroLocal.Fecha,
+            Movimiento = registroLocal.Movimiento
+        };
+
+        await _dbContext.SaveRegisterAsync(registroLocal);
+
+        TextLoading = "";
+        IsLoading = false;
+        IsBusy = false;
+
+        App.Current.MainPage = new MainPage();
+        UserSession.ClearSession();
+
+        try {
+            await _dbContext.SaveMovimientoAsync(movimiento);
+        } catch { }
+
+        await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
     }
 }

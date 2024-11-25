@@ -1,6 +1,9 @@
-﻿namespace Asis_Batia.Model;
+﻿using SQLite;
+
+namespace Asis_Batia.Model;
 
 public class InfoEmpleadoModel {
+    [PrimaryKey]
     public int idEmpleado { get; set; }
     public int idCliente { get; set; }
     public int idInmueble { get; set; }

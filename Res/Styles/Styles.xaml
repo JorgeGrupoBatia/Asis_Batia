@@ -2,7 +2,8 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:const="clr-namespace:Asis_Batia.Helpers">
     
     <LinearGradientBrush x:Key="BlueWhiteGradient" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="White" Offset="0.3" />
@@ -179,6 +180,15 @@
         <Setter Property="TextColor" Value="Black"/>
         <Setter Property="Margin" Value="0,0,0,15"/>
     </Style>
+    
+     <Style TargetType="Label" x:Key="ConectivityLabelStyle">
+         <Setter Property="Text" Value="{x:Static const:Constants.SIN_CONEXION}" />
+         <Setter Property="TextColor" Value="White" />
+         <Setter Property="FontAttributes" Value="Bold"/>
+         <Setter Property="HorizontalTextAlignment" Value="Center"/>
+         <Setter Property="BackgroundColor" Value="Red"/>
+         <Setter Property="Padding" Value="10, 5"/>
+     </Style>
     
     <Style TargetType="ListView">
         <Setter Property="SeparatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />

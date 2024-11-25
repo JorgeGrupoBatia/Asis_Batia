@@ -10,6 +10,9 @@ public static class Constants {
     #region API URI´s
     public const string API_BASE_URL = "https://www.singa.com.mx:5500/api/";
     public const string API_EMPLEADO_APP = "EmpleadoApp";
+    public const string API_PRECARGAR_EMPLEADOS = "EmpleadosPrecargados";
+    public const string API_PRECARGAR_MOVIMIENTOS = "MovimientosBiometaAeropuerto";
+    public const string API_REGISTRO_MASIVO_BIOMETA = "RegistroBiometaMasivo";
 #if DEBUG
     public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometaPrueba";
     public const string API_REGISTRO_BIOMETA = "RegistroBiometaPrueba";
@@ -20,6 +23,12 @@ public static class Constants {
     public const string API_CLIENTE = "cliente";
     public const string API_INMUEBLES = "Inmueble";
     public const string API_ENVIO_ARCHIVOS = "FilesAsis/CargaMul";
+    #endregion
+
+    #region SQLite
+    public const string DATABASE_FILE_NAME = "BiometaDB.db3";
+    public const SQLite.SQLiteOpenFlags FLAGS = SQLite.SQLiteOpenFlags.ReadWrite | SQLite.SQLiteOpenFlags.Create | SQLite.SQLiteOpenFlags.SharedCache;
+    public static string DATABASE_PATH = Path.Combine(FileSystem.AppDataDirectory, DATABASE_FILE_NAME);
     #endregion
 
     #region Literales
@@ -36,13 +45,14 @@ public static class Constants {
     public const string PUNTO_ATENCION = "PUNTO DE ATENCION O AREA DE TRABAJO";
     public const string SIGUIENTE = "SIGUIENTE";
     public const string REGISTRAR_ENTRADA_SALIDA = "Registrar entrada / salida";
-    public const string SELECCIONE_OPCION = "Seleccione una opción";
     public const string ARCHIVO = "Archivo";
     public const string FOTO = "Foto";
     public const string ULTIMO_REGISTRO = "Último registro";
     public const string NO_COINCIDE_BIOMETRIA = "Los datos biométricos no coinciden";
     public const string INGRESE_DATOS_BIOMETRICOS = "Captura de datos biométricos";
     public const string COLOQUE_ROSTRO_HUELLA = "Coloque su rostro frente a la cámara o ingrese sus huella dactilar para verificar identidad";
+    public const string SIN_CONEXION = "Sin conexión a Internet";
+    public const string ERROR = "Error";
 
     public const string A = "A";
     public const string A2 = "A2";

@@ -7,8 +7,15 @@
     Title="{Binding CurrentDate}"
     Style="{StaticResource PageStyle}">
 
-    <Grid>
+    <Grid
+        RowDefinitions="auto, *">
+        
+        <Label
+            Style="{StaticResource ConectivityLabelStyle}"
+            IsVisible="{Binding ShowConnectivityMsg}"/>
+
         <RefreshView
+            Grid.Row="1"
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsRefreshing}"
             RefreshColor="{StaticResource Primary}">
@@ -144,6 +151,7 @@
         </RefreshView>
 
         <Grid
+            Grid.RowSpan="2"
             BackgroundColor="#AA000000"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand"

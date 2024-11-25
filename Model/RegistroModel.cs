@@ -1,6 +1,12 @@
-﻿namespace Asis_Batia.Model;
+﻿using SQLite;
+using System.Text.Json.Serialization;
+
+namespace Asis_Batia.Model;
 
 public class RegistroModel {
+    [PrimaryKey, AutoIncrement]
+    [JsonIgnore]
+    public int Id { get; set; }
     public int Idempleado { get; set; }
     public string Confirma { get; set; }
     public string Movimiento { get; set; }
@@ -10,4 +16,5 @@ public class RegistroModel {
     public string Latitud { get; set; }
     public string Longitud { get; set; }
     public string Foto { get; set; }
+    public DateTime Fecha { get; set; }
 }

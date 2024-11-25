@@ -1,4 +1,5 @@
-﻿using Asis_Batia.Helpers;
+﻿using Asis_Batia.Data;
+using Asis_Batia.Helpers;
 using Asis_Batia.Model;
 using Asis_Batia.View;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,6 +27,15 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     [ObservableProperty]
     string _currentDate = DateTime.Now.ToString("dddd d \\de MMMM");
 
+    [ObservableProperty]
+    bool _showConnectivityMsg;
+
+    DbContext _dbContext;
+
+    public FormuPrinAsisViewModel(DbContext dbContext) {
+        _dbContext = dbContext;
+    }
+
     [RelayCommand]
     async Task Refresh() {
         await InitMovimientoList();
@@ -33,14 +43,26 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     }
 
     [RelayCommand]
-    async Task InitMovimientoList() {
-        string url = $"{Constants.API_MOVIMIENTOS_BIOMETA}?idempleado={UserSession.IdEmpleado}";
-        MovimientoList = await _httpHelper.GetAsync<ObservableCollection<MovimientoModel>>(url);
+    public async Task InitMovimientoList() {
+        if(Utils.IsConnectedInternet()) {   
+            string url = $"{Constants.API_MOVIMIENTOS_BIOMETA}?idempleado={UserSession.IdEmpleado}";
+            MovimientoList = await _httpHelper.GetAsync<ObservableCollection<MovimientoModel>>(url);
 
-        if(MovimientoList is null) {
-            await App.Current.MainPage.DisplayAlert("", "Error al obtener los datos, refresque la pantalla", "Ok");
-            MovimientoList = new ObservableCollection<MovimientoModel>();
-            return;
+            if(MovimientoList is null) {
+                await App.Current.MainPage.DisplayAlert("", "Error al obtener los datos, refresque la pantalla", "Ok");
+                MovimientoList = new ObservableCollection<MovimientoModel>();
+                return;
+            }
+        } else {
+            MovimientoModel lastMovimiento = await _dbContext.GetMovimientoAsync(UserSession.IdEmpleado);
+
+            if(lastMovimiento is not null) {
+                MovimientoList = new ObservableCollection<MovimientoModel>() {
+                    lastMovimiento
+                };
+            } else {
+                MovimientoList = new ObservableCollection<MovimientoModel>();
+            }
         }
 
         if(MovimientoList.Count > 0) {
@@ -73,6 +95,7 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
     public async Task OnAppearing() {
         IsLoading = true;
         await InitMovimientoList();
+        ShowConnectivityMsg = !Utils.IsConnectedInternet();
         IsLoading = false;
     }
 }
