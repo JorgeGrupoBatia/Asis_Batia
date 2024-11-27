@@ -118,7 +118,7 @@
                         FontSize="{OnPlatform Android={OnIdiom Phone=22, Tablet=30}, iOS=18}"
                         PlaceholderColor="LightGray"
                         TextColor="Black"
-                        Placeholder="Capture informacion adicional"
+                        Placeholder="Capture información adicional"
                         IsSpellCheckEnabled="True"
                         IsTextPredictionEnabled="True"
                         Text="{Binding RespuestaTxt}"
