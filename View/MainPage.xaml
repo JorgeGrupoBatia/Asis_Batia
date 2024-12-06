@@ -5,7 +5,8 @@
     xmlns:controls="clr-namespace:Asis_Batia.Controls"
     xmlns:const="clr-namespace:Asis_Batia.Helpers"
     x:Class="Asis_Batia.View.MainPage"
-    Style="{StaticResource PageStyle}">
+    Style="{StaticResource PageStyle}"
+    NavigationPage.HasNavigationBar="False">
 
     <Grid>
         <ScrollView
@@ -31,6 +32,16 @@
                             Command="{Binding Source={x:Reference batia}, Path=BindingContext.PrecargarDatosCommand}" />
                     </Image.GestureRecognizers>
                 </Image>
+
+                <ImageButton
+                    Grid.Row="1"
+                    Source="jornaleros"
+                    HorizontalOptions="EndAndExpand"
+                    VerticalOptions="StartAndExpand"
+                    HeightRequest="50"
+                    WidthRequest="50"
+                    Margin="0, 0, 10, 0"
+                    Command="{Binding ShowJornalerosPageCommand}" />
 
                 <Label
                     Grid.Row="2"

@@ -11,7 +11,7 @@ public partial class App : Application {
         if(UserSession.IdEmpleado > 0) {
             MainPage = new AppShell();
         } else {
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         CreateControls();

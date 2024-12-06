@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:helpers="clr-namespace:Asis_Batia.Helpers"
+    x:Class="Asis_Batia.View.Jornaleros.JornalerosPage"
+    Title="{x:Static helpers:Constants.JORNALEROS_PAGE_TITLE}"
+    Style="{StaticResource PageStyle}">
+
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+        <Grid
+            RowDefinitions="auto, auto, auto, auto, auto, *"
+            RowSpacing="25"
+            Margin="10">
+
+            <Frame
+                CornerRadius="25"
+                BackgroundColor="{AppThemeBinding Light='Transparent', Dark={StaticResource Primary}}"
+                BorderColor="{AppThemeBinding Light='#D4BC88', Dark='Transparent'}"
+                Padding="8">
+
+                <VerticalStackLayout
+                    RadioButtonGroup.GroupName="TipoAsistencia"
+                    RadioButtonGroup.SelectedValue="{Binding SelectedTipoAsistencia}">
+
+                    <Label
+                        Text="Tipo de Asistencia"
+                        HorizontalTextAlignment="Center"
+                        FontAttributes="Bold" />
+
+                    <RadioButton
+                        x:Name="chButtonCobertura"
+                        Content="Cobertura"
+                        IsChecked="True"
+                        Value="1">
+
+                        <RadioButton.Behaviors>
+                            <toolkit:EventToCommandBehavior
+                                EventName="CheckedChanged"
+                                Command="{Binding CheckedCommand}" />
+                        </RadioButton.Behaviors>
+                    </RadioButton>
+
+                    <RadioButton
+                        Content="Evento especial"
+                        Value="2" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Picker
+                Grid.Row="1"
+                Title="Seleccione Jornalero"
+                ItemsSource="{Binding JornalerosList}"
+                ItemDisplayBinding="{Binding Empleado}"
+                SelectedItem="{Binding SelectedJornalero}" />
+
+            <Picker
+                Grid.Row="2"
+                Title="Seleccione Cliente"
+                ItemsSource="{Binding ClientList}"
+                ItemDisplayBinding="{Binding nombre}"
+                SelectedItem="{Binding SelectedClient}">
+
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="SelectedIndexChanged"
+                        Command="{Binding SelectClientCommand}" />
+                </Picker.Behaviors>
+            </Picker>
+
+            <Picker
+                Grid.Row="3"
+                Title="Seleccione Inmueble"
+                ItemsSource="{Binding InmuebleList}"
+                ItemDisplayBinding="{Binding nombre}"
+                SelectedItem="{Binding SelectedInmueble}">
+
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="SelectedIndexChanged"
+                        Command="{Binding SelectInmuebleCommand}" />
+                </Picker.Behaviors>
+            </Picker>
+
+            <Picker
+                Grid.Row="4"
+                x:Name="pickerCobertura"
+                Title="Seleccione Cobertura"
+                ItemsSource="{Binding CoberturaList}"
+                ItemDisplayBinding="{Binding Cobertura}"
+                SelectedItem="{Binding SelectedCobertura}"
+                IsVisible="{Binding Source={x:Reference chButtonCobertura}, Path=IsChecked}" />
+
+            <Picker
+                Grid.Row="4"
+                Title="Seleccione Evento"
+                ItemsSource="{Binding EventoList}"
+                ItemDisplayBinding="{Binding Concepto}"
+                SelectedItem="{Binding SelectedEvento}"
+                IsVisible="{Binding Source={x:Reference pickerCobertura}, Path=IsVisible, Converter={StaticResource InvertedBoolConverter}}" />
+
+            <Button
+                Grid.Row="5"
+                Text="REGISTRAR"
+                Command="{Binding RegisterCommand}"
+                VerticalOptions="EndAndExpand"
+                Margin="0,0,0,10" />
+        </Grid>
+
+        <Grid
+            RowDefinitions="*, *"
+            BackgroundColor="#AA000000"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding IsLoading}">
+
+            <ActivityIndicator
+                IsRunning="{Binding IsLoading}"
+                Color="{StaticResource Dorado}"
+                VerticalOptions="EndAndExpand"
+                HeightRequest="70" />
+
+            <Label
+                Grid.Row="1"
+                Text="{Binding TextLoading}"
+                VerticalOptions="StartAndExpand"
+                HorizontalTextAlignment="Center"
+                FontSize="16"
+                TextColor="{StaticResource Dorado}" />
+        </Grid>
+    </Grid>
+</ContentPage>

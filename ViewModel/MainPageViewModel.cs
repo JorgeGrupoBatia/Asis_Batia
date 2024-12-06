@@ -2,6 +2,7 @@
 using Asis_Batia.Helpers;
 using Asis_Batia.Model;
 using Asis_Batia.Popups;
+using Asis_Batia.View.Jornaleros;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Plugin.Fingerprint;
@@ -123,13 +124,18 @@ public partial class MainPageViewModel : ViewModelBase {
 
         int res = await _httpHelper.PostBodyAsync<List<RegistroModel>, int>(Constants.API_REGISTRO_MASIVO_BIOMETA, listRegistros);
 
-        if (res == 1) {
+        if(res == 1) {
             await _dbContext.DeleteAllRegisterAsync();
             await PrecargarMovimientos();
-        }       
+        }
 
         IsLoading = false;
         TextLoading = "";
+    }
+
+    [RelayCommand]
+    async void ShowJornalerosPage() {
+        await App.Current.MainPage.Navigation.PushAsync(new JornalerosPage());
     }
 
     async void ShowTermsAndConditions() {

@@ -32,6 +32,8 @@ public static class Constants {
     #endregion
 
     #region Literales
+    public const string JORNALEROS_PAGE_TITLE = "Asistencia Jornaleros";
+
     public const string SI = "Sí";
     public const string NO = "No";
     public const string RECHAZAR = "Rechazar";

@@ -133,6 +133,7 @@
 	<ItemGroup>
 		<None Remove="Res\Images\conf.svg" />
 		<None Remove="Res\Images\flecha.svg" />
+		<None Remove="Res\Images\jornaleros.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -170,6 +171,9 @@
 		</MauiXaml>
 		<MauiXaml Update="View\FormuSegAsis.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="View\Jornaleros\JornalerosPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="View\MainPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
