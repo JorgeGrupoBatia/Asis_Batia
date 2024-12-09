@@ -124,6 +124,17 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     }
 
     async Task<bool> ValidateLocation() {
+        DateTime now = DateTime.Now;
+        TimeSpan timeSpan = now - _iniciolabores;
+        Double minutosDiferencia = timeSpan.TotalMinutes;
+
+        if(minutosDiferencia < 60) {
+            await App.Current.MainPage.DisplayAlert(Constants.ERROR, 
+                "No puede realizar su registro. \n\nSu registro anterior fue realizado recientemente.", Constants.ACEPTAR);
+            await Shell.Current.GoToAsync("..");
+            return false;
+        }
+
         if(TipoRegistro.Equals(Constants.FIN_LABORES)) {
             bool resp = await App.Current.MainPage.DisplayAlert(""
                 , $"Está a punto de registrar {Constants.FIN_LABORES.ToUpper()}, su {Constants.INICIO_LABORES.ToUpper()} fue el día {_iniciolabores.ToString("dddd dd-MMMM a la(\\s) hh:mm tt")}\n\n¿Desea continuar?"
