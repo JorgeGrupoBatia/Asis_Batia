@@ -24,7 +24,10 @@
                     Grid.Row="1"
                     x:Name="batia"
                     Source="logo_batia"
-                    HeightRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}">
+                    WidthRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}"
+                    HeightRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
 
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer
@@ -33,7 +36,7 @@
                     </Image.GestureRecognizers>
                 </Image>
 
-                <ImageButton
+                <!--<ImageButton
                     Grid.Row="1"
                     Source="jornaleros"
                     HorizontalOptions="EndAndExpand"
@@ -41,7 +44,18 @@
                     HeightRequest="50"
                     WidthRequest="50"
                     Margin="0, 0, 10, 0"
-                    Command="{Binding ShowJornalerosPageCommand}" />
+                    Command="{Binding ShowJornalerosPageCommand}" />-->
+
+                <ImageButton
+                    Grid.Row="2"
+                    Source="warning"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    HeightRequest="30"
+                    WidthRequest="30"
+                    Command="{Binding EnviarRegistrosCommand}"
+                    IsVisible="{Binding ShowWarning}"
+                    Margin="30,0,0,0"/>
 
                 <Label
                     Grid.Row="2"
@@ -124,7 +138,7 @@
                 Text="{Binding TextLoading}"
                 VerticalOptions="StartAndExpand"
                 HorizontalTextAlignment="Center"
-                FontSize="16"
+                FontSize="{OnIdiom Phone=17, Tablet=19}"
                 TextColor="{StaticResource Dorado}" />
         </Grid>
     </Grid>

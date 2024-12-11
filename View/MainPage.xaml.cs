@@ -29,13 +29,14 @@ public partial class MainPage : ContentPage {
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
         }
+        _viewModel.ShowWarningChanged();
     }
 
-    private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e) {
+    private async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e) {
         _viewModel.ShowConnectivityMsg = e.NetworkAccess != NetworkAccess.Internet;
 
         if(!_viewModel.ShowConnectivityMsg) {
-            _viewModel.EnviarRegistrosAsync();
+            await _viewModel.EnviarRegistros();
         }
     }
 }

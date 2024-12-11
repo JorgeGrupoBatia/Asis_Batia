@@ -9,7 +9,8 @@ public class HttpHelper {
 
     public HttpHelper() {
         _httpClient = new HttpClient {
-            BaseAddress = new Uri(Constants.API_BASE_URL)
+            BaseAddress = new Uri(Constants.API_BASE_URL),
+            Timeout = TimeSpan.FromSeconds(40)
         };
 
         _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");

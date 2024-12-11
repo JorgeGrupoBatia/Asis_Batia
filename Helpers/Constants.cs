@@ -12,13 +12,14 @@ public static class Constants {
     public const string API_EMPLEADO_APP = "EmpleadoApp";
     public const string API_PRECARGAR_EMPLEADOS = "EmpleadosPrecargados";
     public const string API_PRECARGAR_MOVIMIENTOS = "MovimientosBiometaAeropuerto";
-    public const string API_REGISTRO_MASIVO_BIOMETA = "RegistroBiometaMasivo";
 #if DEBUG
     public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometaPrueba";
     public const string API_REGISTRO_BIOMETA = "RegistroBiometaPrueba";
+    public const string API_REGISTRO_MASIVO_BIOMETA = "RegistroBiometaMasivoPrueba";
 #elif RELEASE
     public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometa";
     public const string API_REGISTRO_BIOMETA = "RegistroBiometaN";
+    public const string API_REGISTRO_MASIVO_BIOMETA = "RegistroBiometaMasivo";
 #endif
     public const string API_CLIENTE = "cliente";
     public const string API_INMUEBLES = "Inmueble";
@@ -55,6 +56,13 @@ public static class Constants {
     public const string COLOQUE_ROSTRO_HUELLA = "Coloque su rostro frente a la cámara o ingrese sus huella dactilar para verificar identidad";
     public const string SIN_CONEXION = "Sin conexión a Internet";
     public const string ERROR = "Error";
+    public const string PRECARGANDO_DATOS = "Precargando datos ...";
+    public const string ENVIANDO_REGISTROS = "Enviando registros ...";
+    public const string DATOS_PRECARGADOS_OK = "¡ Datos precargados correctamente !";
+    public const string DATOS_PRECARGADOS_ERROR = "¡ Error al precargar los datos !";
+    public const string REGISTROS_SINCRONIZADOS_OK = "¡ Registros sincronizados correctamente !";
+    public const string REGISTROS_SINCRONIZADOS_ERROR_1 = "Error al enviar los registros. Vuelva a intentarlo.";
+    public const string REGISTROS_SINCRONIZADOS_ERROR_2 = "Error al enviar los registros. Precargue los datos nuevamente.";
 
     public const string A = "A";
     public const string A2 = "A2";

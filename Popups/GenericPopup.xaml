@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mauiPopup:BasePopupPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
+    x:Class="Asis_Batia.Popups.GenericPopup"
+    IsCloseOnBackgroundClick="False"
+    VerticalOptions="CenterAndExpand"
+    HorizontalOptions="CenterAndExpand"
+    ForegroundColor="Transparent">
+
+    <Frame
+        CornerRadius="25"
+        BorderColor="Transparent"
+        Margin="40"
+        Padding="{OnPlatform Android='10, 20, 20, 0', iOS='5'}">
+
+        <Grid
+            RowDefinitions="auto, *">
+
+            <ImageButton
+                x:Name="buttonCancel"
+                Source="cerrarsecion"
+                HeightRequest="20"
+                WidthRequest="20"
+                Clicked="buttonCancel_Clicked"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                Scale="{OnPlatform Android=1, iOS=.5}" />
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Padding="{OnPlatform Android={OnIdiom Phone=15, Tablet=25}, iOS=10}">
+
+                <Label
+                    x:Name="lblMessage"
+                    TextColor="#2E3192"
+                    FontSize="{OnPlatform Android={OnIdiom Phone=25, Tablet=40}, iOS=20}"
+                    FontFamily="Regular"
+                    FontAttributes="Bold"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="Center" />
+
+                <Image
+                    x:Name="image"
+                    Aspect="AspectFit"
+                    HeightRequest="{OnPlatform Android={OnIdiom Phone=100, Tablet=150}, iOS=100}"
+                    WidthRequest="{OnPlatform Android={OnIdiom Phone=100, Tablet=150}, iOS=100}"
+                    Margin="{OnPlatform Android={OnIdiom Phone='0,25', Tablet='0,50'}, iOS='0,20'}" />
+
+                <Button
+                    x:Name="buttonAccept"
+                    WidthRequest="{OnPlatform Android={OnIdiom Phone=250, Tablet=300}, iOS=250}"
+                    Margin="0, 20, 0, 0"
+                    Clicked="buttonAceptar_Clicked" />
+            </VerticalStackLayout>
+        </Grid>
+    </Frame>
+</mauiPopup:BasePopupPage>

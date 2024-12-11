@@ -24,6 +24,9 @@ public partial class MainPageViewModel : ViewModelBase {
     [ObservableProperty]
     bool _showConnectivityMsg;
 
+    [ObservableProperty]
+    bool _showWarning;
+
     DbContext _dbContext;
 
     public MainPageViewModel() {
@@ -35,29 +38,30 @@ public partial class MainPageViewModel : ViewModelBase {
     [RelayCommand]
     async Task PrecargarDatos() {
         IsLoading = true;
-        TextLoading = "Sincronizando datos ...";
+        TextLoading = Constants.PRECARGANDO_DATOS;
 
         var empleadosPrecargados = await _httpHelper.GetAsync<List<InfoEmpleadoModel>>(Constants.API_PRECARGAR_EMPLEADOS);
         if(empleadosPrecargados is not null) {
             await _dbContext.DeleteAllEmpleadosAsync();
             await _dbContext.SaveAllEmpleadosAsync(empleadosPrecargados);
-            await PrecargarMovimientos();
+            await PrecargarMovimientos(Constants.DATOS_PRECARGADOS_OK, Constants.DATOS_PRECARGADOS_ERROR);
         } else {
-            await App.Current.MainPage.DisplayAlert(Constants.ERROR, "Conectese a Internet para sincronizar los datos de los empleados.", Constants.ACEPTAR);
+            await MauiPopup.PopupAction.DisplayPopup(new GenericPopup(Constants.DATOS_PRECARGADOS_ERROR, imageUrl: "cerrarsecion"));
         }
 
         TextLoading = "";
         IsLoading = false;
     }
 
-    async Task PrecargarMovimientos() {
+    async Task PrecargarMovimientos(string successMessage, string errorMessage) {
         var movimientosPrecargados = await _httpHelper.GetAsync<List<MovimientoModel>>(Constants.API_PRECARGAR_MOVIMIENTOS);
 
         if(movimientosPrecargados is not null) {
             await _dbContext.DeleteAllMovimientosAsync();
             await _dbContext.SaveAllMovimientosAsync(movimientosPrecargados);
+            await MauiPopup.PopupAction.DisplayPopup(new GenericPopup(successMessage));
         } else {
-            await App.Current.MainPage.DisplayAlert(Constants.ERROR, "Conectese a Internet para sincronizar los datos de los empleados.", Constants.ACEPTAR);
+            await MauiPopup.PopupAction.DisplayPopup(new GenericPopup(errorMessage, imageUrl: "cerrarsecion"));
         }
     }
 
@@ -110,23 +114,25 @@ public partial class MainPageViewModel : ViewModelBase {
         }
     }
 
-    public async void EnviarRegistrosAsync() {
-        IsLoading = true;
-        TextLoading = "Sincronizando datos ...";
-
+    [RelayCommand]
+    public async Task EnviarRegistros() {
         List<RegistroModel> listRegistros = await _dbContext.GetAllRegistersAsync();
 
-        if(listRegistros is null || listRegistros.Count == 0) {
-            IsLoading = false;
-            TextLoading = "";
+        if(listRegistros is null || listRegistros.Count == 0) {            
             return;
         }
+
+        IsLoading = true;
+        TextLoading = Constants.ENVIANDO_REGISTROS;       
 
         int res = await _httpHelper.PostBodyAsync<List<RegistroModel>, int>(Constants.API_REGISTRO_MASIVO_BIOMETA, listRegistros);
 
         if(res == 1) {
             await _dbContext.DeleteAllRegisterAsync();
-            await PrecargarMovimientos();
+            ShowWarningChanged();
+            await PrecargarMovimientos(Constants.REGISTROS_SINCRONIZADOS_OK, Constants.REGISTROS_SINCRONIZADOS_ERROR_2);
+        } else {
+            await MauiPopup.PopupAction.DisplayPopup(new GenericPopup(Constants.REGISTROS_SINCRONIZADOS_ERROR_1, imageUrl: "cerrarsecion"));
         }
 
         IsLoading = false;
@@ -134,8 +140,18 @@ public partial class MainPageViewModel : ViewModelBase {
     }
 
     [RelayCommand]
-    async void ShowJornalerosPage() {
+    async Task ShowJornalerosPage() {
         await App.Current.MainPage.Navigation.PushAsync(new JornalerosPage());
+    }
+
+    public async void ShowWarningChanged() {
+        List<RegistroModel> listRegistros = await _dbContext.GetAllRegistersAsync();
+
+        if(listRegistros is null || listRegistros.Count == 0) {
+            ShowWarning = false;
+        } else {
+            ShowWarning = true;
+        }
     }
 
     async void ShowTermsAndConditions() {
