@@ -51,6 +51,7 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
             if(MovimientoList is null) {
                 await App.Current.MainPage.DisplayAlert("", "Error al obtener los datos, refresque la pantalla", "Ok");
                 MovimientoList = new ObservableCollection<MovimientoModel>();
+                SiguienteNomenclatura = Constants.SIN_REGISTRO;
                 return;
             }
         } else {
@@ -62,6 +63,10 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
                 };
             } else {
                 MovimientoList = new ObservableCollection<MovimientoModel>();
+                if(!UserSession.EsEmpleadoAeropuerto) {
+                    SiguienteNomenclatura = Constants.SIN_REGISTRO;
+                    return;
+                }
             }
         }
 

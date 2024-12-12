@@ -32,11 +32,7 @@ public partial class MainPage : ContentPage {
         _viewModel.ShowWarningChanged();
     }
 
-    private async void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e) {
+    private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e) {
         _viewModel.ShowConnectivityMsg = e.NetworkAccess != NetworkAccess.Internet;
-
-        if(!_viewModel.ShowConnectivityMsg) {
-            await _viewModel.EnviarRegistros();
-        }
     }
 }

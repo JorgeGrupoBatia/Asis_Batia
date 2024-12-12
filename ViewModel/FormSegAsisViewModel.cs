@@ -128,7 +128,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
         TimeSpan timeSpan = now - _iniciolabores;
         Double minutosDiferencia = timeSpan.TotalMinutes;
 
-        if(minutosDiferencia < 60) {
+        if(minutosDiferencia < 60 && !UserSession.EsEmpleadoElektra) {
             await App.Current.MainPage.DisplayAlert(Constants.ERROR, 
                 "No puede realizar su registro. \n\nSu registro anterior fue realizado recientemente.", Constants.ACEPTAR);
             await Shell.Current.GoToAsync("..");
