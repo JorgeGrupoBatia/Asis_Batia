@@ -63,6 +63,10 @@ public static class Constants {
     public const string REGISTROS_SINCRONIZADOS_OK = "¡ Registros sincronizados correctamente !";
     public const string REGISTROS_SINCRONIZADOS_ERROR_1 = "Error al enviar los registros. Vuelva a intentarlo.";
     public const string REGISTROS_SINCRONIZADOS_ERROR_2 = "Error al enviar los registros. Precargue los datos nuevamente.";
+    public const string SOY_EMPLEADO = "Soy Empleado";
+    public const string SOY_JORNALERO = "Soy Jornalero";
+    public const string ID_EMPLEADO = "ID de Empleado";
+    public const string ID_JORNALERO = "ID de Jornalero";
 
     public const string A = "A";
     public const string A2 = "A2";

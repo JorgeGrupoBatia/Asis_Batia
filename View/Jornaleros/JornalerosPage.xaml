@@ -91,7 +91,6 @@
                 x:Name="pickerCobertura"
                 Title="Seleccione Cobertura"
                 ItemsSource="{Binding CoberturaList}"
-                ItemDisplayBinding="{Binding Cobertura}"
                 SelectedItem="{Binding SelectedCobertura}"
                 IsVisible="{Binding Source={x:Reference chButtonCobertura}, Path=IsChecked}" />
 

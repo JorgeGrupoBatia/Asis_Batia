@@ -27,12 +27,29 @@ public partial class MainPageViewModel : ViewModelBase {
     [ObservableProperty]
     bool _showWarning;
 
+    [ObservableProperty]
+    object _selectedTipoEmpleado;
+
+    [ObservableProperty]
+    string _placeholder;
+
     DbContext _dbContext;
 
     public MainPageViewModel() {
         ShowTermsAndConditions();
         ShowConnectivityMsg = !Utils.IsConnectedInternet();
         _dbContext = new DbContext();
+        SelectedTipoEmpleado = "1";
+        Placeholder = Constants.ID_EMPLEADO;
+    }
+
+    [RelayCommand]
+    void Checked() {
+        if(SelectedTipoEmpleado.Equals("1")) {
+            Placeholder = Constants.ID_EMPLEADO;
+        } else if(SelectedTipoEmpleado.Equals("2")) {
+            Placeholder = Constants.ID_JORNALERO;
+        }
     }
 
     [RelayCommand]
@@ -67,6 +84,10 @@ public partial class MainPageViewModel : ViewModelBase {
 
     [RelayCommand]
     async Task GetInfoEmpleado() {
+        if(SelectedTipoEmpleado.Equals("2")) {
+            return;
+        }
+
         if(string.IsNullOrWhiteSpace(IdEmpleado) || IdEmpleado == "0") {
             await App.Current.MainPage.DisplayAlert("Error", "Ingrese su número de Empleado", "Cerrar");
             return;
@@ -118,12 +139,12 @@ public partial class MainPageViewModel : ViewModelBase {
     public async Task EnviarRegistros() {
         List<RegistroModel> listRegistros = await _dbContext.GetAllRegistersAsync();
 
-        if(listRegistros is null || listRegistros.Count == 0) {            
+        if(listRegistros is null || listRegistros.Count == 0) {
             return;
         }
 
         IsLoading = true;
-        TextLoading = Constants.ENVIANDO_REGISTROS;       
+        TextLoading = Constants.ENVIANDO_REGISTROS;
 
         int res = await _httpHelper.PostBodyAsync<List<RegistroModel>, int>(Constants.API_REGISTRO_MASIVO_BIOMETA, listRegistros);
 

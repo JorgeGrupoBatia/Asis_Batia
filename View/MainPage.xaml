@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:controls="clr-namespace:Asis_Batia.Controls"
     xmlns:const="clr-namespace:Asis_Batia.Helpers"
     x:Class="Asis_Batia.View.MainPage"
@@ -9,85 +10,98 @@
     NavigationPage.HasNavigationBar="False">
 
     <Grid>
-        <ScrollView
-            VerticalOptions="FillAndExpand">
+        <Grid
+            RowDefinitions="auto, auto, auto, auto, auto"
+            RowSpacing="10">
 
-            <Grid
-                RowDefinitions="auto, auto, auto, auto, auto"
-                RowSpacing="10">
+            <Label
+                Style="{StaticResource ConectivityLabelStyle}"
+                IsVisible="{Binding ShowConnectivityMsg}" />
+
+            <Image
+                Grid.Row="1"
+                x:Name="batia"
+                Source="logo_batia"
+                WidthRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=200}, iOS=180}"
+                HeightRequest="{OnPlatform Android={OnIdiom Phone=150, Tablet=200}, iOS=180}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        NumberOfTapsRequired="2"
+                        Command="{Binding Source={x:Reference batia}, Path=BindingContext.PrecargarDatosCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <HorizontalStackLayout
+                Grid.Row="2"
+                Margin="0, 10"
+                HorizontalOptions="CenterAndExpand">
+
+                <ImageButton
+                    Source="warning"
+                    VerticalOptions="Center"
+                    HeightRequest="30"
+                    WidthRequest="30"
+                    Command="{Binding EnviarRegistrosCommand}"
+                    IsVisible="{Binding ShowWarning}"
+                    Margin="0, 0, 15, 0" />
 
                 <Label
-                    Style="{StaticResource ConectivityLabelStyle}"
-                    IsVisible="{Binding ShowConnectivityMsg}" />
+                    Text="{x:Static const:Constants.BIOMETA}"
+                    FontSize="{OnPlatform Android={OnIdiom Phone=90, Tablet=110}, iOS=70}"
+                    FontFamily="Regular"
+                    FontAttributes="Bold"
+                    TextColor="#2E3192"
+                    VerticalTextAlignment="Center"
+                    BackgroundColor="Transparent" />
+            </HorizontalStackLayout>
 
-                <Image
-                    Grid.Row="1"
-                    x:Name="batia"
-                    Source="logo_batia"
-                    WidthRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}"
-                    HeightRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
+            <Frame
+                Grid.Row="3"
+                Margin="15"
+                Padding="5">
 
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer
-                            NumberOfTapsRequired="2"
-                            Command="{Binding Source={x:Reference batia}, Path=BindingContext.PrecargarDatosCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
+                <VerticalStackLayout
+                    RadioButtonGroup.GroupName="TipoEmpleado"
+                    RadioButtonGroup.SelectedValue="{Binding SelectedTipoEmpleado}">
 
-                <!--<ImageButton
-                    Grid.Row="1"
-                    Source="jornaleros"
-                    HorizontalOptions="EndAndExpand"
-                    VerticalOptions="StartAndExpand"
-                    HeightRequest="50"
-                    WidthRequest="50"
-                    Margin="0, 0, 10, 0"
-                    Command="{Binding ShowJornalerosPageCommand}" />-->
+                    <RadioButton
+                        Content="{x:Static const:Constants.SOY_EMPLEADO}"
+                        IsChecked="True"
+                        Value="1">
 
-                <HorizontalStackLayout
-                    Grid.Row="2"
-                    Margin="0,10"
-                    HorizontalOptions="CenterAndExpand">
+                        <RadioButton.Behaviors>
+                            <toolkit:EventToCommandBehavior
+                                EventName="CheckedChanged"
+                                Command="{Binding CheckedCommand}" />
+                        </RadioButton.Behaviors>
+                    </RadioButton>
 
-                    <ImageButton
-                        Source="warning"
-                        VerticalOptions="Center"
-                        HeightRequest="30"
-                        WidthRequest="30"
-                        Command="{Binding EnviarRegistrosCommand}"
-                        IsVisible="{Binding ShowWarning}" 
-                        Margin="0, 0, 15, 0"/>
+                    <RadioButton
+                        Content="{x:Static const:Constants.SOY_JORNALERO}"
+                        Value="2" />
+                </VerticalStackLayout>
+            </Frame>
 
-                    <Label
-                        Text="{x:Static const:Constants.BIOMETA}"
-                        FontSize="{OnPlatform Android={OnIdiom Phone=90, Tablet=110}, iOS=70}"
-                        FontFamily="Regular"
-                        FontAttributes="Bold"
-                        TextColor="#2E3192"
-                        VerticalTextAlignment="Center"
-                        BackgroundColor="Transparent" />
-                </HorizontalStackLayout>
+            <HorizontalStackLayout
+                Grid.Row="4"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand">
 
                 <Frame
-                    Grid.Row="3"
-                    Padding="0"
-                    HasShadow="True"
-                    BackgroundColor="Transparent"
-                    BorderColor="#D4BC88"
+                    Padding="0"     
                     HorizontalOptions="FillAndExpand"
-                    CornerRadius="5"
-                    WidthRequest="{OnPlatform Android={OnIdiom Phone=180, Tablet=220}, iOS=180}"
-                    HeightRequest="{OnPlatform Android={OnIdiom Phone=70, Tablet=90}, iOS=70}"
-                    Margin="0, 40">
+                    WidthRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=240}, iOS=190}"
+                    HeightRequest="{OnPlatform Android={OnIdiom Phone=60, Tablet=75}, iOS=60}">
 
                     <controls:TransparentEntry
                         IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
                         Text="{Binding IdEmpleado, Mode=TwoWay}"
                         TextColor="Black"
-                        Placeholder="ID de empleado"
-                        PlaceholderColor="White"
+                        Placeholder="{Binding Placeholder}"
+                        PlaceholderColor="{StaticResource Gray500}"
                         FontFamily="Regular"
                         CharacterSpacing="1"
                         FontSize="{OnPlatform Android={OnIdiom Phone=25, Tablet=30}, iOS=20}"
@@ -95,53 +109,23 @@
                         VerticalOptions="Center"
                         ReturnCommand="{Binding GetInfoEmpleadoCommand}"
                         ReturnType="Send"
-                        Keyboard="Numeric" />
+                        Keyboard="Numeric"
+                        MaxLength="6" />
                 </Frame>
 
                 <ImageButton
-                    Grid.Row="3"
                     Source="flecha"
                     Aspect="AspectFit"
                     HeightRequest="50"
                     WidthRequest="50"
-                    HorizontalOptions="End"
                     Command="{Binding GetInfoEmpleadoCommand}"
                     IsVisible="{OnPlatform Android=false, iOS=true}"
-                    Margin="0, 0, 10, 0" />
-
-                <ImageButton
-                    Grid.Row="4"
-                    Source="biometa_icoq"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    WidthRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}"
-                    HeightRequest="{OnPlatform Android={OnIdiom Phone=200, Tablet=300}, iOS=200}"
-                    Command="{Binding GetInfoEmpleadoCommand}"
-                    Margin="0, 10, 0, 0" />
-            </Grid>
-        </ScrollView>
-
-        <Grid
-            RowDefinitions="*, *"
-            BackgroundColor="#AA000000"
-            VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand"
-            IsVisible="{Binding IsLoading}">
-
-            <ActivityIndicator
-                IsRunning="{Binding IsLoading}"
-                Color="{StaticResource Dorado}"
-                VerticalOptions="EndAndExpand"
-                HeightRequest="70" />
-
-            <Label
-                Grid.Row="1"
-                Text="{Binding TextLoading}"
-                VerticalOptions="StartAndExpand"
-                HorizontalTextAlignment="Center"
-                FontSize="{OnIdiom Phone=17, Tablet=19}"
-                TextColor="{StaticResource Dorado}" />
+                    Margin="15, 0" />
+            </HorizontalStackLayout>          
         </Grid>
-    </Grid>
 
+        <controls:LoadingView
+            IsLoading="{Binding IsLoading}"
+            TextLoading="{Binding TextLoading}" />
+    </Grid>
 </ContentPage>

@@ -11,6 +11,7 @@
 
     <Frame
         CornerRadius="25"
+        BackgroundColor="White"
         BorderColor="Transparent"
         Padding="{OnPlatform Android={OnIdiom Phone=20, Tablet=40}, iOS=20}">
 

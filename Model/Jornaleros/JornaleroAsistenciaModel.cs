@@ -8,8 +8,7 @@ public class JornaleroAsistenciaModel {
     public int IdInmueble { get; set; }
     public int IdJornalero { get; set; }
     public int IdTurno { get; set; }
-    //public DateTime Fecha { get; set; }
-    //public int Importe { get; set; }
+    public int Importe { get; set; }
     public int TipoAsistencia { get; set; }
     public string TipoMovimiento { get; set; }
     public int IdVacante { get; set; }

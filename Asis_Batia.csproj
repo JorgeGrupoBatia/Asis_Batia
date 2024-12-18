@@ -133,7 +133,6 @@
 	<ItemGroup>
 		<None Remove="Res\Images\conf.svg" />
 		<None Remove="Res\Images\flecha.svg" />
-		<None Remove="Res\Images\jornaleros.png" />
 		<None Remove="Res\Images\warning.svg" />
 	</ItemGroup>
 
@@ -149,6 +148,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Controls\LoadingView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Popups\BiometricsPopup.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

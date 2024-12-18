@@ -2,7 +2,9 @@
 using Asis_Batia.Helpers;
 using Asis_Batia.Model;
 using Asis_Batia.Model.Jornaleros;
+using Asis_Batia.Popups;
 using Asis_Batia.View;
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
@@ -37,10 +39,10 @@ public partial class JornalerosViewModel : ViewModelBase {
     InmuebleByIdClienteModel.InmuebleModel _selectedInmueble;
 
     [ObservableProperty]
-    ObservableCollection<RegistroModel> _coberturaList;
+    ObservableCollection<CoberturaModel> _coberturaList;
 
     [ObservableProperty]
-    RegistroModel _selectedCobertura;
+    CoberturaModel _selectedCobertura;
 
     [ObservableProperty]
     ObservableCollection<EventoModel> _eventoList;
@@ -93,12 +95,35 @@ public partial class JornalerosViewModel : ViewModelBase {
         }
 
         IsLoading = true;
+
+        ObservableCollection<CoberturaModel> coberturasFVN = new ObservableCollection<CoberturaModel>();
         string urlCoberturas = $"{_urlBase}Coberturas?inmueble={SelectedInmueble.id_inmueble}";
         HttpResponseMessage result = await _cli.GetAsync(urlCoberturas);
-
         if(result.IsSuccessStatusCode) {
-            CoberturaList = JsonConvert.DeserializeObject<ObservableCollection<RegistroModel>>(result.Content.ReadAsStringAsync().Result);
+            coberturasFVN = JsonConvert.DeserializeObject<ObservableCollection<CoberturaModel>>(result.Content.ReadAsStringAsync().Result);
         }
+
+        ObservableCollection<CoberturaModel> coberturasVacantes = new ObservableCollection<CoberturaModel>();
+        //string urlVacantes = $"{_urlBase}CoberturaVacantes?inmueble={SelectedInmueble.id_inmueble}";
+        //HttpResponseMessage resultVacantes = await _cli.GetAsync(urlVacantes);
+        //if(resultVacantes.IsSuccessStatusCode) {
+        //    coberturasVacantes = JsonConvert.DeserializeObject<ObservableCollection<CoberturaModel>>(resultVacantes.Content.ReadAsStringAsync().Result);
+        //}
+        if(coberturasFVN.Count > 0) {
+            coberturasVacantes = new ObservableCollection<CoberturaModel> {
+                new CoberturaModel {
+                    IdVacante = 1234,
+                    IdTurno = 1,
+                    Turno = "MATUTINO"
+                },
+                new CoberturaModel {
+                    IdVacante = 9999,
+                    IdTurno = 2,
+                    Turno = "VESPERTINO"
+                }
+            };
+        }
+        CoberturaList = coberturasFVN.Union<CoberturaModel>(coberturasVacantes).ToObservableCollection();
 
         string urlEventos = $"{_urlBase}EventosJornaleros?idcliente={SelectedClient.idCliente}&idinmueble={SelectedInmueble.id_inmueble}";
         HttpResponseMessage res = await _cli.GetAsync(urlEventos);
@@ -140,7 +165,10 @@ public partial class JornalerosViewModel : ViewModelBase {
             return;
         }
 
-        int idVacante = 0;
+        IsLoading = true;
+        TextLoading = Constants.ENVIANDO_REGISTROS;
+
+        bool esVacante = esCobertura && SelectedCobertura.IdVacante != 0;
 
         JornaleroAsistenciaModel registro = new JornaleroAsistenciaModel {
             IdPeriodo = SelectedCobertura is null ? 0 : SelectedCobertura.IdPeriodo,
@@ -149,19 +177,28 @@ public partial class JornalerosViewModel : ViewModelBase {
             IdCliente = SelectedClient.idCliente,
             IdInmueble = SelectedInmueble.id_inmueble,
             IdJornalero = SelectedJornalero.IdJornalero,
-            TipoAsistencia = int.Parse(SelectedTipoAsistencia.ToString()),
-            TipoMovimiento = esEvento ? "A" : SelectedCobertura.Movimiento, // L
-            IdVacante = esEvento ? 0 : idVacante,
+            IdTurno = SelectedCobertura is null ? 0 : SelectedCobertura.IdTurno,
+            Importe = 0,
+            TipoAsistencia = esCobertura ? 1 : 2,
+            TipoMovimiento = esEvento ? "A" : esVacante ? "L" : SelectedCobertura.Movimiento,
+            IdVacante = esVacante ? SelectedCobertura.IdVacante : 0,
             IdEvento = esEvento ? SelectedEvento.IdEvento : 0,
-            IdEmpleado = esEvento ? 0 : idVacante == 0 ? SelectedCobertura.Idempleado : 0
+            IdEmpleado = !esEvento && !esVacante ? SelectedCobertura.IdEmpleado : 0
         };
 
-        Dictionary<string, object> data = new Dictionary<string, object>{
-            { "jornaleros key", registro }
-        };
+        string url = $"{_urlBase}RegistroJornalerosAsistencia";
+        int res = await _httpHelper.PostBodyAsync<JornaleroAsistenciaModel, int>(url, registro);
 
-        await App.Current.MainPage.Navigation.PushAsync(new FormuSegAsis(new DbContext()));
-        //await Shell.Current.GoToAsync(nameof(FormuSegAsis), true, data);
+        if(res > 0) {
+            LimpiarValores();
+            await App.Current.MainPage.Navigation.PopAsync();
+            await MauiPopup.PopupAction.DisplayPopup(new GenericPopup("¡ Registro exitoso !"));
+        } else {
+            await MauiPopup.PopupAction.DisplayPopup(new GenericPopup("Error al realizar el registro.\nVuelva a intentarlo.", imageUrl: "cerrarsecion"));
+        }
+
+        IsLoading = false;
+        TextLoading = string.Empty;
     }
 
     [RelayCommand]
@@ -184,5 +221,13 @@ public partial class JornalerosViewModel : ViewModelBase {
 
         TextLoading = "";
         IsLoading = false;
+    }
+
+    void LimpiarValores() {
+        SelectedJornalero = null;
+        SelectedClient = null;
+        SelectedInmueble = null;
+        SelectedCobertura = null;
+        SelectedEvento = null;
     }
 }
