@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mauiPopup="clr-namespace:MauiPopup.Views;assembly=MauiPopup"
     xmlns:const="clr-namespace:Asis_Batia.Helpers"
-    x:Class="Asis_Batia.Popups.PopupRulesPage"
+    x:Class="Asis_Batia.Popups.RulesPopup"
     HorizontalOptions="FillAndExpand"
     VerticalOptions="CenterAndExpand"
     IsCloseOnBackgroundClick="False"

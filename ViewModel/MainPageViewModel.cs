@@ -6,7 +6,6 @@ using Asis_Batia.View.Jornaleros;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Plugin.Fingerprint;
-using System.Runtime.InteropServices;
 
 namespace Asis_Batia.ViewModel;
 
@@ -177,21 +176,7 @@ public partial class MainPageViewModel : ViewModelBase {
 
     async void ShowTermsAndConditions() {
         if(UserSession.ShowTermsConditions) {
-            bool res = await MauiPopup.PopupAction.DisplayPopup<bool>(new PopupRulesPage());
-            if(res) {
-                UserSession.ShowTermsConditions = false;
-            } else {
-#if IOS
-                exit(0);
-#else
-                Application.Current.Quit();
-#endif
-            }
+            await MauiPopup.PopupAction.DisplayPopup<bool>(new RulesPopup());
         }
     }
-
-#if IOS
-    [DllImport("__Internal", EntryPoint = "exit")]
-    public static extern void exit(int status);
-#endif
 }

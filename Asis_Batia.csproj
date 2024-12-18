@@ -148,6 +148,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Popups\RulesPopup.xaml.cs">
+	    <DependentUpon>RulesPopup.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 		<MauiXaml Update="Controls\LoadingView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -184,7 +190,7 @@
 		<MauiXaml Update="View\MainPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Popups\PopupRulesPage.xaml">
+		<MauiXaml Update="Popups\RulesPopup.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="View\RegExitoso.xaml">
