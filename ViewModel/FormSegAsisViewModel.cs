@@ -17,8 +17,9 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
     public string _selectionRadio, _dbPhotoPathList, _dbFilePathList;
     Location _currentLocation = new Location();
     bool _getLocation;
-    DateTime _iniciolabores;
+    //DateTime _iniciolabores;
     DbContext _dbContext;
+    MovimientoModel _lastMov;
 
     [NotifyCanExecuteChangedFor(nameof(RegisterCommand), nameof(PhotoCommand), nameof(LoadFileCommand))]
     [ObservableProperty]
@@ -80,7 +81,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             ValidateNomenclature();
             IsBusy = false;
 
-        } else {            
+        } else {
             if(UserSession.EsEmpleadoAeropuerto) {
                 await SaveLocalData();
             } else {
@@ -125,20 +126,25 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
 
     async Task<bool> ValidateLocation() {
         DateTime now = DateTime.Now;
-        TimeSpan timeSpan = now - _iniciolabores;
+        TimeSpan timeSpan = now - _lastMov.Fecha;
         Double minutosDiferencia = timeSpan.TotalMinutes;
 
-        if(minutosDiferencia < 60 && !UserSession.EsEmpleadoElektra) {
-            await App.Current.MainPage.DisplayAlert(Constants.ERROR, 
+        if(minutosDiferencia < 60 && !UserSession.EsEmpleadoElektra && !(UserSession.EsEmpleadoAeropuerto && Nomenclatura.Equals(Constants.D))) {
+            await App.Current.MainPage.DisplayAlert(Constants.ERROR,
                 "No puede realizar su registro. \n\nSu registro anterior fue realizado recientemente.", Constants.ACEPTAR);
             await Shell.Current.GoToAsync("..");
             return false;
         }
 
         if(TipoRegistro.Equals(Constants.FIN_LABORES)) {
-            bool resp = await App.Current.MainPage.DisplayAlert(""
-                , $"Está a punto de registrar {Constants.FIN_LABORES.ToUpper()}, su {Constants.INICIO_LABORES.ToUpper()} fue el día {_iniciolabores.ToString("dddd dd-MMMM a la(\\s) hh:mm tt")}\n\n¿Desea continuar?"
-                , Constants.SI, Constants.NO);
+            string msj = $"Está a punto de registrar {Constants.FIN_LABORES.ToUpper()}";
+            if(!UserSession.EsEmpleadoElektra) {
+                msj += $", su {Constants.INICIO_LABORES.ToUpper()} fue el día {_lastMov.Fecha.ToString("dddd dd-MMMM a la(\\s) hh:mm tt")}";
+            } else {
+                msj += ".";
+            }
+            msj += "\n\n¿Desea continuar?";
+            bool resp = await App.Current.MainPage.DisplayAlert("", msj, Constants.SI, Constants.NO);
             if(!resp) {
                 return false;
             }
@@ -223,6 +229,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             Movimiento = _selectionRadio,
             RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
             Foto = _dbPhotoPathList == null ? "" : _dbPhotoPathList,
+            IdRegistro = _selectionRadio.Equals(Constants.A) || _selectionRadio.Equals(Constants.N) ? 0 : _lastMov.Id
         };
 
         int resp = await _httpHelper.PostBodyAsync<RegistroModel, int>(Constants.API_REGISTRO_BIOMETA, registroModel);
@@ -255,7 +262,7 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             UserSession.ClearSession();
         } else {
             await Shell.Current.GoToAsync("..");
-        }       
+        }
 
         await MauiPopup.PopupAction.DisplayPopup(new RegExitoso());
     }
@@ -390,7 +397,8 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             Nomenclatura = (string)query[Constants.NOMENCLATURA_KEY];
             TipoRegistro = Constants.GetRegisterType(Nomenclatura);
             _selectionRadio = Nomenclatura;
-            _iniciolabores = (DateTime)query[Constants.INICIO_LABORES_KEY];
+            _lastMov = (MovimientoModel)query[Constants.ULTIMO_MOVIMIENTO_KEY];
+            //_iniciolabores = _lastMov.Fecha;
         } catch(Exception) { }
     }
 
@@ -423,14 +431,16 @@ public partial class FormSegAsisViewModel : ViewModelBase, IQueryAttributable {
             Longitud = "",
             Movimiento = _selectionRadio,
             RespuestaTexto = RespuestaTxt == null ? "" : RespuestaTxt,
-            Fecha = DateTime.Now
+            Fecha = DateTime.Now,
+            IdRegistro = _selectionRadio.Equals(Constants.A) || _selectionRadio.Equals(Constants.N) ? 0 : _lastMov.Id
             //Foto = _dbPhotoPathList == null ? "" : _dbPhotoPathList,
         };
 
         MovimientoModel movimiento = new MovimientoModel {
             IdEmpleado = registroLocal.Idempleado,
             Fecha = registroLocal.Fecha,
-            Movimiento = registroLocal.Movimiento
+            Movimiento = registroLocal.Movimiento,
+            Id = registroLocal.IdRegistro
         };
 
         await _dbContext.SaveRegisterAsync(registroLocal);

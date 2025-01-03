@@ -11,6 +11,7 @@ public class MovimientoModel {
     public int IdEmpleado { get; set; }
     public DateTime Fecha { get; set; }
     public string Movimiento { get; set; }
+    public int Id { get; set; }
 
     [JsonIgnore]
     public string Descripcion {

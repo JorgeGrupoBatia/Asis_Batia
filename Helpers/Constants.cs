@@ -11,16 +11,11 @@ public static class Constants {
     public const string API_BASE_URL = "https://www.singa.com.mx:5500/api/";
     public const string API_EMPLEADO_APP = "EmpleadoApp";
     public const string API_PRECARGAR_EMPLEADOS = "EmpleadosPrecargados";
-    public const string API_PRECARGAR_MOVIMIENTOS = "MovimientosBiometaAeropuerto";
-#if DEBUG
-    public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometaPrueba";
-    public const string API_REGISTRO_BIOMETA = "RegistroBiometaPrueba";
-    public const string API_REGISTRO_MASIVO_BIOMETA = "RegistroBiometaMasivoPrueba";
-#elif RELEASE
-    public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometa";
-    public const string API_REGISTRO_BIOMETA = "RegistroBiometaN";
-    public const string API_REGISTRO_MASIVO_BIOMETA = "RegistroBiometaMasivo";
-#endif
+    public const string API_PRECARGAR_MOVIMIENTOS = "MovimientosBiometaAeropuertoNuevo";
+    public const string API_MOVIMIENTOS_BIOMETA = "MovimientosBiometaNuevo";
+    public const string API_REGISTRO_BIOMETA = "RegistroBiometaNuevo";
+    public const string API_REGISTRO_MASIVO_BIOMETA = "RegistroBiometaMasivoNuevo";
+
     public const string API_CLIENTE = "cliente";
     public const string API_INMUEBLES = "Inmueble";
     public const string API_ENVIO_ARCHIVOS = "FilesAsis/CargaMul";
@@ -74,6 +69,7 @@ public static class Constants {
     public const string A4 = "A4";
     public const string N = "N";
     public const string D = "D";
+    public const string D4 = "D4";
     public const string F = "F";
     public const string FJ = "FJ";
     public const string IEG = "IEG";
@@ -86,6 +82,7 @@ public static class Constants {
     public const string FIN_LABORES = "Fin de labores";
     public const string DESCANSO = "Descanso";
     public const string DOBLETE = "Doblete";
+    public const string SALIDA_DOBLETE = "Salida doblete";
     public const string FALTA = "Falta";
     public const string FALTA_JUSTIFICADA = "Falta justificada";
     public const string INCAPACIDAD_ENFERMEDAD_GENERAL = "Incapacidad por enfermedad general";
@@ -96,39 +93,86 @@ public static class Constants {
 
     public static string GetNextRegister(MovimientoModel ultimoRegistro) {
 
+        TimeSpan timeSpan = DateTime.Now - ultimoRegistro.Fecha;
+        Double horasDiferencia = timeSpan.TotalHours;
+
+        bool esD = horasDiferencia < 1;
+        bool esMismoTurno = horasDiferencia < 9; 
         bool esMismoDia = ultimoRegistro.Fecha.Day == DateTime.Now.Day;
 
         if(UserSession.EsTurnoNocturno) {
-            switch(ultimoRegistro.Movimiento) {
-                case A:
-                    return A4;
-                case A4:
-                    return A;
-                default: // A2, A3, N, D, F, FJ, IEG, IRT, V
-                    return A;
-            }
-        } else {
-            if(!UserSession.EsEmpleadoElektra) {
+            if(UserSession.EsEmpleadoAeropuerto) {
                 switch(ultimoRegistro.Movimiento) {
                     case A:
-                        return esMismoDia ? A4 : A;
+                        return esMismoTurno ? A4 : A;
                     case A4:
-                        return esMismoDia ? SIN_REGISTRO : A;
-                    default: // A2, A3, N, D, F, FJ, IEG, IRT, V
+                        return esD ? D : A;
+                    case D:
+                        return esMismoTurno ? D4 : A;
+                    case D4:
+                        return A;
+                    default: // A2, A3, N, F, FJ, IEG, IRT, V
                         return esMismoDia ? SIN_REGISTRO : A;
                 }
             } else {
                 switch(ultimoRegistro.Movimiento) {
                     case A:
-                        return esMismoDia ? A2 : A;
-                    case A2:
-                        return esMismoDia ? A3 : A;
-                    case A3:
+                        return esMismoTurno ? A4 : A;
+                    case A4:
+                        return A;
+                    default: // A2, A3, N, D, F, FJ, IEG, IRT, V
+                        return esMismoDia ? SIN_REGISTRO : A;
+                }
+            }
+        } else { // EsTurnoNocturno = False
+            if(UserSession.EsEmpleadoAeropuerto) {
+                switch(ultimoRegistro.Movimiento) {
+                    case A:
                         return esMismoDia ? A4 : A;
                     case A4:
+                        if(esMismoDia) {
+                            return esD ? D : SIN_REGISTRO;
+                        } else {
+                            return A;
+                        }
+                    case D:
+                        if(esMismoTurno) {
+                            return D4;
+                        } else {
+                            return esMismoDia ? SIN_REGISTRO : A;
+                        }
+                    case D4:
+                        return A;
+                    default: // A2, A3, N, F, FJ, IEG, IRT, V
                         return esMismoDia ? SIN_REGISTRO : A;
-                    default: // N, D, F, FJ, IEG, IRT, V
-                        return esMismoDia ? SIN_REGISTRO : A;
+                }
+            } else if(!UserSession.EsEmpleadoElektra) {
+                if(esMismoDia) {
+                    switch(ultimoRegistro.Movimiento) {
+                        case A:
+                            return A4;
+                        default:// A4, A2, A3, NF, FJ, IEG, IRT, V
+                            return SIN_REGISTRO;
+                    }
+                } else {
+                    return A;
+                }
+            } else {
+                if(esMismoDia) {
+                    switch(ultimoRegistro.Movimiento) {
+                        case A:
+                            return A2;
+                        case A2:
+                            return A3;
+                        case A3:
+                            return A4;
+                        case A4:
+                            return SIN_REGISTRO;
+                        default: // N, D, F, FJ, IEG, IRT, V
+                            return SIN_REGISTRO;
+                    }
+                } else {
+                    return A;
                 }
             }
         }
@@ -148,6 +192,8 @@ public static class Constants {
                 return DESCANSO;
             case D:
                 return DOBLETE;
+            case D4:
+                return SALIDA_DOBLETE;
             case F:
                 return FALTA;
             case FJ:
@@ -166,8 +212,8 @@ public static class Constants {
 
     #region Keys
     public const string NOMENCLATURA_KEY = "Nomenclatura key";
-    public const string LOCATION_KEY = "Location key";
-    public const string INICIO_LABORES_KEY = "Inicio labores key";
+    //public const string LOCATION_KEY = "Location key";
+    public const string ULTIMO_MOVIMIENTO_KEY = "Último movimiento key";
     #endregion
 
     #region Aviso de privacidad

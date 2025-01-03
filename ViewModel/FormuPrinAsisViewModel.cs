@@ -44,9 +44,9 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
 
     [RelayCommand]
     public async Task InitMovimientoList() {
-        if(Utils.IsConnectedInternet()) {   
+        if(Utils.IsConnectedInternet()) {
             string url = $"{Constants.API_MOVIMIENTOS_BIOMETA}?idempleado={UserSession.IdEmpleado}";
-            MovimientoList = await _httpHelper.GetAsync<ObservableCollection<MovimientoModel>>(url);
+            MovimientoList = await _httpHelper.GetAsync<ObservableCollection<MovimientoModel>>(url);           
 
             if(MovimientoList is null) {
                 await App.Current.MainPage.DisplayAlert("", "Error al obtener los datos, refresque la pantalla", "Ok");
@@ -79,15 +79,15 @@ public partial class FormuPrinAsisViewModel : ViewModelBase {
 
     [RelayCommand(CanExecute = nameof(CanExecuteNextPageCommand))]
     private async Task NextPage() {
-        DateTime inicioLabores = new DateTime();
+        //DateTime inicioLabores = new DateTime();
 
-        if(MovimientoList.Count > 0 && MovimientoList[0].Movimiento == Constants.A) {
-            inicioLabores = MovimientoList[0].Fecha;
-        }
+        //if(MovimientoList.Count > 0 && MovimientoList[0].Movimiento == Constants.A) {
+        //    inicioLabores = MovimientoList[0].Fecha;
+        //}
 
         Dictionary<string, object> data = new Dictionary<string, object>{
             { Constants.NOMENCLATURA_KEY, SiguienteNomenclatura },
-            { Constants.INICIO_LABORES_KEY, inicioLabores }
+            { Constants.ULTIMO_MOVIMIENTO_KEY, MovimientoList.Count == 0 ? new MovimientoModel() : MovimientoList[0]}
         };
 
         await Shell.Current.GoToAsync(nameof(FormuSegAsis), true, data);

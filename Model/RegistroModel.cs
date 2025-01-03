@@ -1,5 +1,5 @@
-﻿using SQLite;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using SQLite;
 
 namespace Asis_Batia.Model;
 
@@ -17,4 +17,7 @@ public class RegistroModel {
     public string Longitud { get; set; }
     public string Foto { get; set; }
     public DateTime Fecha { get; set; }
+
+    [JsonProperty("Id")]
+    public int IdRegistro { get; set; }
 }
