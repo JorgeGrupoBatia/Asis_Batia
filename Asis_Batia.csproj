@@ -69,7 +69,8 @@
 	
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
 	  <CodesignKey>Apple Development: Created via API (NSMS5C332M)</CodesignKey>
-	  <CodesignProvision>Generic Provisioning Profile</CodesignProvision>
+	  <CodesignProvision>VS: com.GrupoBatia.AsisBatia Development</CodesignProvision>
+	  <!--<CodesignProvision>Generic Provisioning Profile</CodesignProvision>-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
@@ -81,7 +82,7 @@
 		<CodesignProvision>BiometaProvisioningP</CodesignProvision>
 		<ArchiveOnBuild>true</ArchiveOnBuild>
 		<TcpPort>58181</TcpPort>
-		<ServerAddress>192.168.3.34</ServerAddress>
+		<ServerAddress>192.168.3.138</ServerAddress>
 		<ServerUser>ricardoberistain</ServerUser>
 		<EnableAssemblyILStripping>false</EnableAssemblyILStripping>
 	</PropertyGroup>

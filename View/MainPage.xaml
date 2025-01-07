@@ -136,6 +136,7 @@
         </Grid>
 
         <controls:LoadingView
+            IsVisible="{Binding IsLoading}"
             IsLoading="{Binding IsLoading}"
             TextLoading="{Binding TextLoading}" />
     </Grid>
